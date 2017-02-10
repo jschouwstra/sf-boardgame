@@ -8,6 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
+
+    public function getCategories()
+    {
+        //this returns an array
+        return $this->categories->toArray();
+    }
+
     /**
      * {@inheritdoc}
      */
