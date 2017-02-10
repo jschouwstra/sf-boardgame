@@ -18,3 +18,4 @@ web/web.config
 *.rar
 *.zip
 var/sessions/prod/sess_755df8t8dn8qsmft1qkp99qqgj
+var/
