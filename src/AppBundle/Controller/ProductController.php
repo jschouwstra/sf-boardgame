@@ -46,7 +46,7 @@ class ProductController extends Controller
         $product->setCategory($category);
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);
-
+        $category->setName("testCategory");
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
