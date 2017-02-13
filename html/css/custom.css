@@ -19,25 +19,19 @@
 
 .btn-primary{
     background-image: url('../img/primary.gif') ;
-    -webkit-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    -moz-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
+
 
 }
 .btn-danger{
     background-image: url('../img/danger.gif');
-    -webkit-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    -moz-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
+
 
 }
 
 .btn-success{
 
     background-image: url('../img/success.gif') ;
-    -webkit-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    -moz-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
+
 }
 .btn{
     border: 1px solid #222222;
