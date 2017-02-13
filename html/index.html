@@ -12,7 +12,7 @@
     <title>Boardgame</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/scrolling-nav.css" rel="stylesheet">
@@ -42,9 +42,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">
-                <i class="fa fa-map"></i>
-                Game stack</a>
+            <a style="color: white;" class="navbar-brand page-scroll" href="#page-top">
+                <i style="color: #4c9ed9;" class="fa fa-archive"></i>
+                Game Stack</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,12 +60,23 @@
                 <li>
                     <a class="page-scroll" href="#services">Services</a>
                 </li>
-                <li>
-                    <a class="page-scroll" href="#contact">Contact</a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
                 </li>
+
             </ul>
         </div>
         <!-- /.navbar-collapse -->
+
     </div>
     <!-- /.container -->
 </nav>
@@ -74,14 +85,6 @@
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default" id="main">
                 <h1>Welcome</h1>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <p>test</p>
-                        </div>
-
-                    </div>
-                </div>
                 <hr>
         <div class="row">
             <div class="col-md-9">
@@ -96,17 +99,11 @@
                 </div>
             </div>
         </div>
-                    <a class="btn btn-danger"><i class="fa fa-remove"></i> Delete</a>
+                <a class="btn btn-danger"><i class="fa fa-remove"></i> <span class="adaptiveText">Delete</span></a>
 
-                    <a class="btn btn-success"><i class="fa fa-check"></i> Confirm</a>
+                <a class="btn btn-success"><i class="fa fa-check"></i> <span class="adaptiveText">Confirm</span></a>
 
-                <svg>
-                    <pattern id="mypattern" patternUnits="userSpaceOnUse" width="100" height="100">
-                        <image width="100" height="100" xlink:href="img/congruent_pentagon-blue.png"></image>
-                    </pattern>
-                    <text x="0" y="100" class="fa fa-5x" style="fill:url(#mypattern);"> &#xf279;</text>
-                </svg>
-                    <i class="fa fa-5x fa-map"></i>
+
                 <p>test</p>
                 <p>test</p>
                 <p>test</p>

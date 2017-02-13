@@ -19,31 +19,47 @@
 
 .btn-primary{
     background-image: url('../img/primary.gif') ;
-    -webkit-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    -moz-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    background-color: black;
 }
 .btn-danger{
-    background-image: url('../img/danger.gif');
-    -webkit-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    -moz-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
+    background-image: url('../img/danger2.gif');
+}
 
+.btn-danger:hover{
+    background-image: url('../img/danger2.gif');
 }
 
 .btn-success{
 
-    background-image: url('../img/success.gif') ;
-    -webkit-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    -moz-box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
-    box-shadow: 2px 4px 8px 0px rgba(156,156,156,1);
+    background-image: url('../img/success2.gif') ;
+
 }
 .btn{
     border: 1px solid #222222;
 
     margin-top:2px;
 }
-.btn:hover,:hover .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-    background-color: black !important;
+
+
+@media (min-width: 100px) and (max-width: 1000px) {
+    .adaptiveText{
+        display: none;
+    }
+}
+
+.btn:focus,*
+.btn.focus {
+    color: #fff;
+    background-image: none;
+    background-color: #444349 !important;
+    border-color: #122b40;
+}
+.btn:hover {
+    color: #fff;
+    background-image: none;
+
+    background-color: #444349 !important;
+    border-color: #204d74;
 }
