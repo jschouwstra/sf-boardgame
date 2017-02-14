@@ -9,15 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Title</title>
+    <title>Boardgame</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"/>
-    {#<link href="css/bootstrap.css" rel="stylesheet">#}
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,8 +24,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {#<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">#}
-    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 </head>
 
 <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
@@ -86,8 +84,32 @@
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default" id="main">
-            {% block content %}
-            {% endblock content %}
+                <h1>Welcome</h1>
+                <hr>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="btn-group" role="group">
+                    <a class="btn btn-primary"><i class="fa fa-list"></i> Primary</a>
+                    <a class="btn btn-primary"><i class="fa fa-list"></i> Primary</a>
+                    <a class="btn btn-primary"><i class="fa fa-list"></i> Primary</a>
+                    <a class="btn btn-primary"><i class="fa fa-list"></i> Primary</a>
+                    <a class="btn btn-primary"><i class="fa fa-list"></i> Primary</a>
+                    <a class="btn btn-primary"><i class="fa fa-list"></i> Primary</a>
+
+                </div>
+            </div>
+        </div>
+                <a class="btn btn-danger"><i class="fa fa-remove"></i> <span class="adaptiveText">Delete</span></a>
+
+                <a class="btn btn-success"><i class="fa fa-check"></i> <span class="adaptiveText">Confirm</span></a>
+
+
+                <p>test</p>
+                <p>test</p>
+                <p>test</p>
+                <p>test</p>
+                <p>test</p>
+                <p>test</p>
             </div>
         </div>
     </div>
@@ -109,4 +131,3 @@
 </body>
 
 </html>
-
