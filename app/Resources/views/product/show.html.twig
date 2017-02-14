@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Product</h1>
+    {% block content %}
 
-    <table>
-        <tbody>
+        <h1>Product</h1>
+
+        <table>
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ product.id }}</td>
@@ -13,20 +15,21 @@
                 <th>Name</th>
                 <td>{{ product.name }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('product_edit', { 'id': product.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
+        <ul>
+            <li>
+                <a href="{{ path('product_index') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('product_edit', { 'id': product.id }) }}">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    {% endblock content %}
 {% endblock %}
