@@ -1,24 +1,23 @@
-{% extends 'base.html.twig' %}
+{#app\Resources\views\product\edit.html.twig#}
 
-{% block body %}
+    {% extends 'base.html.twig' %}
+
     {% block content %}
+    <h1>Product edit (test)</h1>
 
-        <h1>Product edit</h1>
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
 
-        {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit"/>
-        {{ form_end(edit_form) }}
-
-        <ul>
-            <li>
-                <a href="{{ path('product_index') }}">Back to the list</a>
-            </li>
-            <li>
-                {{ form_start(delete_form) }}
+            <ul>
+        <li>
+            <a href="{{ path('product_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
-                {{ form_end(delete_form) }}
-            </li>
-        </ul>
-    {% endblock content %}
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
 {% endblock %}
