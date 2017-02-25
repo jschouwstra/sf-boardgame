@@ -18,7 +18,10 @@
 }
 
 .btn-primary{
-    background-image: url('../img/primary.gif') ;
+    color: #fff;
+    background-image: none;
+    background-color: #444349 !important;
+    border-color: #122b40;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
     background-color: black;
@@ -51,15 +54,9 @@
 
 .btn:focus,*
 .btn.focus {
-    color: #fff;
-    background-image: none;
-    background-color: #444349 !important;
-    border-color: #122b40;
 }
 .btn:hover {
-    color: #fff;
-    background-image: none;
+    color: whitesmoke;
+    background-image: url('../img/primary.gif') ;
 
-    background-color: #444349 !important;
-    border-color: #204d74;
 }
