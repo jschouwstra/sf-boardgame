@@ -1,10 +1,10 @@
-src\AppBundle\Resources\SensioGeneratorBundle\skeleton\crud\views\show.html.twig.twig
+{#src\AppBundle\Resources\SensioGeneratorBundle\skeleton\crud\views\show.html.twig.twig#}
 {% block extends %}
 {{ "{% extends 'base.html.twig' %}" }}
 {% endblock extends %}
 
-{% block body %}
-{{ "{% block body %}" }}
+{% block content %}
+{{ "{% block content %}" }}
     <h1>{{ entity_singularized|capitalize }}</h1>
 
     <table>
@@ -50,4 +50,4 @@ src\AppBundle\Resources\SensioGeneratorBundle\skeleton\crud\views\show.html.twig
 {% set hide_edit, hide_delete = false, false %}
 {{ include('crud/views/others/record_actions.html.twig.twig') -}}
 {{ "{% endblock %}" }}
-{% endblock body %}
+{% endblock content %}
