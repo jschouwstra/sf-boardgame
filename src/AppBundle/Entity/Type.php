@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Type
@@ -12,6 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Type
 {
+
+    private $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
     /**
      * @var int
      *
@@ -27,6 +36,8 @@ class Type
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+
 
 
     /**
@@ -62,5 +73,22 @@ class Type
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGames()
+    {
+        return $this->games;
+    }
+
+    /**
+     * @param mixed $games
+     */
+    public function setGames($games)
+    {
+        $this->games = $games;
+    }
+
 }
 

@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Game
@@ -12,6 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Type", inversedBy="games")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    private $type;
+
+
+
     /**
      * @var int
      *
@@ -20,6 +31,7 @@ class Game
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
 
     /**
      * @var string
@@ -62,5 +74,24 @@ class Game
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+
+
 }
 
