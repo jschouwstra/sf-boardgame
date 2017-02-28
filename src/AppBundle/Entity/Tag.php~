@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Product
+ * Tag
  *
- * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\Table(name="tag")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
  */
-class Product
+class Tag
 {
     /**
      * @var int
@@ -44,7 +44,7 @@ class Product
      *
      * @param string $name
      *
-     * @return Product
+     * @return Tag
      */
     public function setName($name)
     {

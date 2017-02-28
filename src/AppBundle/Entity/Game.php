@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Game
 {
-
     /**
      * @ORM\ManyToOne(targetEntity="Type", inversedBy="games")
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
@@ -94,4 +93,3 @@ class Game
 
 
 }
-

@@ -13,7 +13,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Category
 {
 
-    public $categories;
+    private $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -64,8 +70,5 @@ class Category
     {
         return $this->name;
     }
-    public function __construct()
-    {
-        $this->categories = new ArrayCollection();
-    }
+
 }

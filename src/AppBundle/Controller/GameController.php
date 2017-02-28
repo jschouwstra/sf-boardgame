@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -39,12 +40,20 @@ class GameController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        $type = new Type();
+        $type->setName('testje');
+
         $game = new Game();
+
+        $game->setType($type);
+
         $form = $this->createForm('AppBundle\Form\GameType', $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->persist($type);
             $em->persist($game);
             $em->flush($game);
 

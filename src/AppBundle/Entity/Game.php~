@@ -3,15 +3,26 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
- * Product
+ * Game
  *
- * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\Table(name="game")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
  */
-class Product
+class Game
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Type", inversedBy="games")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    private $type;
+
+
+
     /**
      * @var int
      *
@@ -21,10 +32,11 @@ class Product
      */
     private $id;
 
+
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
@@ -44,7 +56,7 @@ class Product
      *
      * @param string $name
      *
-     * @return Product
+     * @return Game
      */
     public function setName($name)
     {
@@ -62,5 +74,24 @@ class Product
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+
+
 }
 

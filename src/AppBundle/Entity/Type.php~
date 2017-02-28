@@ -3,15 +3,24 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
- * Product
+ * Type
  *
- * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\Table(name="type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TypeRepository")
  */
-class Product
+class Type
 {
+
+    private $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
     /**
      * @var int
      *
@@ -29,6 +38,8 @@ class Product
     private $name;
 
 
+
+
     /**
      * Get id
      *
@@ -44,7 +55,7 @@ class Product
      *
      * @param string $name
      *
-     * @return Product
+     * @return Type
      */
     public function setName($name)
     {
@@ -62,5 +73,22 @@ class Product
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGames()
+    {
+        return $this->games;
+    }
+
+    /**
+     * @param mixed $games
+     */
+    public function setGames($games)
+    {
+        $this->games = $games;
+    }
+
 }
 

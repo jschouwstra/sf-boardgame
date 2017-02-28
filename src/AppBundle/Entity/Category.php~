@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Category
  *
@@ -12,6 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+
+    private $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -62,5 +70,5 @@ class Category
     {
         return $this->name;
     }
-}
 
+}

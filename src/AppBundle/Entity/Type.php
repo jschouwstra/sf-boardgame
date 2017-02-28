@@ -14,7 +14,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Type
 {
-
+    /**
+     * @ORM\OneToMany(targetEntity="Game", mappedBy="type")
+     */
     private $games;
 
     public function __construct()
@@ -91,4 +93,3 @@ class Type
     }
 
 }
-
