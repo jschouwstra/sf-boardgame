@@ -6,7 +6,8 @@ use AppBundle\Entity\Game;
 use AppBundle\Entity\Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Game controller.
@@ -42,7 +43,7 @@ class GameController extends Controller
     {
 
         $type = new Type();
-        $type->setName('testje');
+//        $type->setName('test');
 
         $game = new Game();
 
