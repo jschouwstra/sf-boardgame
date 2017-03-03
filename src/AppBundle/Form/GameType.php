@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Form;
-use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -17,11 +17,9 @@ class GameType extends AbstractType
     {
         $builder
             ->add( 'name', TextType::class, [
-                'class' => 'AppBundle:Game',
-                'choice_label' => 'name',
             ] );
         $builder
-            ->add( 'name', EntityType::class, [
+            ->add( 'type', EntityType::class, [
                 'class' => 'AppBundle:Type',
                 'choice_label' => 'name',
                 'multiple' => false,
