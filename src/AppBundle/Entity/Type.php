@@ -92,4 +92,16 @@ class Type
         $this->games = $games;
     }
 
+    public function addGame(Game $game)
+    {
+        $this->games->add($game);
+        $game->setType($this);
+    }
+    public function removeGame(Game $game)
+    {
+        $this->games->removeElement($game);
+    }
+
+
+
 }

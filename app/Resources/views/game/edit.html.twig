@@ -4,7 +4,8 @@
     <h1>Game edit</h1>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
+        {{ form_widget(edit_form.name) }}
+        {{ form_widget(edit_form.type) }}
         <input type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 

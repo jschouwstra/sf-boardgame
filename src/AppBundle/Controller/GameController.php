@@ -42,19 +42,13 @@ class GameController extends Controller
     public function newAction(Request $request)
     {
 
-        $type = new Type();
-//        $type->setName('test');
-
         $game = new Game();
-
-        $game->setType($type);
 
         $form = $this->createForm('AppBundle\Form\GameType', $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($type);
             $em->persist($game);
             $em->flush($game);
 
@@ -77,6 +71,7 @@ class GameController extends Controller
     {
         $deleteForm = $this->createDeleteForm($game);
 
+
         return $this->render('game/show.html.twig', array(
             'game' => $game,
             'delete_form' => $deleteForm->createView(),
@@ -98,13 +93,14 @@ class GameController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
+            return $this->redirectToRoute('game_show', array('id' => $game->getId()));
         }
 
         return $this->render('game/edit.html.twig', array(
             'game' => $game,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+
         ));
     }
 

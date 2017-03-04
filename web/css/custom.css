@@ -27,14 +27,14 @@
     background-color: black;
 }
 .btn-danger{
-    background-image: url('../img/danger2.gif');
+    /*background-image: url('../img/danger2.gif');*/
 }
 
 .btn-danger:hover{
     background-image: url('../img/danger2.gif');
 }
 
-.btn-success{
+.btn-success:hover{
 
     background-image: url('../img/success2.gif') ;
 
@@ -55,7 +55,7 @@
 .btn:focus,*
 .btn.focus {
 }
-.btn:hover {
+.btn-primary:hover {
     color: whitesmoke;
     background-image: url('../img/primary.gif') ;
 

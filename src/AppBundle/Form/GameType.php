@@ -17,13 +17,20 @@ class GameType extends AbstractType
     {
         $builder
             ->add( 'name', TextType::class, [
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
             ] );
         $builder
             ->add( 'type', EntityType::class, [
                 'class' => 'AppBundle:Type',
                 'choice_label' => 'name',
                 'multiple' => false,
-                'expanded' => false
+                'expanded' => false,
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+
             ] );
 
 

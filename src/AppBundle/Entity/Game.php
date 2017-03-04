@@ -4,8 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Game
  *
@@ -34,7 +33,11 @@ class Game
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = "3",
+     *  max = "100"
+     * )
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
