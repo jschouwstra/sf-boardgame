@@ -24,7 +24,10 @@ class GameType extends AbstractType
         $builder
             ->add( 'type', EntityType::class, [
                 'class' => 'AppBundle:Type',
-                'choice_label' => 'name',
+//                'placeholder' => ' ',
+                'choice_label' => function($type){
+                    return $type->getName();
+                },
                 'multiple' => false,
                 'expanded' => false,
                 'attr'  => [

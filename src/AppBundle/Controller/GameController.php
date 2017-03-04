@@ -67,7 +67,7 @@ class GameController extends Controller
      * @Route("/{id}", name="game_show")
      * @Method("GET")
      */
-    public function showAction(Game $game)
+    public function showAction(Game $game, Type $type)
     {
         $deleteForm = $this->createDeleteForm($game);
 
