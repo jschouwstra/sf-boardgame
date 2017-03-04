@@ -95,6 +95,11 @@
 </div>
 
 {% block javascripts %}
+    <script type="text/javascript">
+        function goBack() {
+            window.history.back();
+        }
+    </script>
     <!-- jQuery -->
     <script src="{{ asset('js/jquery.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
