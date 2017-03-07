@@ -11,7 +11,8 @@
             </tr>
             <tr>
                 <th>Type</th>
-                <td>{% if  game.type is not null  %}
+                <td>
+                    {% if  game.type is not null  %}
                     {{ game.type.name}}
                     {% endif %}
                 </td>
