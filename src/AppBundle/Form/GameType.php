@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Form;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,29 +17,28 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add( 'name', TextType::class, [
-                'attr'  => [
+            ->add('name', TextType::class, [
+                'attr' => [
                     'class' => 'form-control',
                 ],
-            ] );
+            ]);
         $builder
-            ->add( 'type', EntityType::class, [
+            ->add('type', EntityType::class, [
                 'class' => 'AppBundle:Type',
-//                'placeholder' => ' ',
-                'choice_label' => function($type){
+                'choice_label' => function ($type) {
                     return $type->getName();
                 },
                 'multiple' => false,
                 'expanded' => false,
-                'attr'  => [
+                'attr' => [
                     'class' => 'form-control',
                 ],
 
-            ] );
+            ]);
 
 
     }
-    
+
     /**
      * {@inheritdoc}
      */
