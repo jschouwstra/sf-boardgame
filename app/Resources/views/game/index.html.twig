@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Games list</h1>
+
     <a class="btn btn-primary" href="{{ path('game_new') }}"><i class="fa fa-plus"></i> New game</a>
     <p>
     <div class="table">
@@ -24,6 +25,9 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
+    <div class="navigation text-center">
+        {{ knp_pagination_render(games) }}
     </div>
     </p>
 {% endblock %}

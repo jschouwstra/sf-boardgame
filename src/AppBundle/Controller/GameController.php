@@ -22,14 +22,25 @@ class GameController extends Controller
      * @Route("/", name="game_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $games = $em->getRepository('AppBundle:Game')->findAll();
+//        $games = $em->getRepository('AppBundle:Game')->findAll();
+        $dql = "SELECT game FROM AppBundle:Game game";
+        $query = $em->createQuery($dql);
+        /*
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+             $query,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 4)
+        );
+//        dump(get_class($paginator));
 
         return $this->render('game/index.html.twig', array(
-            'games' => $games,
+            'games' => $result,
         ));
     }
 
