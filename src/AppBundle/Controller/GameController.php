@@ -26,7 +26,7 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 //        $games = $em->getRepository('AppBundle:Game')->findAll();
-        $dql = "SELECT game FROM AppBundle:Game game";
+        $dql = "SELECT game FROM AppBundle:Game game JOIN game.type type";
         $query = $em->createQuery($dql);
         /*
          * @var $paginator \Knp\Component\Pager\Paginator
@@ -41,6 +41,7 @@ class GameController extends Controller
 
         return $this->render('game/index.html.twig', array(
             'games' => $result,
+            'max_limit_error' => 5
         ));
     }
 

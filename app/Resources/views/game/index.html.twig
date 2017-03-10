@@ -9,20 +9,31 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(games,'name', 'game.name') }}</th>
+                <th>{{ knp_pagination_sortable(games,'Name', 'game.name') }}</th>
+                <th>{{ knp_pagination_sortable(games,'Type', 'type.name') }}</th>
                 <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for game in games %}
-            <tr>
-                <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i class="fa fa-search"></i> Show</a>
-                    <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="fa fa-pencil"></i> Edit</a>
-                </td>
-            </tr>
-        {% endfor %}
+        {% if games.params.limit is defined and games.params.limit > max_limit_error %}
+            <div class="alert alert-warning text-center">
+                <p>
+                There was an error (2123).<br>
+                Please report this to the administrator
+                </p>
+            </div>
+        {% else %}
+            {% for game in games %}
+                <tr>
+                    <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
+                    <td><a>{{ game.type.name }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i class="fa fa-search"></i> Show</a>
+                        <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="fa fa-pencil"></i> Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
         </tbody>
     </table>
     </div>
