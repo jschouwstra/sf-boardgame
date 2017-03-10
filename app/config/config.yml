@@ -71,7 +71,7 @@ swiftmailer:
 
 #KNP paginator
 knp_paginator:
-    page_range: 5                      # default page range used in pagination control
+    page_range: 10              # default page range used in pagination control
     default_options:
         page_name: page                # page query parameter name
         sort_field_name: sort          # sort field query parameter name
@@ -79,4 +79,4 @@ knp_paginator:
         distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
     template:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
-        sortable: KnpPaginatorBundle:Pagina
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig

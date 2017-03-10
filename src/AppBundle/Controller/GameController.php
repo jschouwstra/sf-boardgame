@@ -35,7 +35,7 @@ class GameController extends Controller
         $result = $paginator->paginate(
              $query,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 4)
+            $request->query->getInt('limit', 5)
         );
 //        dump(get_class($paginator));
 
