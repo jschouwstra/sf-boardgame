@@ -8,15 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Symfony</title>
-
     <!-- Bootstrap Core CSS -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"/>
-    {#<link href="css/bootstrap.css" rel="stylesheet">#}
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -25,8 +24,10 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {#<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">#}
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}"/>
+
+
 </head>
 
 <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
@@ -63,14 +64,14 @@
                     <a class="page-scroll" href="#services">Services</a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Games <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('game_index') }}">Games list</a></li>
                         <li><a href="{{ path('game_new') }}">New game</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ path('tag_index') }}">Tag list</a></li>
                         <li><a href="{{ path('tag_new') }}">New Tag</a></li>
-
                     </ul>
                 </li>
 
@@ -85,8 +86,8 @@
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default" id="main">
-            {% block content %}
-            {% endblock content %}
+                {% block content %}
+                {% endblock content %}
             </div>
         </div>
     </div>
@@ -94,18 +95,18 @@
 
 </div>
 
-{% block javascripts %}
-    <script type="text/javascript">
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-    <!-- jQuery -->
-    <script src="{{ asset('js/jquery.js') }}"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-{% endblock javascripts %}
 
+<!-- jQuery -->
+<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('DataTables/datatables.js') }}"></script>
+<script type="text/javascript">
+    $('#example').DataTable();
+    //        function goBack() {
+    //            window.history.back();
+    //        }
+</script>
 </body>
 
 </html>
