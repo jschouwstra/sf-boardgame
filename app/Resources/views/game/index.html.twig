@@ -5,48 +5,61 @@
     <p>
         <a class="btn btn-primary" href="{{ path('game_new') }}"><i class="fa fa-plus"></i> New game</a>
     </p>
-    <div class="panel panel-default">
-        <div class="table">
-            <table id="example"
-                   class="display table table-bordered table-striped table-hover table-condensed table-responsive">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Actions</th>
-                </tr>
-                </tfoot>
-                <tbody>
-                {% if games.params.limit is defined and games.params.limit > max_limit_error %}
-                    <div class="alert alert-warning text-center">
-                        <p>
-                            There was an error (2123).<br>
-                            Please report this to the administrator
-                        </p>
-                    </div>
-                {% else %}
-                    {% for game in games %}
+    <div class="row">
+        <div class="col-md-1">
+            Filter:
+        </div>
+        <div class="col-md-3">
+            <input type="text" id="searchDataTable" class="form-control">
+
+        </div>
+    </div>
+    <div class="row">
+        <div >
+            <div class="panel panel-default">
+                <div class="table">
+                    <table id="example"
+                           class=" datatable display table table-bordered table-striped table-hover table-condensed table-responsive">
+                        <thead>
                         <tr>
-                            <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
-                            <td><a>{{ game.type.name }}</td>
-                            <td>
-                                <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i
-                                            class="fa fa-search"></i> Show</a>
-                                <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
-                                            class="fa fa-pencil"></i> Edit</a>
-                            </td>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Actions</th>
                         </tr>
-                    {% endfor %}
-                {% endif %}
-                </tbody>
-            </table>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% if games.params.limit is defined and games.params.limit > max_limit_error %}
+                            <div class="alert alert-warning text-center">
+                                <p>
+                                    There was an error (2123).<br>
+                                    Please report this to the administrator
+                                </p>
+                            </div>
+                        {% else %}
+                            {% for game in games %}
+                                <tr>
+                                    <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
+                                    <td><a>{{ game.type.name }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i
+                                                    class="fa fa-search"></i> Show</a>
+                                        <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
+                                                    class="fa fa-pencil"></i> Edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="navigation text-center">

@@ -102,7 +102,19 @@
 <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
 <script type="text/javascript" src="{{ asset('DataTables/datatables.js') }}"></script>
 <script type="text/javascript">
-    $('#example').DataTable();
+    $(document).ready(function () {
+        $('.datatable').DataTable({
+            "paging": false,
+            "ordering": true,
+            "responsive": true
+        });
+
+        var table = $('#example').DataTable();
+        $('#searchDataTable').keyup(function(){
+            table.search( $(this).val() ).draw();
+        })
+
+    });
     //        function goBack() {
     //            window.history.back();
     //        }

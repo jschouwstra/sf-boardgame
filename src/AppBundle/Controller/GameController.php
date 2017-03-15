@@ -35,13 +35,13 @@ class GameController extends Controller
         $result = $paginator->paginate(
              $query,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 10)
+            $request->query->getInt('limit', 25)
         );
 //        dump(get_class($paginator));
 
         return $this->render('game/index.html.twig', array(
             'games' => $result,
-            'max_limit_error' => 10
+            'max_limit_error' => 25
         ));
     }
 
