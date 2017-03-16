@@ -5,24 +5,24 @@
     <p>
         <a class="btn btn-primary" href="{{ path('game_new') }}"><i class="fa fa-plus"></i> New game</a>
     </p>
+
     <div class="row">
-        <div class="col-md-1">
-            Filter:
+        <div class="col-md-2">
+            Filter (current page):
         </div>
         <div class="col-md-3">
             <input type="text" id="searchDataTable" class="form-control">
-
         </div>
     </div>
     <div class="row">
-        <div >
+        <div>
             <div class="panel panel-default">
                 <div class="table">
                     <table id="example"
                            class=" datatable display table table-bordered table-striped table-hover table-condensed table-responsive">
                         <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>{{ knp_pagination_sortable(games, 'Name', 'game.name') }}</th>
                             <th>Type</th>
                             <th>Actions</th>
                         </tr>
@@ -65,5 +65,4 @@
     <div class="navigation text-center">
         {{ knp_pagination_render(games) }}
     </div>
-
 {% endblock %}

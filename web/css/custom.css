@@ -43,8 +43,9 @@
 }
 .btn{
     border: 1px solid #222222;
-
+    color:white !important;
     margin-top:2px;
+    text-transform: capitalize;
 }
 
 
@@ -56,6 +57,8 @@
 
 .btn:focus,*
 .btn.focus {
+    color:white !important;
+
 }
 .btn-primary:hover {
     color: whitesmoke;
@@ -65,3 +68,13 @@
 
 /*datatables*/
 .dataTables_filter, .dataTables_info { display: none; }
+
+table td a:link,table td a:visited{
+    color: rgb(34,34,34);
+    text-transform: capitalize;
+
+}
+
+.row{
+    margin-bottom: 10px;
+}
