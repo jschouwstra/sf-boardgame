@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Playlogs list</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Gameid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for playLog in playLogs %}
+            <tr>
+                <td><a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playLog.id }) }}">{{ playLog.id }}</a></td>
+                <td>{% if playLog.date %}{{ playLog.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ playLog.gameId }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('playlog_show', { 'id': playLog.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('playlog_edit', { 'id': playLog.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('playlog_new') }}">Create a new playLog</a>
+        </li>
+    </ul>
+{% endblock %}
