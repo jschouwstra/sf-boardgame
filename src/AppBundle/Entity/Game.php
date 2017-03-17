@@ -13,6 +13,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Game
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
+     */
+    private $playlogs;
+
+    public function __construct()
+    {
+        $this->playlogs = new ArrayCollection();
+    }
+
     /**
      * @ORM\ManyToOne(targetEntity="Type", inversedBy="games")
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
@@ -93,6 +104,24 @@ class Game
     {
         $this->type = $type;
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPlaylogs()
+    {
+        return $this->playlogs;
+    }
+
+    /**
+     * @param mixed $playlogs
+     */
+    public function setPlaylogs($playlogs)
+    {
+        $this->playlogs = $playlogs;
+    }
+
 
 
 

@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PlayLog
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="playlogs")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     */
+
+
     /**
      * @var int
      *
@@ -93,5 +100,19 @@ class PlayLog
     {
         return $this->gameId;
     }
+
+
+    public function addGame(Game $game)
+    {
+        $this->games->add($game);
+        $game->setType($this);
+    }
+    public function removeGame(Game $game)
+    {
+        $this->games->removeElement($game);
+    }
+
+
+
 }
 
