@@ -17,6 +17,7 @@ class PlayLog
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="playlogs")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
+    private $game;
 
 
     /**
