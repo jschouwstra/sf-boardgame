@@ -3,7 +3,10 @@
 {% block content %}
 
     <h1>Game</h1>
-
+{{ dump() }}
+    {% for playlog in game.playlogs %}
+        {{ playlog.date|date('Y-m-d') }}
+    {% endfor %}
     <table>
         <tbody>
             <tr>
