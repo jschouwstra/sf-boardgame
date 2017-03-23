@@ -3,12 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Game controller.
  *
@@ -113,6 +115,41 @@ class GameController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
 
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing game entity.
+     *
+     * @Route("/{id}/log", name="game_log")
+     * @Method({"GET", "POST"})
+     */
+    public function addLogAction(Request $request, Game $game)
+    {
+        // Maak formulier
+        $form = $this->createFormBuilder($game)
+        ->add('date', new PlayLog())
+        ->add('save', SubmitType::class, array(
+            'label' => 'Log'
+        ))
+        ->getForm();
+//        $form->handleRequest($request);
+
+//        if($form->isSubmitted() && $form->isValid()) {
+//            $log = new PlayLog();
+//            $log->setDate($form->get('date')->getData());
+//
+//            $game->addPlayLog($log);
+
+
+//            $em->persist($game);
+//            $em->flush();
+//        }
+
+        // Render / return view incl. formulier.
+        return $this->render('game/new.html.twig', array(
+            'game' => $game,
+            'form' => $form->createView(),
         ));
     }
 

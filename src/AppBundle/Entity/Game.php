@@ -121,5 +121,10 @@ class Game
         $this->playlogs = $playlogs;
     }
 
+    public function addPlayLog(PlayLog $playlog)
+    {
+        $this->playlog->add($playlog);
+        $playlog->setType($this);
+    }
 
 }

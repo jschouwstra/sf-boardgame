@@ -52,6 +52,8 @@
                                                     class="fa fa-search"></i> Show</a>
                                         <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
                                                     class="fa fa-pencil"></i> Edit</a>
+                                        <a class="btn btn-primary" href="{{ path('game_log', { 'id': game.id }) }}"><i
+                                                    class="fa fa-book"></i> Log game</a>
                                     </td>
                                 </tr>
                             {% endfor %}
