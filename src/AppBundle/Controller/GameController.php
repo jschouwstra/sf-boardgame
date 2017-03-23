@@ -124,14 +124,17 @@ class GameController extends Controller
      * @Route("/{id}/log", name="game_log")
      * @Method({"GET", "POST"})
      */
-    public function addLogAction(Request $request, Game $game)
+    public function addLogAction(Request $request, Game $game,PlayLog $playlog)
     {
         // Maak formulier
-        $form = $this->createFormBuilder($game)
-        ->add('date', new PlayLog())
-        ->add('save', SubmitType::class, array(
-            'label' => 'Log'
+        $form = $this->createFormBuilder($game,$playlog)
+        ->add('date',DateType::class, array(
+            'widget' => 'single_text',
         ))
+
+//        ->add('save', SubmitType::class, array(
+//            'label' => 'Log'
+//        ))
         ->getForm();
 //        $form->handleRequest($request);
 
