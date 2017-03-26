@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\PlayLog;
+use AppBundle\Entity\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -30,33 +31,34 @@ class PlayLogController extends Controller
             'playLogs' => $playLogs,
         ));
     }
-
     /**
      * Creates a new playLog entity.
      *
-     * @Route("/new", name="playlog_new")
+     * @Route("/{gameId}/new", name="playlog_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $gameId)
     {
-        $playLog = new Playlog();
-        $form = $this->createForm('AppBundle\Form\PlayLogType', $playLog);
+
+        $playlog = new PlayLog();
+
+        $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
         $form->handleRequest($request);
 
+        $playlog->setGameId($gameId);
+        echo $playlog->getGameId()."!";
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($playLog);
-            $em->flush($playLog);
-
-            return $this->redirectToRoute('playlog_show', array('id' => $playLog->getId()));
+            $em->persist($playlog);
+            $em->flush();
+//            return $this->redirectToRoute('game_show', array('id' => $gameId));
         }
 
         return $this->render('playlog/new.html.twig', array(
-            'playLog' => $playLog,
+            'playLog' => $playlog,
             'form' => $form->createView(),
         ));
     }
-
     /**
      * Finds and displays a playLog entity.
      *

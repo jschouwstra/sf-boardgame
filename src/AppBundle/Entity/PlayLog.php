@@ -19,6 +19,22 @@ class PlayLog
      */
     private $game;
 
+    /**
+     * @return mixed
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * @param mixed $game
+     */
+    public function setGame($game)
+    {
+        $this->game = $game;
+    }
+
 
     /**
      * @var int

@@ -1,5 +1,6 @@
 #content{
     padding-top: 140px;
+    padding-bottom: 140px;
 }
 .background{
     background-image: url('../img/stardust.png');
@@ -14,40 +15,15 @@
     padding-top: 6px;
     padding-left: 6px;
     padding-right: 6px;
+    padding-bottom: 200px !important;
+}
+.btn{
+    margin-top: 20px !important;
+    margin-bottom: 20px;
 }
 @media (min-width: 1px) and (max-width: 1000px) {
     .logo {display:none}
 }
-
-.btn-primary{
-    /*color: #fff;*/
-    /*background-image: none;*/
-    /*background-color: #444349 !important;*/
-    /*border-color: #122b40;*/
-}
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-    /*background-color: black;*/
-}
-.btn-danger{
-    /*background-image: url('../img/danger2.gif');*/
-}
-
-.btn-danger:hover{
-    background-image: url('../img/danger2.gif');
-}
-
-.btn-success:hover{
-
-    background-image: url('../img/success2.gif') ;
-
-}
-.btn{
-    border: 1px solid #222222;
-    color:white !important;
-    margin-top:2px;
-    text-transform: capitalize;
-}
-
 
 @media (min-width: 100px) and (max-width: 1000px) {
     .adaptiveText{
@@ -55,16 +31,6 @@
     }
 }
 
-.btn:focus,*
-.btn.focus {
-    color:white !important;
-
-}
-.btn-primary:hover {
-    color: whitesmoke;
-    background-image: url('../img/primary.gif') ;
-
-}
 
 /*datatables*/
 .dataTables_filter, .dataTables_info { display: none; }

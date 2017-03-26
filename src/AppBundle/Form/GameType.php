@@ -2,6 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\PlayLog;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -35,6 +38,11 @@ class GameType extends AbstractType
                 ],
 
             ]);
+
+        $builder->add('playlogs', CollectionType::class, array(
+            'entry_type' => PlayLogType::class,
+            'label' => false
+        ));
 
 
     }

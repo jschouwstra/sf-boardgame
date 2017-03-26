@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\Type;
+use AppBundle\Form\GameType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -124,33 +125,21 @@ class GameController extends Controller
      * @Route("/{id}/log", name="game_log")
      * @Method({"GET", "POST"})
      */
-    public function addLogAction(Request $request, Game $game,PlayLog $playlog)
+    public function addLogAction(Request $request, Game $game)
     {
-        // Maak formulier
-        $form = $this->createFormBuilder($game,$playlog)
-        ->add('date',DateType::class, array(
-            'widget' => 'single_text',
-        ))
+        $playlog = new PlayLog();
+        $form = $this->createForm(GameType::class, $game);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
 
-//        ->add('save', SubmitType::class, array(
-//            'label' => 'Log'
-//        ))
-        ->getForm();
-//        $form->handleRequest($request);
+            //Save playLog
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($playlog);
+            $em->flush();
 
-//        if($form->isSubmitted() && $form->isValid()) {
-//            $log = new PlayLog();
-//            $log->setDate($form->get('date')->getData());
-//
-//            $game->addPlayLog($log);
-
-
-//            $em->persist($game);
-//            $em->flush();
-//        }
-
+        }
         // Render / return view incl. formulier.
-        return $this->render('game/new.html.twig', array(
+        return $this->render('game/log.html.twig', array(
             'game' => $game,
             'form' => $form->createView(),
         ));
