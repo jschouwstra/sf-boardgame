@@ -121,9 +121,13 @@ class PlayLog
 
     public function addGame(Game $game)
     {
-        $this->games->add($game);
-        $game->setType($this);
+        $this->game->add($game);
+        $game->setGame($this);
     }
+
+
+
+
     public function removeGame(Game $game)
     {
         $this->games->removeElement($game);

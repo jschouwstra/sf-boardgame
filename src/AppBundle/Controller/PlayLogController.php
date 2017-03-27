@@ -45,6 +45,7 @@ class PlayLogController extends Controller
         $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
         $form->handleRequest($request);
 
+//        $playlog->setGameId($gameId);
         $playlog->setGameId($gameId);
         echo $playlog->getGameId()."!";
         if ($form->isSubmitted() && $form->isValid()) {
