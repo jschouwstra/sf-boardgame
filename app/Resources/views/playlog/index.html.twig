@@ -2,39 +2,40 @@
 
 {% block content %}
     <h1>Playlogs list</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Gameid</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for playLog in playLogs %}
-            <tr>
-                <td><a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playLog.id }) }}">{{ playLog.id }}</a></td>
-                <td>{% if playLog.date %}{{ playLog.date|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ playLog.gameId }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('playlog_show', { 'id': playLog.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('playlog_edit', { 'id': playLog.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <hr>
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <div class="btn-group pull-right">
+                        {#<a class="btn btn-default btn-sm" href="{{ path('playlog_new') }}"><i class="fa fa-plus"></i> New playlog</a>#}
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
+                        <th>Playlog</th>
+                        {#<th>{{ knp_pagination_sortable(Playlogs, 'Type', 'type.name') }}</th>#}
+                        <th>Actions</th>
+                    </tr>
 
-    <ul>
-        <li>
-            <a href="{{ path('playlog_new') }}">Create a new playLog</a>
-        </li>
-    </ul>
+                        {% for playlog in playlogs %}
+                            <tr>
+                                <td><a href="{{ path('playlog_show', { 'id': playlog.id }) }}">{{ playlog.game.name }}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playlog.id }) }}"><i
+                                                    class="fa fa-search"></i> Show</a>
+                                        <a class="btn btn-primary" href="{{ path('playlog_edit', { 'id': playlog.id }) }}"><i
+                                                    class="fa fa-pencil"></i> Edit</a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                </table>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

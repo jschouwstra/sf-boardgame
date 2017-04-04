@@ -28,7 +28,7 @@ class PlayLogController extends Controller
         $playLogs = $em->getRepository('AppBundle:PlayLog')->findAll();
 
         return $this->render('playlog/index.html.twig', array(
-            'playLogs' => $playLogs,
+            'playlogs' => $playLogs,
         ));
     }
     /**
@@ -46,8 +46,12 @@ class PlayLogController extends Controller
         $form->handleRequest($request);
 
 //        $playlog->setGameId($gameId);
+
         $playlog->setGameId($gameId);
+
+        //Show id for test
         echo $playlog->getGameId()."!";
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($playlog);
