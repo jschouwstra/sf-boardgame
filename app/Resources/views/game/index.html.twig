@@ -2,39 +2,21 @@
 
 {% block content %}
     <h1>Games list</h1>
-    <p>
-        <a class="btn btn-primary" href="{{ path('game_new') }}"><i class="fa fa-plus"></i> New game</a>
-    </p>
-
-    <div class="row">
-        <div class="col-md-2">
-            Filter (current page):
-        </div>
-        <div class="col-md-3">
-            <input type="text" id="searchDataTable" class="form-control">
-        </div>
-    </div>
+    <hr>
     <div class="row">
         <div class="col-md-12 ">
-            <div class="panel panel-default">
-                <div class="table">
-                    <table id="example"
-                           class=" datatable display table table-bordered table-striped table-hover table-condensed table-responsive">
-                        <thead>
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-default btn-sm" href="{{ path('game_new') }}"><i class="fa fa-plus"></i> New game</a>
+                    </div>
+                </div>
+                    <table class="table table-bordered table-striped table-hover">
                         <tr>
                             <th>{{ knp_pagination_sortable(games, 'Name', 'game.name') }}</th>
                             <th>{{ knp_pagination_sortable(games, 'Type', 'type.name') }}</th>
                             <th>Actions</th>
                         </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Actions</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
                         {% if games.params.limit is defined and games.params.limit > max_limit_error %}
                             <div class="alert alert-warning text-center">
                                 <p>
@@ -48,20 +30,20 @@
                                     <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
                                     <td><a>{{ game.type.name }}</td>
                                     <td>
+                                        <div class="btn-group" role="group">
                                         <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i
                                                     class="fa fa-search"></i> Show</a>
                                         <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
                                                     class="fa fa-pencil"></i> Edit</a>
-                                        <a class="btn btn-primary" href="{{ path('game_log', { 'id': game.id }) }}"><i
+                                        <a class="btn btn-primary" href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i
                                                     class="fa fa-book"></i> Log game</a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}
 
                         {% endif %}
-                        </tbody>
                     </table>
-                </div>
             </div>
         </div>
     </div>

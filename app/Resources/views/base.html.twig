@@ -11,12 +11,12 @@
     <title>Symfony</title>
     <!-- Bootstrap Core CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}" />
+    <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,7 +25,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}" />
 
 
 </head>
@@ -78,21 +78,16 @@
             </ul>
         </div>
         <!-- /.navbar-collapse -->
-
     </div>
     <!-- /.container -->
 </nav>
-<div id="content" class="container">
-    <div class="row">
+<div id="content" class="container" style="background-color: white; ">
+    <div style="background-color: white;">
         <div class="col-lg-12 col-md-offset-0">
-            <div class="panel panel-default" id="main">
                 {% block content %}
                 {% endblock content %}
-            </div>
         </div>
     </div>
-</div>
-
 </div>
 
 
@@ -110,14 +105,11 @@
         });
 
         var table = $('#example').DataTable();
-        $('#searchDataTable').keyup(function(){
-            table.search( $(this).val() ).draw();
+        $('#searchDataTable').keyup(function () {
+            table.search($(this).val()).draw();
         })
 
     });
-    //        function goBack() {
-    //            window.history.back();
-    //        }
 </script>
 </body>
 
