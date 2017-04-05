@@ -6,7 +6,8 @@ use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Playlog controller.
@@ -39,24 +40,67 @@ class PlayLogController extends Controller
      */
     public function newAction(Request $request, $gameId)
     {
+//// start Hardcoded:
+//        $playlog = new PlayLog();
+//        $playlog->setGameId($gameId);
+//
+//
+//        echo $playlog->getGameId();
+//        $playlog->setDate(new \DateTime("now"));
+//
+//        $game = new Game();
+//        $game->setPlaylogs($playlog);
+//
+//
+//
+////        $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
+////        $form->handleRequest($request);
+//
+////        $game->setPlaylogs($playlog);
+////        echo $playlog->getGameId()."!";
+////        if ($form->isSubmitted() && $form->isValid()) {
+//
+//        //        $game = $this->getRepository('AppBundle:Game')->find($gameId);
+//
+//        $em = $this->getDoctrine()->getManager();
+//
+//            $em->persist($playlog);
+//            $em->persist($game);
+//            $em->flush();
+////        }
+
+//        return $this->render('playlog/new.html.twig', array(
+//            'playLog' => $playlog,
+////            'form' => $form->createView(),
+//        ));
+//end hardcoded
 
         $playlog = new PlayLog();
-
+        $em = $this->getDoctrine()->getManager();
+        $game = $em ->getRepository(Game::class)->find($gameId);
+        $playlog->setGame($game);
         $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
         $form->handleRequest($request);
 
 //        $playlog->setGameId($gameId);
+<<<<<<< HEAD
 
         $playlog->setGameId($gameId);
 
         //Show id for test
         echo $playlog->getGameId()."!";
         
+=======
+//        $playlog->setGameId($gameId);
+>>>>>>> pm_13_playlog_game_action
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+
+            /* @var $playLog PlayLog */
+            $playlog = $form->getData();
+           // echo $playlog->getGame()->getId() .'!';
+
             $em->persist($playlog);
             $em->flush();
-//            return $this->redirectToRoute('game_show', array('id' => $gameId));
         }
 
         return $this->render('playlog/new.html.twig', array(

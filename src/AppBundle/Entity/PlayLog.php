@@ -52,12 +52,12 @@ class PlayLog
      */
     private $date;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="game_id", type="integer")
-     */
-    private $gameId;
+//    /**
+//     * @var int
+//     *
+//     * @ORM\Column(name="game_id", type="integer")
+//     */
+//    private $gameId;
 
 
     /**
@@ -94,44 +94,43 @@ class PlayLog
         return $this->date;
     }
 
-    /**
-     * Set gameId
-     *
-     * @param integer $gameId
-     *
-     * @return PlayLog
-     */
-    public function setGameId($gameId)
-    {
-        $this->gameId = $gameId;
+//    /**
+//     * Set gameId
+//     *
+//     * @param integer $gameId
+//     *
+//     * @return PlayLog
+//     */
+//    public function setGameId($gameId)
+//    {
+//        $this->gameId = $gameId;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get gameId
+//     *
+//     * @return int
+//     */
+//    public function getGameId()
+//    {
+//        return $this->gameId;
+//    }
 
-        return $this;
-    }
 
-    /**
-     * Get gameId
-     *
-     * @return int
-     */
-    public function getGameId()
-    {
-        return $this->gameId;
-    }
-
-
-    public function addGame(Game $game)
-    {
-        $this->game->add($game);
-        $game->setGame($this);
-    }
-
+//    public function setGame(Game $game)
+//    {
+//        $this->game = $game;
+//    }
 
 
 
-    public function removeGame(Game $game)
-    {
-        $this->games->removeElement($game);
-    }
+
+//    public function removeGame(Game $game)
+//    {
+//        $this->games->removeElement($game);
+//    }
 
 
 
