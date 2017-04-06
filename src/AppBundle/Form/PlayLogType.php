@@ -3,6 +3,8 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\PlayLog;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +16,13 @@ class PlayLogType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date');
+//        $builder->add('date');
+        $builder->add('date', DateType::class, array(
+            'widget' => 'single_text',
+            'html5' => false,
+            'attr' => ['class' => 'js-datepicker'],
+            )
+        );
     }
     
     /**
