@@ -41,41 +41,6 @@ class PlayLogController extends Controller
      */
     public function newAction(Request $request, $gameId)
     {
-//// start Hardcoded:
-//        $playlog = new PlayLog();
-//        $playlog->setGameId($gameId);
-//
-//
-//        echo $playlog->getGameId();
-//        $playlog->setDate(new \DateTime("now"));
-//
-//        $game = new Game();
-//        $game->setPlaylogs($playlog);
-//
-//
-//
-////        $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
-////        $form->handleRequest($request);
-//
-////        $game->setPlaylogs($playlog);
-////        echo $playlog->getGameId()."!";
-////        if ($form->isSubmitted() && $form->isValid()) {
-//
-//        //        $game = $this->getRepository('AppBundle:Game')->find($gameId);
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//            $em->persist($playlog);
-//            $em->persist($game);
-//            $em->flush();
-////        }
-
-//        return $this->render('playlog/new.html.twig', array(
-//            'playLog' => $playlog,
-////            'form' => $form->createView(),
-//        ));
-//end hardcoded
-
         $playlog = new PlayLog();
         $em = $this->getDoctrine()->getManager();
         $game = $em ->getRepository(Game::class)->find($gameId);
@@ -83,10 +48,7 @@ class PlayLogController extends Controller
         $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
         $form->handleRequest($request);
 
-//        $playlog->setGameId($gameId);
-//        $playlog->setGameId($gameId);
         if ($form->isSubmitted() && $form->isValid()) {
-
             /* @var $playLog PlayLog */
             $playlog = $form->getData();
            // echo $playlog->getGame()->getId() .'!';
@@ -109,7 +71,6 @@ class PlayLogController extends Controller
     public function showAction(PlayLog $playLog)
     {
         $deleteForm = $this->createDeleteForm($playLog);
-
         return $this->render('playlog/show.html.twig', array(
             'playLog' => $playLog,
             'delete_form' => $deleteForm->createView(),
