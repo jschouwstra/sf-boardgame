@@ -4,7 +4,7 @@
 
     <h1>Game</h1>
     {% for playlog in game.playlogs %}
-        {{ playlog.date|date('Y-m-d') }}
+        {{ playlog.id}} {{ playlog.date|date('m-d-Y') }}<br>
     {% endfor %}
     <table>
         <tbody>

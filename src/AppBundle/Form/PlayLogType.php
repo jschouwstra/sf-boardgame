@@ -16,7 +16,6 @@ class PlayLogType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $builder->add('date');
         $builder->add('date', DateType::class, array(
             'widget' => 'single_text',
             'html5' => false,

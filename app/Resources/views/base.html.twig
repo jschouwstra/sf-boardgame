@@ -103,20 +103,11 @@
 
 {%  endblock javascripts %}
 
-{#<script type="text/javascript" src="{{ asset('DataTables/datatables.js') }}"></script>#}
 <script type="text/javascript">
     $(document).ready(function () {
-//        $('.datatable').DataTable({
-//            "paging": false,
-//            "ordering": false,
-//            "responsive": true
-//        });
-//
-//        var table = $('#example').DataTable();
-//        $('#searchDataTable').keyup(function () {
-//            table.search($(this).val()).draw();
-//        })
-        $('.js-datepicker').datepicker('show');
+        $('.js-datepicker').datepicker({
+            format: 'mm/dd/yyyy'
+        });
 
     });
 </script>
