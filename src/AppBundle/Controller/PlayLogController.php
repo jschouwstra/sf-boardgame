@@ -51,10 +51,11 @@ class PlayLogController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             /* @var $playLog PlayLog */
             $playlog = $form->getData();
-           // echo $playlog->getGame()->getId() .'!';
 
             $em->persist($playlog);
             $em->flush();
+            return $this->redirectToRoute('game_show', array('id' => $gameId));
+
         }
 
         return $this->render('playlog/new.html.twig', array(
