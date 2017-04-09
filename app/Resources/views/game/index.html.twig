@@ -33,12 +33,12 @@
                                     <td><span class="badge">{{ game.playlogs|length }}x</span> </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                        <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i
-                                                    class="fa fa-search"></i> Show</a>
-                                        <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        <a class="btn btn-primary" href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i
-                                                    class="fa fa-book"></i> Log game </a>
+                                        <a title="Show" class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i
+                                                    class="fa fa-search"></i> <span class="adaptiveText">Show</span></a>
+                                        <a title="Edit" class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
+                                                    class="fa fa-pencil"></i> <span class="adaptiveText">Edit</span></a>
+                                        <a title="Log game" class="btn btn-primary" href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i
+                                                    class="fa fa-book"></i> <span class="adaptiveText">Log game</span> </a>
                                         </div>
                                     </td>
                                 </tr>
