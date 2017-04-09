@@ -11,12 +11,9 @@
         /*temp*/
         background-color: rgb(68,67,73);
 }
-/*.panel{*/
-    /*padding-top: 6px;*/
-    /*padding-left: 6px;*/
-    /*padding-right: 6px;*/
-    /*padding-bottom: 200px !important;*/
-/*}*/
+.panel-body{
+padding: 20px;
+}
 .btn{
     margin-top: 2px !important;
     margin-bottom: 2px;

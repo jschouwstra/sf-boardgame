@@ -96,7 +96,6 @@ class Game
     }
 
     /**
-     * @ORM\Column (options={"default" = none})
      * @param mixed $type
      */
     public function setType($type)
