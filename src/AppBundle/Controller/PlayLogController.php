@@ -83,16 +83,7 @@ class PlayLogController extends Controller
         $form->handleRequest($request);
 
 //        $playlog->setGameId($gameId);
-<<<<<<< HEAD
 
-        $playlog->setGameId($gameId);
-
-        //Show id for test
-        echo $playlog->getGameId()."!";
-        
-=======
-//        $playlog->setGameId($gameId);
->>>>>>> pm_13_playlog_game_action
         if ($form->isSubmitted() && $form->isValid()) {
 
             /* @var $playLog PlayLog */
