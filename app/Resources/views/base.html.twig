@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,6 +28,7 @@
     <![endif]-->
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}" />
+
 
 
 </head>
@@ -95,19 +98,16 @@
 <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 <!-- Bootstrap Core JavaScript -->
 <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
-<script type="text/javascript" src="{{ asset('DataTables/datatables.js') }}"></script>
+
+{%  block javascripts %}
+
+{%  endblock javascripts %}
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.datatable').DataTable({
-            "paging": false,
-            "ordering": false,
-            "responsive": true
+        $('.js-datepicker').datepicker({
+            format: 'mm/dd/yyyy'
         });
-
-        var table = $('#example').DataTable();
-        $('#searchDataTable').keyup(function () {
-            table.search($(this).val()).draw();
-        })
 
     });
 </script>

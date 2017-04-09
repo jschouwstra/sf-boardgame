@@ -3,10 +3,13 @@
 {% block content %}
 
     <h1>Game</h1>
-{{ dump() }}
+    <h2>Playlogs</h2>
+    Number of times played: <span class="badge">{{ game.playlogs|length }}</span>
+    <p>
     {% for playlog in game.playlogs %}
-        {{ playlog.date|date('Y-m-d') }}
+       {{ playlog.date|date('M-d-Y') }}<br>
     {% endfor %}
+    </p>
     <table>
         <tbody>
             <tr>

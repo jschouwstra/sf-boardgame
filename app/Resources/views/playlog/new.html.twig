@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Add playlog</h1>
 {{ dump() }}
+    <h1>Add playlog</h1>
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />
@@ -15,3 +15,12 @@
     </li>
 </ul>
 {% endblock %}
+
+{%  block stylesheets %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+{%  endblock stylesheets %}
+
+{%  block javascripts %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+{%  endblock javascripts %}
+
