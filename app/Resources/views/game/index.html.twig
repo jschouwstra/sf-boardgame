@@ -2,6 +2,19 @@
 
 {% block content %}
     <h1>Games list</h1>
+    {% set gamesPlayed = [] %}
+    {% set gamesNotPlayed = [] %}
+    {% for game in games %}
+    {% set played = game.getplaylogs|length %}
+        {% if played %}
+            {% set gamesPlayed = gamesPlayed|merge([game]) %}
+        {% else %}
+            {% set gamesNotPlayed = gamesNotPlayed|merge([game]) %}
+        {% endif %}
+    {% endfor %}
+    <hr>
+    <a class="btn btn-primary">Played <span class="badge"> {{ gamesPlayed|length }} </span></a>
+    <a class="btn btn-primary">Unplayed <span class="badge"> {{ gamesNotPlayed|length }} </span></a>
     <hr>
     <div class="row">
         <div class="col-md-12 ">
@@ -11,41 +24,38 @@
                         <a class="btn btn-default btn-sm" href="{{ path('game_new') }}"><i class="fa fa-plus"></i> New game</a>
                     </div>
                 </div>
-                    <table class="table table-bordered table-striped table-hover">
-                        <tr>
-                            <th>{{ knp_pagination_sortable(games, 'Name', 'game.name') }}</th>
-                            <th>{{ knp_pagination_sortable(games, 'Type', 'type.name') }}</th>
-                            <th>Played</th>
-                            <th>Actions</th>
-                        </tr>
-                        {% if games.params.limit is defined and games.params.limit > max_limit_error %}
-                            <div class="alert alert-warning text-center">
-                                <p>
-                                    There was an error (2123).<br>
-                                    Please report this to the administrator
-                                </p>
-                            </div>
-                        {% else %}
-                            {% for game in games %}
-                                <tr>
-                                    <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
-                                    <td><a>{{ game.type.name }}</td>
-                                    <td><span class="badge">{{ game.playlogs|length }}x</span> </td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                        <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i
-                                                    class="fa fa-search"></i> Show</a>
-                                        <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        <a class="btn btn-primary" href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i
-                                                    class="fa fa-book"></i> Log game </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(games, 'Name', 'game.name') }}</th>
+                        <th>{{ knp_pagination_sortable(games, 'Type', 'type.name') }}</th>
+                        <th>Plays</th>
+                        <th>Actions</th>
+                    </tr>
+                    {#Show error if pagination page number exceeds given limit#}
+                    {% if games.params.limit is defined and games.params.limit > max_limit_error %}
+                        <div class="alert alert-warning text-center">
+                            <p>
+                                There was an error (2123).<br>
+                                Please report this to the administrator </p>
+                        </div>
+                    {% else %}
+                        {% for game in games %}
+                            <tr>
+                                <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
+                                <td><a>{{ game.type.name }}</td>
+                                <td><span class="badge">&nbsp;{{ game.playlogs|length }}&nbsp;</span></td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i class="fa fa-search"></i> <span class="adaptiveText">Show </span></a>
+                                    <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="fa fa-pencil"></i> <span class="adaptiveText">Edit</span></a>
+                                    <a class="btn btn-primary" href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> <span class="adaptiveText">Log game</span> </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
 
-                        {% endif %}
-                    </table>
+                    {% endif %}
+                </table>
+                </div>
             </div>
         </div>
     </div>
