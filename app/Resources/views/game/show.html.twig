@@ -3,48 +3,29 @@
 {% block content %}
 
     <h1>Game</h1>
-    <h2>{{ game.name }}</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{ game.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>Type</th>
-                        <td>
-                            {% if  game.type is not null %}
-                                {{ game.type.name }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-4 ">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Playlogs
-                </div>
-                <div class="panel-body"
-                     <p>
-                     You've played this game <span class="badge">{{ game.playlogs|length }}</span> times, on:
-                     </p>
-                <p>
-                    {% for playlog in game.playlogs|sort|reverse %}
-                        {{ playlog.date|date('M-d-Y') }}<br>
-                    {% endfor %}
-                </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
+    <h2>Playlogs</h2>
+    Number of times played: <span class="badge">{{ game.playlogs|length }}</span>
+    <p>
+    {% for playlog in game.playlogs %}
+        {{ playlog.id }}{{ playlog.date|date('M-d-Y') }}<br>
+    {% endfor %}
+    </p>
+    <table>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ game.name }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>
+                    {% if  game.type is not null  %}
+                    {{ game.type.name}}
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
     <ul>
         <li>
@@ -55,7 +36,7 @@
         </li>
         <li>
             {{ form_start(delete_form) }}
-            <input type="submit" value="Delete">
+                <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
     </ul>

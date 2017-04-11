@@ -16,6 +16,8 @@ class PlayLog
     /**
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="playlogs")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     * @ORM\OrderBy({"date" = "ASC"})
+
      */
     private $game;
 
@@ -49,6 +51,7 @@ class PlayLog
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
+
      */
     private $date;
 
