@@ -13,10 +13,17 @@
         {% endif %}
     {% endfor %}
     <hr>
-    <a class="btn btn-primary">Played <span class="badge"> {{ gamesPlayed|length }} </span></a>
-    <a class="btn btn-primary">Unplayed <span class="badge"> {{ gamesNotPlayed|length }} </span></a>
+    <a href="{{ path('game_index', app.request.query.all|merge({'gamesPlayed': 1})) }}" class="btn btn-primary">Played <span class="badge"> {{ gamesPlayed|length }} </span></a>
+    <a href="{{ path('game_index', app.request.query.all|merge({'gamesPlayed': 0})) }}" class="btn btn-primary">Unplayed <span class="badge"> {{ gamesNotPlayed|length }} </span></a>
+    {#<a class="btn btn-primary">Unplayed <span class="badge"> {{ gamesNotPlayed|length }} </span></a>#}
     <hr>
-    <div class="row">
+    {% set gamesPlayed = app.request.get('gamesPlayed') %}
+    {% if gamesPlayed %}
+    gamesPlayed = 1
+    {% else %}
+    gamesPlayed = 0
+    {% endif %}
+<div class="row">
         <div class="col-md-12 ">
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
