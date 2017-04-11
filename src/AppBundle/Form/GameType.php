@@ -39,10 +39,6 @@ class GameType extends AbstractType
 
             ]);
 
-        $builder->add('playlogs', CollectionType::class, array(
-            'entry_type' => PlayLogType::class,
-            'label' => false
-        ));
 
 
     }
