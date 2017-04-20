@@ -3,7 +3,8 @@
     padding-bottom: 140px;
 }
 .background{
-    background-image: url('../img/stardust.png');
+    background-color: white;
+    /*background-image: url('../img/stardust.png');*/
 }
 
 #main{
