@@ -54,7 +54,7 @@
                             {% for game in games %}
                                 <tr>
                                     <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
-                                    <td><a>{{ game.type.name }}</td>
+                                    <td>{{ game.type.name }}</td>
                                     <td><span class="badge">&nbsp;{{ game.playlogs|length }}&nbsp;</span></td>
                                     <td>
                                         <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i class="fa fa-search"></i>
