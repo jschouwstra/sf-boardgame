@@ -6,6 +6,7 @@
     <h2>Playlogs</h2>
     Number of times played: <span class="badge">{{ game.playlogs|length }}</span>
     <p>
+    {#{% for playlog in game.playlogs | sortbyfield('date') %}#}
     {% for playlog in game.playlogs %}
         {{ playlog.id }}{{ playlog.date|date('M-d-Y') }}<br>
     {% endfor %}

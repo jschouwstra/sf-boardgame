@@ -29,7 +29,7 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 //        $games = $em->getRepository('AppBundle:Game')->findAll();
-        $dql = "SELECT game FROM AppBundle:Game game JOIN game.type type ORDER BY game.name";
+        $dql = "SELECT game FROM AppBundle:Game game JOIN game.type type";
         $query = $em->createQuery($dql);
         /*
          * @var $paginator \Knp\Component\Pager\Paginator

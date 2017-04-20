@@ -17,6 +17,8 @@ class Game
 
     /**
      * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
+     * @ORM\OrderBy({"date" = "DESC"})
+     *
      */
     private $playlogs;
     public function __construct()
