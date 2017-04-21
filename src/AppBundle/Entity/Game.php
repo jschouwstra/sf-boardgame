@@ -21,6 +21,9 @@ class Game
      *
      */
     private $playlogs;
+
+    private $categories;
+
     public function __construct()
     {
         $this->playlogs = new ArrayCollection();
