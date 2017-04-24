@@ -22,11 +22,13 @@ class Game
      */
     private $playlogs;
 
-    private $categories;
+
+//    private $categories;
 
     public function __construct()
     {
         $this->playlogs = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     /**
@@ -36,6 +38,11 @@ class Game
     private $type;
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="games")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
     /**
      * @var int
      *

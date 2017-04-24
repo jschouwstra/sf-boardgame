@@ -13,15 +13,50 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends BaseUser
 {
     /**
+     * @ORM\OneToMany(targetEntity="Game", mappedBy="user")
+     *
+     */
+    private $games;
+
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
-    public function __construct()
+
+    /**
+     * @return mixed
+     */
+    public function getGames()
     {
-        parent::__construct();
-        // your own logic
+        return $this->games;
     }
+
+    /**
+     * @param mixed $games
+     */
+    public function setGames($games)
+    {
+        $this->games = $games;
+    }
+
+    public function addGame(Game $game)
+    {
+        $this->games->add($game);
+        $game->setType($this);
+    }
+    public function removeGame(Game $game)
+    {
+        $this->games->removeElement($game);
+    }
+
+
 }
