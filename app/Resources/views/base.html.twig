@@ -36,7 +36,7 @@
 <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
 
 <body id="page-top" class="background" data-spy="scroll" data-target=".navbar-fixed-top">
-
+{% block navigation %}
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
 
@@ -63,9 +63,6 @@
                 <li>
                     <a class="page-scroll" href="#about">About</a>
                 </li>
-                <li>
-                    <a class="page-scroll" href="#services">Services</a>
-                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -74,12 +71,26 @@
                     </ul>
                 </li>
 
+                {% if app.user.username is defined%}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">   <span style="text-transform: capitalize;">{{ app.user.username }}</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('game_index') }}">Games list</a></li>
+                        <li><a href="{{ path('game_new') }}">New game</a></li>
+                    </ul>
+                </li>
+                {% else %}
+
+                {% endif %}
+
             </ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
 </nav>
+{% endblock navigation %}
+
 {#<div id="content" class="container" style="background-color: white; ">#}
 {#<div style="background-color: white;">#}
     <div class="col-lg-12 col-md-offset-0" style="padding-top: 100px;">

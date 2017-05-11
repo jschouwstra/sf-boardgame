@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\PlayLog;
-use AppBundle\Entity\Type;
+use AppBundle\Entity\User;
 use AppBundle\Form\GameType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -62,6 +62,7 @@ class GameController extends Controller
         $form = $this->createForm('AppBundle\Form\GameType', $game);
         $form->handleRequest($request);
 
+        $game->setUser($this->getUser());
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($game);
