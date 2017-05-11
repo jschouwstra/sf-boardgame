@@ -28,7 +28,7 @@ class Game
     public function __construct()
     {
         $this->playlogs = new ArrayCollection();
-        $this->user = new ArrayCollection();
+        //$this->user = new ArrayCollection();
     }
 
     /**
@@ -40,7 +40,6 @@ class Game
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="games")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
     /**
@@ -73,6 +72,22 @@ class Game
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 
     /**
