@@ -32,13 +32,6 @@ class Game
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Type", inversedBy="games")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     */
-    private $type;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="games")
      */
     private $user;
@@ -114,21 +107,6 @@ class Game
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
 
 
     /**
