@@ -27,23 +27,29 @@ class GameController extends Controller
      */
     public function indexAction(Request $request)
     {
+        //get user_id
+
+        $usr = $this->getUser();
+        $id = $usr->getId();
         $em = $this->getDoctrine()->getManager();
-//        $games = $em->getRepository('AppBundle:Game')->findAll();
-        $dql = "SELECT game FROM AppBundle:Game game ";
+        $dql="SELECT * games FROM Game WHERE Game.user_id := user_id";
         $query = $em->createQuery($dql);
+        $query->setParameter('user_id', $id);
+        $current_games = $query->getResult();
+
         /*
          * @var $paginator \Knp\Component\Pager\Paginator
          */
-        $paginator = $this->get('knp_paginator');
-        $result = $paginator->paginate(
-             $query,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 25)
-        );
+//        $paginator = $this->get('knp_paginator');
+//        $result = $paginator->paginate(
+//             $query,
+//            $request->query->getInt('page', 1),
+//            $request->query->getInt('limit', 25)
+//        );
 //        dump(get_class($paginator));
 
         return $this->render('game/index.html.twig', array(
-            'games' => $result,
+            'games' => $current_games,
             'max_limit_error' => 25
         ));
     }

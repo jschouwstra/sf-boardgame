@@ -15,6 +15,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Game
 {
 
+
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="games")
+     * @ORM\JoinTable(name="users_games")
+     */
+    private $users;
+
+
     /**
      * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
      * @ORM\OrderBy({"date" = "DESC"})
@@ -22,19 +32,13 @@ class Game
      */
     private $playlogs;
 
-
 //    private $categories;
 
     public function __construct()
     {
         $this->playlogs = new ArrayCollection();
-        //$this->user = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="games")
-     */
-    private $user;
     /**
      * @var int
      *
@@ -72,15 +76,15 @@ class Game
      */
     public function getUser()
     {
-        return $this->user;
+        return $this->users;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $users
      */
-    public function setUser($user)
+    public function setUser($users)
     {
-        $this->user = $user;
+        $this->users = $users;
     }
 
     /**
