@@ -16,8 +16,6 @@ class Game
 {
 
 
-
-
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="games")
      * @ORM\JoinTable(name="users_games")

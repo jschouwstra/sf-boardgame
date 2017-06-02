@@ -25,7 +25,7 @@ class GameController extends Controller
      * @Route("/", name="game_index")
      * @Method("GET")
      */
-    public function indexAction(Request $reques)
+    public function indexAction(Request $request)
     {
         //get user_id
 //
@@ -54,10 +54,19 @@ class GameController extends Controller
 //
 //        $current_games = $em->getRepository('AppBundle:Game')->findAll();
 
+
+
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $current_games = $em->getRepository('AppBundle:Game')->findAllOrdered($id);
+//
         $em = $this->getDoctrine()->getManager();
 
-        $current_games = $em->getRepository('AppBundle:Game')->findAllOrdered($id);
-
+        $qb = $em->getRepository( Game::class )->createQueryBuilder( 'game_t' );
+        $qb->join( 'users_games.user_id', 'ug' )
+            ->where( 'ug.user_id = :userId' )
+            ->setParameter( 'userId', $id);
+        return $qb->getQuery()->getResult();
 
 
         return $this->render('game/index.html.twig', array(
