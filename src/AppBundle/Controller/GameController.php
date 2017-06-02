@@ -25,12 +25,12 @@ class GameController extends Controller
      * @Route("/", name="game_index")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $reques)
     {
         //get user_id
 //
-//        $usr = $this->getUser();
-//        $id = $usr->getId();
+        $usr = $this->getUser();
+        $id = $usr->getId();
 //
 //        $em = $this->getDoctrine()->getManager();
 ////        $dql="SELECT g FROM AppBundle\Entity\Game g Join g.users u WHERE u.id := user_id";
@@ -48,9 +48,16 @@ class GameController extends Controller
 //        );
 //        dump(get_class($paginator));
 
+
+
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $current_games = $em->getRepository('AppBundle:Game')->findAll();
+
         $em = $this->getDoctrine()->getManager();
 
-        $current_games = $em->getRepository('AppBundle:Game')->findAll();
+        $current_games = $em->getRepository('AppBundle:Game')->findAllOrdered($id);
+
 
 
         return $this->render('game/index.html.twig', array(
