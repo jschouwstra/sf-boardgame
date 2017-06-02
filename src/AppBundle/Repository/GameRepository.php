@@ -1,8 +1,6 @@
 <?php
 
 namespace AppBundle\Repository;
-use AppBundle\AppBundle;
-use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 
 /**
@@ -31,21 +29,12 @@ class GameRepository extends \Doctrine\ORM\EntityRepository
         //Query builder:
         ///////////////////////
 
-//        $qb = $this->createQueryBuilder('game')
-//            ->addOrderBy('game.name', 'ASC')
-//            ->andWhere('game.id = :user')
-//
-//            ->setParameter('user', $user_id);
-//        ;
-        $qb = $this->getEntityManager()->createQuery();
+        $qb = $this->createQueryBuilder('game')
+            ->addOrderBy('game.name', 'ASC')
+            ->andWhere('game.id = :user')
 
-        $qb->select ('c');
-        $qb->from(Game, 'c');
-
-        $qb->leftJoin('c.users_games','j');
-        $qb->where('j.id = :user_id');
-        $qb->setParameter("user_id", 1);
-
+            ->setParameter('user', $user_id);
+        ;
 
         $query = $qb->getQuery();
         return $query->execute();
