@@ -31,8 +31,10 @@ class GameController extends Controller
 
         $usr = $this->getUser();
         $id = $usr->getId();
+
         $em = $this->getDoctrine()->getManager();
-        $dql="SELECT * games FROM Game WHERE Game.user_id := user_id";
+//        $dql="SELECT g FROM AppBundle\Entity\Game g Join g.users u WHERE u.id := user_id";
+        $dql='SELECT g FROM Game ';
         $query = $em->createQuery($dql);
         $query->setParameter('user_id', $id);
         $current_games = $query->getResult();
