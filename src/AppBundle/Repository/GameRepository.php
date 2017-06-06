@@ -1,7 +1,10 @@
 <?php
 
 namespace AppBundle\Repository;
+<<<<<<< HEAD
 use Doctrine\ORM\EntityRepository;
+=======
+>>>>>>> 539cd1274f35eda2b5a5b750b2478a26929b974c
 use AppBundle\Entity\User;
 
 /**
@@ -31,7 +34,11 @@ class GameRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('game')
             ->addOrderBy('game.name', 'ASC')
+<<<<<<< HEAD
             ->andWhere('game.users.user_id = :user')
+=======
+            ->andWhere('game.id = :user')
+>>>>>>> 539cd1274f35eda2b5a5b750b2478a26929b974c
 
             ->setParameter('user', $user_id);
         ;
