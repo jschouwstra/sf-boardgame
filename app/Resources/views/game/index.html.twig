@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    {% dump(games) %}
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -11,6 +12,8 @@
 <div class="col-md-8 col-md-offset-2">
     {% set gamesPlayed = [] %}
     {% set gamesNotPlayed = [] %}
+
+
     {% for game in games %}
         {% set played = game.getplaylogs|length %}
         {% if played %}
@@ -19,14 +22,15 @@
             {% set gamesNotPlayed = gamesNotPlayed|merge([game]) %}
         {% endif %}
     {% endfor %}
+
+
     <hr>
     <a href="{{ path('game_index', app.request.query.all|merge({'gamesPlayed': 1})) }}" class="btn btn-primary">Played <span class="badge"> {{ gamesPlayed|length }} </span></a>
     <a href="{{ path('game_index', app.request.query.all|merge({'gamesPlayed': 0})) }}" class="btn btn-primary">Unplayed
         <span class="badge"> {{ gamesNotPlayed|length }} </span></a>
-    {#<a class="btn btn-primary">Unplayed <span class="badge"> {{ gamesNotPlayed|length }} </span></a>#}
+    <a class="btn btn-primary">Unplayed <span class="badge"> {{ gamesNotPlayed|length }} </span></a>
     <hr>
     {% set gamesPlayed = app.request.get('gamesPlayed') %}
-
     <div class="row">
         <div class="col-md-12 col-sm-12 col-lg-12 ">
             <div class="panel panel-primary">
@@ -73,7 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="navigation text-center">
+    {#<div class="navigation text-center">#}
         {#{{ knp_pagination_render(games) }}#}
-    </div>
+    {#</div>#}
     {% endblock %}

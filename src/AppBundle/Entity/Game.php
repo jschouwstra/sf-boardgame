@@ -17,13 +17,6 @@ class Game
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="games")
-     * @ORM\JoinTable(name="users_games")
-     */
-    private $users;
-
-
-    /**
      * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
      * @ORM\OrderBy({"date" = "DESC"})
      *
@@ -69,21 +62,7 @@ class Game
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->users;
-    }
 
-    /**
-     * @param mixed $users
-     */
-    public function setUser($users)
-    {
-        $this->users = $users;
-    }
 
     /**
      * Set name

@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User extends BaseUser
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Game", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="Game")
      *
      * @ORM\JoinTable(name="users_games",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},

@@ -29,46 +29,13 @@ class GameController extends Controller
     {
         //get user_id
 //
+        /** @var User $usr */
         $usr = $this->getUser();
-        $id = $usr->getId();
-//
-//        $em = $this->getDoctrine()->getManager();
-////        $dql="SELECT g FROM AppBundle\Entity\Game g Join g.users u WHERE u.id := user_id";
-//        $dql = "SELECT game FROM AppBundle:Game game ";
-//        $query = $em->createQuery($dql);
-//        $query->setParameter('user_id', $id);
-//        $current_games = $query->getResult();
-
-
-//        $paginator = $this->get('knp_paginator');
-//        $result = $paginator->paginate(
-//
-//            $request->query->getInt('page', 1),
-//            $request->query->getInt('limit', 25)
-//        );
-//        dump(get_class($paginator));
+        $user_id = $usr->getId();
 
 
 
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $current_games = $em->getRepository('AppBundle:Game')->findAll();
-
-
-
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $current_games = $em->getRepository('AppBundle:Game')->findAllOrdered($id);
-//
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->getRepository( Game::class )->createQueryBuilder( 'game_t' );
-        $qb->join( 'users_games.user_id', 'ug' )
-            ->where( 'ug.user_id = :userId' )
-            ->setParameter( 'userId', $id);
-        return $qb->getQuery()->getResult();
-
-
+        $current_games = $usr->getGames();
         return $this->render('game/index.html.twig', array(
             'games' => $current_games,
             'max_limit_error' => 25
