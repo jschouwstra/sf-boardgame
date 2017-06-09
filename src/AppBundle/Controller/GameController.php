@@ -43,6 +43,22 @@ class GameController extends Controller
     }
 
     /**
+     * Adds game(s) to current user.
+     *
+     * @Route("/add", name="game_add")
+     * @Method({"GET", "POST"})
+     */
+    public function addToUserAction(Request $request){
+        $form = $this->createForm('AppBundle\Form\addGameToUserType');
+        $form->handleRequest($request);
+
+        return $this->render('game/addToUser.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+
+    /**
      * Creates a new game entity.
      *
      * @Route("/new", name="game_new")
