@@ -143,22 +143,22 @@ class GameController extends Controller
      */
     public function addLogAction(Request $request, Game $game)
     {
-        $playlog = new PlayLog();
-        $form = $this->createForm(GameType::class, $game);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            //Save playLog
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($playlog);
-            $em->flush();
-
-        }
-        // Render / return view incl. formulier.
-        return $this->render('game/log.html.twig', array(
-            'game' => $game,
-            'form' => $form->createView(),
-        ));
+//        $playlog = new PlayLog();
+//        $form = $this->createForm(GameType::class, $game);
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            //Save playLog
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($playlog);
+//            $em->flush();
+//
+//        }
+//        // Render / return view incl. formulier.
+//        return $this->render('game/log.html.twig', array(
+//            'game' => $game,
+//            'form' => $form->createView(),
+//        ));
     }
 
     /**
