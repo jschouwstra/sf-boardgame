@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Game controller.
  *
@@ -31,15 +32,18 @@ class GameController extends Controller
 //
         /** @var User $usr */
         $usr = $this->getUser();
-        $user_id = $usr->getId();
 
+        $userGames = $usr->getGames();
 
-
-        $current_games = $usr->getGames();
         return $this->render('game/index.html.twig', array(
-            'games' => $current_games,
+            'games' => $userGames,
             'max_limit_error' => 25
         ));
+
+
+        //$user_id = $usr->getId();
+
+
     }
 
     /**
@@ -48,7 +52,8 @@ class GameController extends Controller
      * @Route("/add", name="game_add")
      * @Method({"GET", "POST"})
      */
-    public function addToUserAction(Request $request){
+    public function addToUserAction(Request $request)
+    {
         $form = $this->createForm('AppBundle\Form\addGameToUserType');
         $form->handleRequest($request);
 
@@ -141,7 +146,7 @@ class GameController extends Controller
         $playlog = new PlayLog();
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             //Save playLog
             $em = $this->getDoctrine()->getManager();
@@ -188,7 +193,6 @@ class GameController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('game_delete', array('id' => $game->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
