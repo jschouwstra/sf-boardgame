@@ -23,6 +23,13 @@ class User extends BaseUser
      */
     private $games;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlayLog", mappedBy="user")
+     *
+     */
+    private $playlogs;
+
     /**
      * @return mixed
      */
@@ -78,6 +85,30 @@ class User extends BaseUser
     {
         $this->games->removeElement($game);
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPlaylogs()
+    {
+        return $this->playlogs;
+    }
+
+    /**
+     * @param mixed $playlogs
+     */
+    public function setPlaylogs($playlogs)
+    {
+        $this->playlogs = $playlogs;
+    }
+
+    public function addPlayLog(PlayLog $playlog)
+    {
+        $this->playlog->add($playlog);
+        $playlog->setPlayLogs($this);
+    }
+
 
 
 }

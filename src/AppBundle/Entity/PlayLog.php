@@ -19,6 +19,29 @@ class PlayLog
      */
     private $game;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="playlogs")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * @return mixed
      */
@@ -44,6 +67,31 @@ class PlayLog
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+
+    /**
+     * @var int
+     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $user_id;
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
 
     /**
      * @var \DateTime

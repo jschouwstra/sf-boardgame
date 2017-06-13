@@ -32,8 +32,9 @@ class GameController extends Controller
 //
         /** @var User $usr */
         $usr = $this->getUser();
-
         $userGames = $usr->getGames();
+
+
 
         return $this->render('game/index.html.twig', array(
             'games' => $userGames,
