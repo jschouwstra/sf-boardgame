@@ -32,6 +32,7 @@ class PlayLogController extends Controller
             'playlogs' => $playLogs,
         ));
     }
+
     /**
      * Creates a new playLog entity.
      *
@@ -40,10 +41,15 @@ class PlayLogController extends Controller
      */
     public function newAction(Request $request, $gameId)
     {
+        /** @var User $userObject */
+        $userObject = $this->getUser();
         $playlog = new PlayLog();
         $em = $this->getDoctrine()->getManager();
-        $game = $em ->getRepository(Game::class)->find($gameId);
+        $game = $em->getRepository(Game::class)->find($gameId);
         $playlog->setGame($game);
+
+
+        $playlog->setUser($userObject);
         $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
         $form->handleRequest($request);
 
@@ -54,6 +60,11 @@ class PlayLogController extends Controller
 
             $em->persist($playlog);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('game_show', array(
+                'id' => $gameId
+            )));
+
         }
 
         return $this->render('playlog/new.html.twig', array(
@@ -61,6 +72,7 @@ class PlayLogController extends Controller
             'form' => $form->createView(),
         ));
     }
+
     /**
      * Finds and displays a playLog entity.
      *
@@ -134,7 +146,6 @@ class PlayLogController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('playlog_delete', array('id' => $playLog->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

@@ -8,7 +8,7 @@
     <p>
     {#{% for playlog in game.playlogs | sortbyfield('date') %}#}
     {% for playlog in game.playlogs %}
-        {{ playlog.id }}{{ playlog.date|date('M-d-Y') }}<br>
+        {{ playlog.date|date('M-d-Y') }}<br>
     {% endfor %}
     </p>
     <table>

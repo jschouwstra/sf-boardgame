@@ -29,11 +29,14 @@ class UserController extends Controller
         /** @var  $form */
         $form = $this->createForm('AppBundle\Form\addGameToUserType');
         $form->handleRequest($request);
-        /** @var User $userObject */
+
+        /** Get current User
+         * @var User $userObject */
         $userObject = $this->getUser();
-      //  var_dump($userObject);
 
-
+        /**
+         * If form is not submitted get all user's games and set the selectbox accordingly
+         */
         if (!$form->isSubmitted()) {
             // games selecteren
             $form["game"]->setData($userObject->getGames());
@@ -42,9 +45,15 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            /**
+             * Get form data as an array and declare variable
+             */
             /** @var  $game */
             $gameArray = $form["game"]->getData();
 
+            /**
+             * Unset each game from User Collection and set each game with ArrayCollection "->remove" and "->add"
+             */
             $userObject->removeAllGames();
             foreach ($gameArray as $game) {
                 $userObject->addGame($game);
