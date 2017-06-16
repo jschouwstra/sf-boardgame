@@ -94,8 +94,8 @@
                                     <td>
                                         <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}"><i class="fa fa-search"></i>
                                             <span class="adaptiveText">Show </span></a>
-                                        <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="fa fa-pencil"></i>
-                                            <span class="adaptiveText">Edit</span></a>
+                                        {#<a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="fa fa-pencil"></i>#}
+                                            {#<span class="adaptiveText">Edit</span></a>#}
                                         <a class="btn btn-primary"
                                            href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> <span class="adaptiveText">Log game</span>
                                         </a>

@@ -33,42 +33,23 @@ class UserController extends Controller
         $userObject = $this->getUser();
       //  var_dump($userObject);
 
+
         if (!$form->isSubmitted()) {
             // games selecteren
             $form["game"]->setData($userObject->getGames());
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            print_r ("<br><br><br><br><br><br><br><br><br><br><br><br>".$request->request->get('game'));
-//            die($request->request->all());
-            $logger = $this->get('logger');
-//            $logger->debug("test games selectbox".var_dump($form));
-
             $em = $this->getDoctrine()->getManager();
-
-
-
-
-//            $logger->debug("hello world");
-
 
             /** @var  $game */
             $gameArray = $form["game"]->getData();
-           // $logger->debug(var_dump($game));
-//            $logger->debug(var_dump($game['id']));
-//            $logger->debug(var_dump($game->id));
 
-
-            //$user = new User();
             $userObject->removeAllGames();
             foreach ($gameArray as $game) {
                 $userObject->addGame($game);
             }
-//            $user = $em->getRepository('AppBundle:User')
-//                ->find(['id' => $userObject->getId()]);
 
-
-//            $user->addGame($game);
             $em->persist($userObject);
             $em->flush();
             return $this->redirectToRoute('game_index');
