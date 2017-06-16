@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% import "macros.html.twig" as macro %}
+
+{% block content %}
+    {{ form_start(form.game) }}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Add Games To My List</h1>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-lg-4 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 ">
+            <div class="panel panel-default">
+                <div class="table-responsive">
+                    <table class="table ">
+                        <tr>
+                            <td>
+                                Game
+                            </td>
+                            <td>
+                                {{ form_widget(form.game) }}
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            {{ macro.btnSubmitAndCancel() }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+{{ form_end(form.game) }}
+
+{% endblock content %}

@@ -1,5 +1,4 @@
 <?php
-// src/AppBundle/Entity/User.php
 
 namespace AppBundle\Entity;
 
@@ -79,13 +78,22 @@ class User extends BaseUser
     public function addGame(Game $game)
     {
         $this->games->add($game);
-        $game->setType($this);
+   //     $this->games[] = $game;
+        return $this;
     }
     public function removeGame(Game $game)
     {
         $this->games->removeElement($game);
     }
 
+    public function removeAllGames()
+    {
+        foreach ($this->games as $game)
+        {
+            $this->removeGame($game);
+        }
+        //$this->games = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -108,7 +116,6 @@ class User extends BaseUser
         $this->playlog->add($playlog);
         $playlog->setPlayLogs($this);
     }
-
 
 
 }

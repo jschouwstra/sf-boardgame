@@ -14,21 +14,13 @@ class addGameToUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('game', EntityType::class, [
-        'class' => 'AppBundle:Game',
-        'choice_label' => function ($game) {
-            return $game->getName();
-        },
-        'multiple' => true,
-        'expanded' => false,
-        'attr' => [
-            'class' => 'form-control',
-        ],
-
-    ]);
-
-
-
-
+            'class' => 'AppBundle:Game',
+            'choice_label' => function ($game) {
+                return $game->getName();
+            },
+            'multiple' => true,
+            'expanded' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

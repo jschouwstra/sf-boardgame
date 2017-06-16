@@ -14,14 +14,34 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Game
 {
-
-
     /**
      * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
      * @ORM\OrderBy({"date" = "DESC"})
      *
      */
     private $playlogs;
+
+
+    private $users;
+
+
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
 
 //    private $categories;
 
@@ -112,4 +132,8 @@ class Game
         $playlog->setPlayLogs($this);
     }
 
+
+    public function addGameUser(User $user){
+        $this->users[] = $user;
+    }
 }
