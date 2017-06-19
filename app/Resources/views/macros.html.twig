@@ -1,4 +1,5 @@
-{#TODO: make the buttons more flexible#}
+
+
 {% macro input(name, value, type, size) %}
     <input class="form-control" type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|default('text') }}" size="{{ size|default(20) }}"/>
 {% endmacro %}
@@ -67,11 +68,10 @@
 {% endmacro %}
 
 {% macro btnGoBack() %}
-    <button title="Ga terug" class="btn btn-base" onClick="goBack()"><i class="fa fa-arrow-left"></i><span class="adaptiveText">&nbsp; Ga Terug</span></button>
+    <button title="Ga terug" class="btn btn-base" onClick="goBack()"><i class="fa fa-arrow-left"></i><span class="adaptiveText">&nbsp; Go back</span></button>
 {% endmacro %}
 {% macro btnSubmitAndCancel() %}
     <div class="btn-group pull-right">
-        <button title="Cancel" class="btn btn-danger" onClick="goBack()"><i class="fa fa-remove"></i><span class="adaptiveText">&nbsp;Cancel</span></button>
         <button title="Confirm" class="btn btn-success" type="submit"><i class="fa fa-check"></i><span class="adaptiveText">&nbsp;Confirm</span></button>
     </div>
 {% endmacro %}

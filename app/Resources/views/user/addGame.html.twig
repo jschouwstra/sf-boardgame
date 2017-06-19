@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros.html.twig" as macro %}
-
 {% block content %}
+{{ macro.btnGoBack() }}
     {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -38,5 +38,4 @@
     </div>
     {{ form_rest(form) }}
 {{ form_end(form.game) }}
-
 {% endblock content %}
