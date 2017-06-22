@@ -3,19 +3,28 @@
 {% block content %}
     <h1>Add playlog</h1>
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_widget(form) }}
+    <input type="submit" value="Create"/>
     {{ form_end(form) }}
 
 
 
 {% endblock %}
 
-{%  block stylesheets %}
+{% block stylesheets %}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
-{%  endblock stylesheets %}
+{% endblock stylesheets %}
 
-{%  block javascripts %}
+{% block javascripts %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
-{%  endblock javascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+                $('.js-datepicker').datepicker({
+                    format: 'mm/dd/yyyy'
+                });
+            }
+        );
+    </script>
+{% endblock javascripts %}
 

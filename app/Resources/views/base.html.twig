@@ -16,6 +16,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}" />
     <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset/chosen2/dist/css/select2.min.css') }}" />
+
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}" />
@@ -108,6 +110,7 @@
 <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.easing.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/scrolling-nav.js') }}"></script>
+<script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
 
 {% block javascripts %}
 
@@ -115,11 +118,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.js-datepicker').datepicker({
-            format: 'mm/dd/yyyy'
-        });
+//        $('.js-datepicker').datepicker({
+//            format: 'mm/dd/yyyy'
+//        });
 
-    });
+
+        $('select[data-select="true"]').select2();    });
 </script>
 </body>
 

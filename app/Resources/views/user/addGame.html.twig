@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros.html.twig" as macro %}
 {% block content %}
-{{ macro.btnGoBack() }}
+    {{ macro.btnGoBack() }}
     {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -11,23 +11,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-sm-4 col-lg-4 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 ">
-            <div class="panel panel-default">
-                <div class="table-responsive">
-                    <table class="table ">
-                        <tr>
-                            <td>
-                                Game
-                            </td>
-                            <td>
-                                {{ form_widget(form.game) }}
-                            </td>
-                        </tr>
-                    </table>
-
-
-                </div>
-            </div>
+        <div class="col-md-8 col-sm-8 col-lg-8 col-md-offset-2 col-sm-offset-2 col-lg-offset-2 ">
+            {{ form_widget(form.game) }}
         </div>
     </div>
 
@@ -37,5 +22,7 @@
         </div>
     </div>
     {{ form_rest(form) }}
-{{ form_end(form.game) }}
+    {{ form_end(form.game) }}
+
+
 {% endblock content %}

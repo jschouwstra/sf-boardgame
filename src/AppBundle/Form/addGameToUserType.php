@@ -14,6 +14,8 @@ class addGameToUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('game', EntityType::class, [
+            'attr' => ['data-select' => 'true'],
+
             'class' => 'AppBundle:Game',
             'choice_label' => function ($game) {
                 return $game->getName();
@@ -30,6 +32,6 @@ class addGameToUserType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'app_bundleadd_game_to_user';
+        return 'test';
     }
 }
