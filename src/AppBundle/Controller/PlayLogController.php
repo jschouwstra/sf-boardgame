@@ -68,7 +68,7 @@ class PlayLogController extends Controller
         }
 
         return $this->render('playlog/new.html.twig', array(
-            'playLog' => $playlog,
+            'playlog' => $playlog,
             'form' => $form->createView(),
         ));
     }

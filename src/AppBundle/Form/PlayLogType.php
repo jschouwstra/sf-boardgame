@@ -20,6 +20,7 @@ class PlayLogType extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'attr' => ['class' => 'js-datepicker'],
+            'label' => 'Choose date ',
             'format' => 'MM/dd/yyyy'
             )
         );
