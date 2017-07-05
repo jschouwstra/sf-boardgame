@@ -1,44 +1,45 @@
 {% extends 'base.html.twig' %}
-
+{% import "macros.html.twig" as macro %}
 {% block content %}
+    {{ macro.btnGoBack() }}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-6 ">
 
-    <h1>Game</h1>
-    <h2>Playlogs</h2>
-    Number of times played: <span class="badge">{{ game.playlogs|length }}</span>
-    <p>
-    {#{% for playlog in game.playlogs | sortbyfield('date') %}#}
-    {% for playlog in game.playlogs %}
-        {{ playlog.date|date('M-d-Y') }}<br>
-    {% endfor %}
-    </p>
-    <table>
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ game.name }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>
-                    {#{% if  game.type is not null  %}#}
-                    {#{{ game.type.name}}#}
-                    {#{% endif %}#}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                <h2>Game</h2>
+                <hr>
+                {{ game.name }}
+            </div>
+            {% if game.playlogs|length %}
+                <div class="col-md-6 ">
+                    <h2>Playlogs <span class="badge">{{ game.playlogs|length }}</span></h2>
+                    <hr>
+                    {% for playlog in game.playlogs %}
+                        {{ playlog.date|date('M-d-Y') }}<br>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="col-md-4 ">
+                    <h2>Playlog list is empty </h2>
+                    <hr>
+                    <div class="alert alert-info" role="alert">
+                        <p>You haven't played this game (yet).</p>
+                        <p>
+                            If you've played this game before, <a href="{{ path('playlog_new', { 'gameId': game.id }) }}">log it here</a>
+                        </p>
+                    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('game_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+
+
+
+    {#{{ form_start(delete_form) }}#}
+    {#<input class="btn btn-dang" type="submit" value="Delete">#}
+    {#{{ form_end(delete_form) }}#}
+
 {% endblock %}
