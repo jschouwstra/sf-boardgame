@@ -69,4 +69,22 @@ class UserController extends Controller
             'form' => $form->createView()
         ));
     }
+
+
+
+
+
+    /**
+     * Profile of current user
+     *
+     * @Route("user/profile", name="user_profile")
+     * @Method({"GET", "POST"})
+     */
+    public function userProfile(Request $request){
+        return $this->render('user/profile.html.twig', array(
+
+        ));
+
+    }
+
 }

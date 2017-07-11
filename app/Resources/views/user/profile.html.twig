@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% import "macros.html.twig" as macro %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-6 ">
+                <h2>{{ app.user.username| capitalize }}</h2>
+                <hr>
+
+            </div>
+                <div class="col-md-6 ">
+                    <h2>Stats </h2>
+                    <hr>
+                    Games in list:
+                </div>
+
+
+        </div>
+    </div>
+
+{% endblock content %}

@@ -12,6 +12,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * Game controller.
@@ -194,5 +198,27 @@ class GameController extends Controller
             ->setAction($this->generateUrl('game_delete', array('id' => $game->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+
+    /**
+     * Games of current user (JSON)
+     *
+     * @Route("/list-as-json", name="games_json")
+     */
+
+    public function getUserGamesAsJSON(Request $request,Game $game)
+    {
+        //get user_id
+        /** @var User $usr */
+        $usr = $this->getUser();
+        $userGames = $usr->getGames();
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $jsonContent = $serializer->serialize($userGames, 'json');
+        return $jsonContent; // or return it in a Response
     }
 }
