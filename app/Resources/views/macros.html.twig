@@ -70,6 +70,10 @@
 {% macro btnGoBack() %}
     <button title="Ga terug" class="btn btn-base" onClick="goBack()"><i class="fa fa-arrow-left"></i><span class="adaptiveText">&nbsp; Go back</span></button>
 {% endmacro %}
+{% macro btnGoTo() %}
+    <button class="btn btn-base"><i class="fa fa-arrow-left"></i><span class="adaptiveText">&nbsp; Go back</span></button>
+{% endmacro %}
+
 {% macro btnSubmit() %}
     <div class="btn-group pull-right">
         <button title="Confirm" class="btn btn-success" type="submit"><i class="fa fa-check"></i><span class="adaptiveText">&nbsp;Confirm</span></button>

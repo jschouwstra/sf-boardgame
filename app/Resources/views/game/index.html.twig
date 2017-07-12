@@ -1,24 +1,12 @@
 {% extends 'base.html.twig' %}
-
 {% block content %}
-    {#{% dump(games) %}#}
-
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Games list</h1>
+            <h2>My Game List</h2>
         </div>
     </div>
-
     <div class="col-md-8 col-md-offset-2">
     {% set currentUserId =  app.user.id %}
-    {% for game in games %}
-        {% set playlogs = game.playlogs %}
-        {% for playlog in playlogs %}
-            {% set playlogUserId =  playlog.getuserid %}
-            {% if playlogUserId == currentUserId %}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
     <hr>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-lg-12 ">
@@ -26,13 +14,12 @@
                 <div class="panel-heading clearfix">
                     <div class="btn-group pull-right">
                         <a title="Add/remove games from your list" class="btn btn-default btn-sm" href="{{ path('game_add') }}"><i class="fa fa-list"></i>
-                            Manage Gamelist</a>
+                            Manage My Game List</a>
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <tr>
-                            {#<th>{{ knp_pagination_sortable(games, 'Name', 'game.name') }}</th>#}
                             <th>Game</th>
                             <th>Plays</th>
                             <th colspan="2">Actions</th>

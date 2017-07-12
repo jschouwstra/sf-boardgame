@@ -7,12 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use AppBundle\Entity\PlayLog;
-use AppBundle\Entity\Game;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class addLogToGameType extends AbstractType
 {
@@ -20,7 +14,7 @@ class addLogToGameType extends AbstractType
     {
         $builder->add('playlogs', CollectionType::class, array(
             'entry_type' => addLogToGameType::class,
-            'label' => false
+            'label' => false,
         ));
     }
 

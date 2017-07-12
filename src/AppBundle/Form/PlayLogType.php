@@ -19,7 +19,7 @@ class PlayLogType extends AbstractType
         $builder->add('date', DateType::class, array(
             'widget' => 'single_text',
             'html5' => false,
-            'attr' => ['class' => 'js-datepicker'],
+            'attr' => ['class' => 'datepicker'],
             'label' => 'Choose date ',
             'format' => 'MM/dd/yyyy'
             )

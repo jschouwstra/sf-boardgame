@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% import "macros.html.twig" as macro %}
 {% block content %}
-    {{ macro.btnGoBack() }}
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="col-md-6 ">
+    <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
 
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 ">
+            <div class="col-md-6 ">
                 <h2>Game</h2>
                 <hr>
                 {{ game.name }}
@@ -25,21 +25,12 @@
                     <div class="alert alert-info" role="alert">
                         <p>You haven't played this game (yet).</p>
                         <p>
-                            If you've played this game before, <a href="{{ path('playlog_new', { 'gameId': game.id }) }}">log it here</a>
+                            If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may log it  here</a>
                         </p>
                     </div>
 
                 </div>
             {% endif %}
-
         </div>
     </div>
-
-
-
-
-    {#{{ form_start(delete_form) }}#}
-    {#<input class="btn btn-dang" type="submit" value="Delete">#}
-    {#{{ form_end(delete_form) }}#}
-
 {% endblock %}
