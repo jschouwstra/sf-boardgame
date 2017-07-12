@@ -15,23 +15,23 @@
                     <tr>
                         <th>Playlog</th>
                         {#<th>{{ knp_pagination_sortable(Playlogs, 'Type', 'type.name') }}</th>#}
+                        <th>Date</th>
                         <th>Actions</th>
                     </tr>
 
-                        {% for playlog in playlogs %}
-                            <tr>
-                                <td><a href="{{ path('playlog_show', { 'id': playlog.id }) }}">{{ playlog.game.name }}</td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playlog.id }) }}"><i
-                                                    class="fa fa-search"></i> Show</a>
-                                        <a class="btn btn-primary" href="{{ path('playlog_edit', { 'id': playlog.id }) }}"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
+                    {% for playlog in playlogs %}
+                        <tr>
+                            <td><a href="{{ path('playlog_show', { 'id': playlog.id }) }}">{{ playlog.game.name }}</td>
+                            <td>{{ playlog.date| date('M-d-Y')}}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    {#<a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playlog.id }) }}"><i class="fa fa-search"></i> Show</a>#}
 
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
+                                    <a class="btn btn-danger" href="{{ path('playlog_edit', { 'id': playlog.id }) }}"><i class="fa fa-remove"></i> Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
 
                 </table>
             </div>

@@ -25,9 +25,8 @@ class PlayLogController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $playLogs = $em->getRepository('AppBundle:PlayLog')->findAll();
-
+        //Sort by date
+        $playLogs = $em->getRepository('AppBundle:PlayLog')->findBy([], ['date' => 'DESC']);
         return $this->render('playlog/index.html.twig', array(
             'playlogs' => $playLogs,
         ));
@@ -41,26 +40,38 @@ class PlayLogController extends Controller
      */
     public function newAction(Request $request, $gameId)
     {
+        //get FOSUser object
         /** @var User $userObject */
         $userObject = $this->getUser();
+
         $playlog = new PlayLog();
+
         $em = $this->getDoctrine()->getManager();
+        //Find game with specified GameId
         $game = $em->getRepository(Game::class)->find($gameId);
+
+        //Add current Game and User to Playlog object
         $playlog->setGame($game);
-
-
         $playlog->setUser($userObject);
+
+        //Initiate prepared form
         $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
+
+        //Handle form submission
         $form->handleRequest($request);
 
+        //If form is submitted
         if ($form->isSubmitted() && $form->isValid()) {
 
             /* @var $playLog PlayLog */
+            //Collect formdata
             $playlog = $form->getData();
 
+            //Add all User and Game data to the Playlog object and persist it to the database
             $em->persist($playlog);
             $em->flush();
 
+            //Redirect to specified url
             return $this->redirect($this->generateUrl('game_show', array(
                 'id' => $gameId
             )));

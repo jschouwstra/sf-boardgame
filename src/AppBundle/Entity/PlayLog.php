@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="play_log")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PlayLogRepository")
+
  */
 class PlayLog
 {
@@ -57,7 +58,6 @@ class PlayLog
     {
         $this->game = $game;
     }
-
 
     /**
      * @var int

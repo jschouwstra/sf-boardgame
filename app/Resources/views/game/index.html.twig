@@ -38,8 +38,10 @@
                                 <tr>
                                     <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
                                     <td><span class="badge">
-                                        {#Playlogs of current games    #}
+                                            {#get playlogs of current games    #}
                                             {% set playlogs = game.playlogs %}
+
+                                            {#Loop over playlogs#}
                                             {% for playlog in playlogs %}
                                                 {#Get the playlog user_id so we count only the current user's playlogs#}
                                                 {% set playlogUserId =  playlog.getuserid %}
