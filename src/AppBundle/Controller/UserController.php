@@ -15,9 +15,6 @@ use function var_export;
 
 class UserController extends Controller
 {
-
-
-
     /**
      * Adds game(s) to current user.
      *
@@ -46,13 +43,14 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             /**
-             * Get form data as an array and declare variable
+             * Get form data as an array
              */
             /** @var  $game */
             $gameArray = $form["game"]->getData();
 
             /**
              * Unset each game from User Collection and set each game with ArrayCollection "->remove" and "->add"
+             * Remove everyhing unselected and add everything selected
              */
             $userObject->removeAllGames();
             foreach ($gameArray as $game) {
