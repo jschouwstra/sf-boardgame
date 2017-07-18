@@ -79,6 +79,7 @@ class GameController extends Controller
      */
     public function newAction(Request $request)
     {
+
         $game = new Game();
 
         $form = $this->createForm('AppBundle\Form\GameType', $game);
@@ -106,8 +107,12 @@ class GameController extends Controller
      */
     public function showAction(Game $game)
     {
+        $deleteForm = $this->createDeleteForm($game);
+
+
         return $this->render('game/show.html.twig', array(
-            'game' => $game
+            'game' => $game,
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -132,6 +137,43 @@ class GameController extends Controller
         return $this->render('game/edit.html.twig', array(
             'game' => $game,
             'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+
         ));
+    }
+
+    /**
+     * Deletes a game entity.
+     *
+     * @Route("/{id}", name="game_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, Game $game)
+    {
+        $form = $this->createDeleteForm($game);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($game);
+            $em->flush($game);
+        }
+
+        return $this->redirectToRoute('game_index');
+    }
+
+    /**
+     * Creates a form to delete a game entity.
+     *
+     * @param Game $game The game entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Game $game)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('game_delete', array('id' => $game->getId())))
+            ->setMethod('DELETE')
+            ->getForm();
     }
 }
