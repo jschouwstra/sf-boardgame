@@ -28,7 +28,8 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         /** Get current User
-         * @var User $userObject */
+         * @var User $userObject
+         */
         $userObject = $this->getUser();
 
         /**

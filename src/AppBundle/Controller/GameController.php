@@ -3,10 +3,14 @@
 namespace AppBundle\Controller;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
+use function array_push;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Symfony\Component\BrowserKit\Response;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Game controller.
@@ -16,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GameController extends Controller
 {
     /**
-     * Lists all game entities.
+     * Lists all user's game entities.
      *
      * @Route("/", name="game_index")
      * @Method("GET")
@@ -36,6 +40,35 @@ class GameController extends Controller
             'games' => $userGames,
             'max_limit_error' => 25
         ));
+    }
+
+    /**
+     * Lists all user's game entities as JSON.
+     *
+     * @Route("/json", name="user_games_json")
+     * @Method("GET")
+     */
+    public function returnUserGamesAsJson(Request $request)
+    {
+        /*
+         * The FOSUser object (current user) is injected in the container so we can access it globally
+         *
+        */
+
+        /** @var User $usr */
+        $usr = $this->getUser();
+        $userGames = $usr->getGames();
+
+        $games = array();
+        foreach($userGames as $game){
+            array_push($games, $game->getName());
+        }
+        $serializer = $this->get('jms_serializer');
+
+        $jsonContent = $serializer->serialize($games, 'json');
+        return new Response(
+            $jsonContent
+        );
     }
 
     /**
