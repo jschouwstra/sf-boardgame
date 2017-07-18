@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% import "macros.html.twig" as macro %}
+{% block content %}
+    {#<a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>#}
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 ">
+            <div class="col-md-6 ">
+                <h2>Profile</h2>
+                <hr>
+                {{ app.user.username }}
+            </div>
+                <div class="col-md-6 ">
+                    <h2>placeholder</h2>
+                    <hr>
+                    placeholder
+                </div>
+
+        </div>
+    </div>
+{% endblock %}

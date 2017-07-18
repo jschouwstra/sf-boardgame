@@ -68,4 +68,15 @@ class UserController extends Controller
             'form' => $form->createView()
         ));
     }
+
+
+    /**
+     * Show current user profile.
+     *
+     * @Route("user/profile", name="game_add")
+     * @Method({"GET", "POST"})
+     */
+    public function showUserProfile(){
+        return $this->render('user/profile.html.twig');
+    }
 }
