@@ -77,6 +77,26 @@ class UserController extends Controller
      * @Method({"GET", "POST"})
      */
     public function showUserProfile(){
-        return $this->render('user/profile.html.twig');
+
+        /** @var  $usr */
+        $usr = $this->getUser();
+
+        /** @var  $userGames */
+        $userGames = $usr->getGames();
+
+        $games = array();
+        $playlogs = array();
+        foreach($userGames as $game){
+            array_push($games, $game->getName());
+            array_push($playlogs, $game->getPlaylogs());
+        }
+
+
+
+        return $this->render('user/profile.html.twig', array(
+            'games' => $games,
+            'playlogs' => $playlogs
+
+        ));
     }
 }
