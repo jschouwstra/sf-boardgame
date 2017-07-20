@@ -2,6 +2,8 @@
 {% import "macros.html.twig" as macro %}
 {% block content %}
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
+    {% set playlogs = game.playlogs %}
+    {% set currentUserId =  app.user.id %}
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2 ">
@@ -10,27 +12,39 @@
                 <hr>
                 {{ game.name }}
             </div>
-            {% if game.playlogs|length %}
-                <div class="col-md-6 ">
-                    <h2>Playlogs <span class="badge">{{ game.playlogs|length }}</span></h2>
-                    <hr>
-                    {% for playlog in game.playlogs %}
-                        {{ playlog.date|date('M-d-Y') }}<br>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="col-md-4 ">
-                    <h2>Playlog list is empty </h2>
-                    <hr>
-                    <div class="alert alert-info" role="alert">
-                        <p>You haven't played this game (yet).</p>
-                        <p>
-                            If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may log it  here</a>
-                        </p>
-                    </div>
+            {% set gamePlayedCount = [] %}
 
-                </div>
-            {% endif %}
+            {% for playlog in playlogs %}
+                {#Get the playlog user_id so we count only the current user's playlogs#}
+                {% set playlogUserId =  playlog.getuserid %}
+                {% if playlogUserId == currentUserId %}
+                    {#Make an array with only the playlogs of the user and the game#}
+                    {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
+                {% endif %}
+            {% endfor %}
+            <div class="col-md-6">
+                <h2>Playlogs <span class="badge">{{ gamePlayedCount|length }}</span></h2>
+                <hr>
+                {% if gamePlayedCount|length > 0 %}
+                    {% for playlog in game.playlogs %}
+                        {% set playlogUserId =  playlog.getuserid %}
+                        {% if playlogUserId == currentUserId %}
+                            {{ playlog.date|date('M-d-Y') }}<br>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                        <div class="alert alert-info" role="alert">
+                        <h3>Playlog list is empty </h3>
+                            <p>You haven't played this game (yet).</p>
+                            <p>
+                                If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may log it here</a>
+                            </p>
+                        </div>
+                {% endif %}
+            </div>
+
+
         </div>
     </div>
 {% endblock %}
+
