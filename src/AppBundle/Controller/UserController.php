@@ -85,17 +85,23 @@ class UserController extends Controller
         $userGames = $usr->getGames();
 
         $games = array();
-        $playlogs = array();
+        $gameplays = array();
+
+        /** @var  $game */
         foreach($userGames as $game){
-            array_push($games, $game->getName());
-            array_push($playlogs, $game->getPlaylogs());
+            array_push( $games, $game->getName() );
+//            array_push( $playlogs, $game->getPlaylogs($game->getId()) );
         }
 
+        foreach($userGames as $game){
+            $numberOfPlays = count( $game->getPlaylogs() );
+            array_push( $gameplays, $numberOfPlays );
+        }
 
 
         return $this->render('user/profile.html.twig', array(
             'games' => $games,
-            'playlogs' => $playlogs
+            'gamePLaysCount' => $gameplays
 
         ));
     }
