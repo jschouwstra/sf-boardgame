@@ -19,70 +19,52 @@
         </div>
     </div>
 
-    {{ dump() }}
-    {#{% for log in playlogs %}#}
-        {#{{ log.id }}<br>#}
-    {#{% endfor %}#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
-
-
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4 ">
             <div>
-                <canvas id="myChart" width="400" height="400"></canvas>
+                <canvas height="80%" id="myChart"></canvas>
             </div>
-        </div>
+
         <script type="text/javascript">
-
-//            var jsonData = $.ajax({
-//                url: 'http://http://localhost/sf-boardgame/web/app_dev.php/game/json',
-//                dataType: 'json',
-//            }).done(function (results) {
-//                var labels = [],data = []
-//            }
-
-
-                    var labels = {{ games|json_encode()|raw }};
-                    {#var data = {{ playlogs|json_encode()|raw }};#}
-                    console.log(labels);
-                    var ctx = document.getElementById("myChart");
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-//                            labels: ["a","b"],
-                            labels: labels,
-                            datasets: [{
-                                label: '# of plays',
-                                data: [12, 19, 3, 5, 2, 3,4,5,6,7,8],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero:true
-                                    }
-                                }]
+            var labels = {{ games|json_encode()|raw }};
+            var data = {{ gameplays|json_encode()|raw }};
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                responsive: true,
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of plays',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
                             }
-                        }
-                    });
+                        }]
+                    }
+                }
+            });
         </script>
 {% endblock %}

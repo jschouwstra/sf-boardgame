@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
+
 use AppBundle\Entity\User;
 use AppBundle\Entity\Game;
 
@@ -76,32 +77,37 @@ class UserController extends Controller
      * @Route("user/profile", name="game_add")
      * @Method({"GET", "POST"})
      */
-    public function showUserProfile(){
+    public function showUserProfile()
+    {
+        $gameplayArray = array();
 
-        /** @var  $usr */
-        $usr = $this->getUser();
-
-        /** @var  $userGames */
-        $userGames = $usr->getGames();
-
+        /** @var User $user */
+        $user = $this->getUser();
+        $userGames = $user->getGames();
         $games = array();
-        $gameplays = array();
 
-        /** @var  $game */
-        foreach($userGames as $game){
-            array_push( $games, $game->getName() );
-//            array_push( $playlogs, $game->getPlaylogs($game->getId()) );
-        }
+        /** @var Game $game */
+        foreach ($userGames as $game) {
+            //games arrays
+            array_push($games, $game->getName());
+            $gameplays = array();
 
-        foreach($userGames as $game){
-            $numberOfPlays = count( $game->getPlaylogs() );
-            array_push( $gameplays, $numberOfPlays );
+            //playlogs array
+            //all playlogs of current user AND current game
+            $playlogs = $game->getPlaylogs();
+            foreach ($playlogs as $playlog) {
+                if ($user->getId() == $playlog->getUserId()) {
+                    array_push($gameplays, "bla");
+                }
+            }
+            array_push($gameplayArray, count($gameplays));
         }
 
 
         return $this->render('user/profile.html.twig', array(
             'games' => $games,
-            'gamePLaysCount' => $gameplays
+            'gameplays' => $gameplayArray,
+            'playlogs' => $playlogs
 
         ));
     }
