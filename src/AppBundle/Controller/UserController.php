@@ -97,7 +97,7 @@ class UserController extends Controller
             $playlogs = $game->getPlaylogs();
             foreach ($playlogs as $playlog) {
                 if ($user->getId() == $playlog->getUserId()) {
-                    array_push($gameplays, "bla");
+                    array_push($gameplays, 1);
                 }
             }
             array_push($gameplayArray, count($gameplays));
