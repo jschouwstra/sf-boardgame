@@ -19,7 +19,7 @@ class UserController extends Controller
     /**
      * Adds game(s) to current user.
      *
-     * @Route("user/game/add", name="game_add")
+     * @Route("/user/game/add", name="game_add")
      * @Method({"GET", "POST"})
      */
     public function addGameAction(Request $request)
@@ -71,29 +71,31 @@ class UserController extends Controller
     }
 
 
+
     /**
      * Show current user profile.
      *
-     * @Route("user/profile", name="game_add")
+     * @Route("user/profile", name="user_profile")
      * @Method({"GET", "POST"})
      */
     public function showUserProfile()
     {
         $gameplayArray = array();
 
-        /** @var User $user */
         $user = $this->getUser();
         $userGames = $user->getGames();
         $games = array();
 
-        /** @var Game $game */
         foreach ($userGames as $game) {
             //games arrays
             array_push($games, $game->getName());
             $gameplays = array();
 
-            //playlogs array
-            //all playlogs of current user AND current game
+            /*
+             * playlogs array
+             * all playlogs of current user AND current game
+            */
+
             $playlogs = $game->getPlaylogs();
             foreach ($playlogs as $playlog) {
                 if ($user->getId() == $playlog->getUserId()) {
@@ -103,11 +105,9 @@ class UserController extends Controller
             array_push($gameplayArray, count($gameplays));
         }
 
-
         return $this->render('user/profile.html.twig', array(
             'games' => $games,
             'gameplays' => $gameplayArray,
-            'playlogs' => $playlogs
 
         ));
     }
