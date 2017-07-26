@@ -30,7 +30,7 @@
                 <p>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <a id="deleteBtn" class="btn btn-danger" href="#">Delete</a>
+                        Action: <a id="deleteBtn" class="btn btn-danger" href="#">Delete</a>
                     </div>
                 </div>
                 </p>
@@ -40,9 +40,11 @@
                         {% for playlog in game.playlogs %}
                             {% set playlogUserId =  playlog.getuserid %}
                             {% if playlogUserId == currentUserId %}
+                                <label>
                                 <li class="list-group-item">
-                                    <label><input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('M-d-Y') }} </label>
+                                    <input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('M-d-Y') }}
                                 </li>
+                                </label>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -73,6 +75,7 @@
                     playlogs.push($(this).val());
                 });
 
+//                alert("playlogs: " + playlogs.join(", "));
                 alert("playlogs: " + playlogs.join(", "));
 
             });
