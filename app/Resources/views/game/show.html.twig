@@ -12,6 +12,8 @@
                 <hr>
                 {{ game.name }}
             </div>
+
+
             {% set gamePlayedCount = [] %}
 
             {% for playlog in playlogs %}
@@ -22,29 +24,60 @@
                     {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
                 {% endif %}
             {% endfor %}
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <h2>Playlogs <span class="badge">{{ gamePlayedCount|length }}</span></h2>
                 <hr>
-                {% if gamePlayedCount|length > 0 %}
-                    {% for playlog in game.playlogs %}
-                        {% set playlogUserId =  playlog.getuserid %}
-                        {% if playlogUserId == currentUserId %}
-                            {{ playlog.date|date('M-d-Y') }}<br>
-                        {% endif %}
-                    {% endfor %}
+                <p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a id="deleteBtn" class="btn btn-danger" href="#">Delete</a>
+                    </div>
+                </div>
+                </p>
+                <form>
+                    <ul class="list-group">
+                        {% if gamePlayedCount|length > 0 %}
+                        {% for playlog in game.playlogs %}
+                            {% set playlogUserId =  playlog.getuserid %}
+                            {% if playlogUserId == currentUserId %}
+                                <li class="list-group-item">
+                                    <label><input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('M-d-Y') }} </label>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </form>
                 {% else %}
-                        <div class="alert alert-info" role="alert">
+                    <div class="alert alert-info" role="alert">
                         <h3>Playlog list is empty </h3>
-                            <p>You haven't played this game (yet).</p>
-                            <p>
-                                If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may log it here</a>
-                            </p>
-                        </div>
+                        <p>You haven't played this game (yet).</p>
+                        <p>
+                            If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may log it here</a>
+                        </p>
+                    </div>
                 {% endif %}
             </div>
-
-
         </div>
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#deleteBtn").click(function(){
+
+                var playlogs = [];
+
+                $.each($("input[name='playlog']:checked"), function(){
+                    playlogs.push($(this).val());
+                });
+
+                alert("playlogs: " + playlogs.join(", "));
+
+            });
+        });
+
+
+    </script>
+{% endblock javascripts %}
