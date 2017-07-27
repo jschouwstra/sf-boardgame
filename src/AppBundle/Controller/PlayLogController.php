@@ -7,7 +7,9 @@ use AppBundle\Entity\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Playlog controller.
@@ -113,6 +115,20 @@ class PlayLogController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+
+    /**
+     * @Route("/delete/bulk", name="playlog_delete_bulk")
+     */
+    public function deleteBulkAction(Request $request)
+    {
+        if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(array('data' => 'Successfully called the named route playlog_delete_bulk  '));
+        }
+
+        return new Response('This is not ajax!', 400);
+    }
+
 
     /**
      * Deletes a playLog entity.

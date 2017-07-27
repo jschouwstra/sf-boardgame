@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros.html.twig" as macro %}
 {% block content %}
+
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
     {% set playlogs = game.playlogs %}
     {% set currentUserId =  app.user.id %}
@@ -41,9 +42,10 @@
                             {% set playlogUserId =  playlog.getuserid %}
                             {% if playlogUserId == currentUserId %}
                                 <label>
-                                <li class="list-group-item">
-                                    <input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('M-d-Y') }}
-                                </li>
+                                    <li class="list-group-item">
+                                        {#<input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('M-d-Y') }}#}
+                                        <input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('Y-m-d') }}
+                                    </li>
                                 </label>
                             {% endif %}
                         {% endfor %}
@@ -66,21 +68,29 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        $(document).ready(function(){
-            $("#deleteBtn").click(function(){
+        $(document).ready(function () {
+            $('#deleteBtn').click(function () {
 
                 var playlogs = [];
 
-                $.each($("input[name='playlog']:checked"), function(){
+                //Add all checked boxes with corresponding id's to array "playlogs"
+                $.each($("input[name='playlog']:checked"), function () {
                     playlogs.push($(this).val());
                 });
-
-//                alert("playlogs: " + playlogs.join(", "));
-                alert("playlogs: " + playlogs.join(", "));
-
+                var confirmText = "Are you sure you want to delete this?";
+                if (confirm(confirmText)) {
+                    $.ajax({
+                        type: "delete",
+                        url: '{{ path('playlog_delete_bulk') }}',//path to the route of PlayLogController->deleteBulkAction method
+                        data: playlogs,
+                        success: function () {
+                            alert("selected playlogs: " + playlogs.join(", "));
+                        },
+                    });
+                }
+                return false;
             });
+
         });
-
-
     </script>
 {% endblock javascripts %}
