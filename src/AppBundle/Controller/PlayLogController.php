@@ -122,11 +122,18 @@ class PlayLogController extends Controller
      */
     public function deleteBulkAction(Request $request)
     {
-        if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => 'Successfully called the named route playlog_delete_bulk  '));
+
+        $array = json_decode($request->getContent());
+        $em = $this->getDoctrine()->getManager();
+
+        //Find PlayLog with playlogID match and remove it
+        foreach ($array as $playlogID) {
+            $playlog = $em->getRepository('AppBundle:PlayLog')->find($playlogID);
+            $em->remove($playlog);
+            $em->flush();
         }
 
-        return new Response('This is not ajax!', 400);
+        return new Response("Success");
     }
 
 

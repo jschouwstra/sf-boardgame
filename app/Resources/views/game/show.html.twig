@@ -77,14 +77,16 @@
                 $.each($("input[name='playlog']:checked"), function () {
                     playlogs.push($(this).val());
                 });
-                var confirmText = "Are you sure you want to delete this?";
+                var confirmText = "Are you sure you want to delete the selected plays?";
                 if (confirm(confirmText)) {
                     $.ajax({
-                        type: "delete",
+                        type: "POST",
                         url: '{{ path('playlog_delete_bulk') }}',//path to the route of PlayLogController->deleteBulkAction method
-                        data: playlogs,
+                        data: JSON.stringify(playlogs),
+//                        data: plays: playlogs,
                         success: function () {
-                            alert("selected playlogs: " + playlogs.join(", "));
+//                            alert("selected playlogs: " + playlogs.join(", "));
+                                window.location.reload();
                         },
                     });
                 }

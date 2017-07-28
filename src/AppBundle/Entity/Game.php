@@ -20,12 +20,7 @@ class Game
      *
      */
     private $playlogs;
-
-
     private $users;
-
-
-
 
     /**
      * @return ArrayCollection
