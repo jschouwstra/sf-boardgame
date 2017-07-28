@@ -25,13 +25,17 @@
                     {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
                 {% endif %}
             {% endfor %}
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h2>Playlogs <span class="badge">{{ gamePlayedCount|length }}</span></h2>
                 <hr>
                 <p>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        Action: <a id="deleteBtn" class="btn btn-danger" href="#">Delete</a>
+
+                        <a id="deleteBtn" class="btn btn-danger" href="#"><i class="fa fa-remove"></i> <span class="adaptiveText">Delete</span></a>
+                        <a class="btn btn-primary"
+                           href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-plus"></i> <span class="adaptiveText">Add Play</span>
+                        </a>
                     </div>
                 </div>
                 </p>
@@ -43,7 +47,6 @@
                             {% if playlogUserId == currentUserId %}
                                 <label>
                                     <li class="list-group-item">
-                                        {#<input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('M-d-Y') }}#}
                                         <input name="playlog" type="checkbox" value="{{ playlog.Id }}"> {{ playlog.date|date('Y-m-d') }}
                                     </li>
                                 </label>
@@ -69,6 +72,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+
             $('#deleteBtn').click(function () {
 
                 var playlogs = [];
@@ -77,14 +82,16 @@
                 $.each($("input[name='playlog']:checked"), function () {
                     playlogs.push($(this).val());
                 });
-                var confirmText = "Are you sure you want to delete this?";
+                var confirmText = "Are you sure you want to delete the selected plays?";
                 if (confirm(confirmText)) {
                     $.ajax({
-                        type: "delete",
+                        type: "POST",
                         url: '{{ path('playlog_delete_bulk') }}',//path to the route of PlayLogController->deleteBulkAction method
-                        data: playlogs,
+                        data: JSON.stringify(playlogs),
+//                        data: plays: playlogs,
                         success: function () {
-                            alert("selected playlogs: " + playlogs.join(", "));
+//                            alert("selected playlogs: " + playlogs.join(", "));
+                            window.location.reload();
                         },
                     });
                 }
