@@ -80,11 +80,14 @@ class UserController extends Controller
      */
     public function showUserProfile()
     {
+        $games = array();
         $gameplayArray = array();
 
+        $totalGames = array();
+        $totalGameplays = array();
+        
         $user = $this->getUser();
         $userGames = $user->getGames();
-        $games = array();
 
         foreach ($userGames as $game) {
             //games arrays
@@ -102,12 +105,21 @@ class UserController extends Controller
                     array_push($gameplays, 1);
                 }
             }
+
             array_push($gameplayArray, count($gameplays));
         }
 
+        for($x=0; $x < count($gameplayArray); $x++){
+
+            if($gameplayArray[$x] != null ){
+                array_push($totalGameplays, $gameplayArray[$x]);
+                array_push($totalGames, $games[$x]);
+
+            }
+        }
         return $this->render('user/profile.html.twig', array(
-            'games' => $games,
-            'gameplays' => $gameplayArray,
+            'games' => $totalGames,
+            'gameplays' => $totalGameplays,
 
         ));
     }
