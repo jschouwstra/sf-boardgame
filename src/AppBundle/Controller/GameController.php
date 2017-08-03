@@ -48,14 +48,13 @@ class GameController extends Controller
      * @Route("/json", name="user_games_json")
      * @Method("GET")
      */
-    public function returnUserGamesAsJson(Request $request)
+    public function returnUserGamesAsJsonAction(Request $request)
     {
         /*
          * The FOSUser object (current user) is injected in the container so we can access it globally
          *
         */
 
-        /** @var User $usr */
         $usr = $this->getUser();
         $userGames = $usr->getGames();
 
