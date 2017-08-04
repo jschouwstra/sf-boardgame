@@ -7,16 +7,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class addGameToUserType extends AbstractType
+class addExpansionToGameType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('game', EntityType::class, [
+        /** Expansion $expansion */
+        $builder->add('expansion', EntityType::class, [
             'attr' => ['data-select' => 'true'],
 
-            'class' => 'AppBundle:Game',
-            'choice_label' => function ($game) {
-                return $game->getName();
+            'class' => 'AppBundle:Expansion',
+            'choice_label' => function ($expansion) {
+                return $expansion->getName();
             },
             'multiple' => true,
             'expanded' => false,
@@ -30,6 +31,6 @@ class addGameToUserType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'test';
+        return 'app_bundleadd_expansion_to_game';
     }
 }

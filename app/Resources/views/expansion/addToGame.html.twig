@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 {% import "macros.html.twig" as macro %}
+
+
 {% block content %}
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
-    {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h1>Add Games To My List</h1>
-            <hr>
+            <h1>Add Expansion(s)</h1>
+            <h3>For {{ game.name }}</h3>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            {{ form_widget(form.game) }}
+            {{ form_widget(form.expansion) }}
         </div>
     </div>
 
@@ -22,18 +22,16 @@
         </div>
     </div>
     {{ form_rest(form) }}
-    {{ form_end(form.game) }}
+    {{ form_end(form.expansion) }}
 
 
 {% endblock content %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+{% endblock stylesheets %}
+
 {% block javascripts %}
-    {{ parent() }}
 
-
-    <script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
-
-    <script type="text/javascript">
-        $('select').select2();
-    </script>
 {% endblock javascripts %}
 
