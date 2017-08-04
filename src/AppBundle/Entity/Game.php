@@ -16,10 +16,17 @@ class Game
 {
     /**
      * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
-     * @ORM\OrderBy({"date" = "DESC"})
-     *
      */
     private $playlogs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Expansion", mappedBy="game")
+     */
+    private $expansions;
+
+    /**
+     * @ORM\OrderBy({"date" = "DESC"})
+     */
     private $users;
 
     /**
@@ -38,13 +45,34 @@ class Game
         $this->users = $users;
     }
 
-//    private $categories;
 
+
+    /**
+     * @return mixed
+     */
+    public function getPlaylogs()
+    {
+        return $this->playlogs;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExpansions()
+    {
+        return $this->expansions;
+    }
+
+    /**
+     * Game constructor.
+     */
     public function __construct()
     {
         $this->playlogs = new ArrayCollection();
+        $this->expansions = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
+
     /**
      * @var int
      *
@@ -53,7 +81,6 @@ class Game
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
 
     /**
      * @var string
@@ -66,7 +93,6 @@ class Game
      */
     private $name;
 
-
     /**
      * Get id
      *
@@ -76,7 +102,6 @@ class Game
     {
         return $this->id;
     }
-
 
 
     /**
@@ -105,30 +130,9 @@ class Game
 
 
 
-    /**
-     * @return mixed
-     */
-    public function getPlaylogs()
+
+    public function addGameUser(User $user)
     {
-        return $this->playlogs;
-    }
-
-    /**
-     * @param mixed $playlogs
-     */
-    public function setPlaylogs($playlogs)
-    {
-        $this->playlogs = $playlogs;
-    }
-
-    public function addPlayLog(PlayLog $playlog)
-    {
-        $this->playlog->add($playlog);
-        $playlog->setPlayLogs($this);
-    }
-
-
-    public function addGameUser(User $user){
         $this->users[] = $user;
     }
 }

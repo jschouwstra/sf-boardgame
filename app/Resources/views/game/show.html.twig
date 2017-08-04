@@ -8,14 +8,20 @@
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2 ">
-            <div class="col-md-6 ">
-                <h2>Game</h2>
-                <hr>
-                {{ game.name }}
+
+            <div class="row">
+                <div class="col-md-6 ">
+                    <h2>Game: {{ game.name }}</h2>
+                    <hr>
+                </div>
             </div>
 
 
             {% set gamePlayedCount = [] %}
+            {% set expansions = game.expansions %}
+            {% for expansion in expansions %}
+                {{ expansion.name }}
+            {% endfor %}
 
             {% for playlog in playlogs %}
                 {#Get the playlog user_id so we count only the current user's playlogs#}
@@ -29,7 +35,7 @@
                 <h2>Playlogs <span class="badge">{{ gamePlayedCount|length }}</span></h2>
                 <hr>
                 <p>
-                <div class="panel panel-default">
+                <div class="panel panel-default " style="background-color: #BFC9D2">
                     <div class="panel-body">
 
                         <a id="deleteBtn" class="btn btn-danger" href="#"><i class="fa fa-remove"></i> <span class="adaptiveText">Delete</span></a>
@@ -64,6 +70,18 @@
                     </div>
                 {% endif %}
             </div>
+            <div class="col-md-4">
+                <h2>Expansions <span class="badge">{{ gamePlayedCount|length }}</span></h2>
+                <hr>
+                <p>
+                <div class="panel panel-default " style="background-color: #BFC9D2">
+                    <div class="panel-body">
+                        <a class="btn btn-primary" href="{{ path('playlog_new', { 'gameId': game.id }) }}">
+                            <i class="fa fa-plus"></i> <span class="adaptiveText">Add Expansion</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -72,12 +90,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
-
             $('#deleteBtn').click(function () {
-
                 var playlogs = [];
-
                 //Add all checked boxes with corresponding id's to array "playlogs"
                 $.each($("input[name='playlog']:checked"), function () {
                     playlogs.push($(this).val());

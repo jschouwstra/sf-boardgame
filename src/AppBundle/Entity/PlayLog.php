@@ -12,8 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PlayLog
 {
-
+    /**************************
+     *  Relations
+     *************************/
     /**
+
+     /**
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="playlogs")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
@@ -25,6 +29,11 @@ class PlayLog
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+
+    /**************************
+     *  Getters and setters
+     *************************/
 
     /**
      * @return mixed
@@ -97,7 +106,6 @@ class PlayLog
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
-
      */
     private $date;
 
@@ -174,13 +182,10 @@ class PlayLog
 //    }
 
 
-
-
 //    public function removeGame(Game $game)
 //    {
 //        $this->games->removeElement($game);
 //    }
-
 
 
 }

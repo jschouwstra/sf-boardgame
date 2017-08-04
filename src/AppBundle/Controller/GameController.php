@@ -1,14 +1,12 @@
 <?php
 
 namespace AppBundle\Controller;
+
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
-use function array_push;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-//use Symfony\Component\BrowserKit\Response;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -60,7 +58,7 @@ class GameController extends Controller
         $userGames = $usr->getGames();
 
         $games = array();
-        foreach($userGames as $game){
+        foreach ($userGames as $game) {
             array_push($games, $game->getName());
         }
         $serializer = $this->get('jms_serializer');
