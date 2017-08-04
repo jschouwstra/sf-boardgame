@@ -32,7 +32,7 @@
                 {% endif %}
             {% endfor %}
             <div class="col-md-4">
-                <h2>Playlogs <span class="badge">{{ gamePlayedCount|length }}</span></h2>
+                <h2>Plays <span class="badge">{{ gamePlayedCount|length }}</span></h2>
                 <hr>
                 <p>
                 <div class="panel panel-default " style="background-color: #BFC9D2">
@@ -62,10 +62,9 @@
                 </form>
                 {% else %}
                     <div class="alert alert-info" role="alert">
-                        <h3>Playlog list is empty </h3>
                         <p>You haven't played this game (yet).</p>
                         <p>
-                            If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may log it here</a>
+                            If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may add a play here</a>
                         </p>
                     </div>
                 {% endif %}
