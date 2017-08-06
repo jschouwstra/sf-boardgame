@@ -101,5 +101,42 @@ class Expansion
     {
         return $this->name;
     }
+
+    //Array collection functions
+    //  Every function about relations
+
+    public function getExpansions()
+    {
+        return $this->expansions;
+    }
+
+    /**
+     * @param mixed $games
+     */
+    public function setGames($games)
+    {
+        $this->games = $games;
+    }
+
+    public function addGame(Game $game)
+    {
+        $this->games->add($game);
+        //     $this->games[] = $game;
+        return $this;
+    }
+
+
+
+    public function removeExpansion(Expansion $expansion){
+        $this->expansions->removeElement($expansion);
+    }
+
+    public function removeAllExpansions()
+    {
+        foreach ($this->expansion as $expansion)
+        {
+            $this->removeExpansion($expansion);
+        }
+    }
 }
 

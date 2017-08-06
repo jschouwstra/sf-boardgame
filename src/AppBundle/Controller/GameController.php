@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Expansion;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -173,5 +175,32 @@ class GameController extends Controller
             ->setAction($this->generateUrl('game_delete', array('id' => $game->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     * @Route("/add/expansion/to/{gameId}", name="add_expansion_to_game")
+     * @Method("GET")
+     */
+    public function addExpansionAction(Game $gameId,Request $request)
+    {
+        $game = $gameId;
+        $form = $this->createForm('AppBundle\Form\addExpansionToGameType');
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted()) {
+             //if form not submitted set current known data
+            $form["expansion"]->setData($game->getExpansions());
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $expansionArray = $form["expansion"]->getData();
+
+        }
+
+        return $this->render('expansion/addToGame.html.twig', array(
+            'game' => $game,
+            'form' => $form->createView()
+        ));
     }
 }

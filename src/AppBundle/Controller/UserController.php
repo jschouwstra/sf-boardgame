@@ -33,9 +33,8 @@ class UserController extends Controller
          */
         $userObject = $this->getUser();
 
-        /**
-         * If form is not submitted get all user's games and set the selectbox accordingly
-         */
+
+        //If form is not submitted get all user's games and set the selectbox accordingly
         if (!$form->isSubmitted()) {
             // games selecteren
             $form["game"]->setData($userObject->getGames());
@@ -44,15 +43,13 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            /**
-             * Get form data as an array
-             */
+            //get form data as array
             /** @var  $game */
             $gameArray = $form["game"]->getData();
 
             /**
              * Unset each game from User Collection and set each game with ArrayCollection "->remove" and "->add"
-             * Remove everyhing unselected and add everything selected
+             * Remove every unselected and add everything selected to the User object
              */
             $userObject->removeAllGames();
             foreach ($gameArray as $game) {
@@ -63,7 +60,6 @@ class UserController extends Controller
             $em->flush();
             return $this->redirectToRoute('game_index');
         }
-
 
         return $this->render('user/addGame.html.twig', array(
             'form' => $form->createView()

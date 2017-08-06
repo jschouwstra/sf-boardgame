@@ -18,30 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ExpansionController extends Controller
 {
 
-    /**
-     * @Route("/add/to/game/{gameId}", name="add_expansion_to_game")
-     * @Method("GET")
-     */
-    public function addToGameAction(Game $gameId, Request $request)
-    {
-        $game = $gameId;
-        $form = $this->createForm('AppBundle\Form\addExpansionToGameType');
 
-        if (!$form->isSubmitted()) {
-            // games selecteren
-            $form["expansion"]->setData($game->getExpansions());
-        }
-
-        if($form->isValid()){
-            $form->handleRequest();
-
-        }
-
-        return $this->render('expansion/addToGame.html.twig', array(
-        'game' => $game,
-        'form' => $form->createView()
-        ));
-    }
 
 
 }

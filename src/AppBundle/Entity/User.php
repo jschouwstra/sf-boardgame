@@ -92,7 +92,6 @@ class User extends BaseUser
         {
             $this->removeGame($game);
         }
-        //$this->games = new ArrayCollection();
     }
 
     /**
