@@ -19,9 +19,6 @@
 
             {% set gamePlayedCount = [] %}
             {% set expansions = game.expansions %}
-            {% for expansion in expansions %}
-                {{ expansion.name }}
-            {% endfor %}
 
             {% for playlog in playlogs %}
                 {#Get the playlog user_id so we count only the current user's playlogs#}
@@ -70,7 +67,7 @@
                 {% endif %}
             </div>
             <div class="col-md-4">
-                <h2>Expansions <span class="badge">{{ gamePlayedCount|length }}</span></h2>
+                <h2>Expansions <span class="badge">{{ game.expansions|length }}</span></h2>
                 <hr>
                 <p>
                 <div class="panel panel-default " style="background-color: #BFC9D2">
@@ -79,7 +76,19 @@
                             <i class="fa fa-plus"></i> <span class="adaptiveText">Add Expansion</span>
                         </a>
                     </div>
+
                 </div>
+                <ul class="list-group">
+                    {% if game.expansions|length > 0 %}
+                        {% for expansion in game.expansions %}
+                            <label>
+                                <li class="list-group-item">
+                                    {{ expansion.name }}
+                                </li>
+                            </label>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>

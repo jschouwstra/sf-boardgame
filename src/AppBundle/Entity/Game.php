@@ -47,21 +47,6 @@ class Game
 
 
 
-    /**
-     * @return mixed
-     */
-    public function getPlaylogs()
-    {
-        return $this->playlogs;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getExpansions()
-    {
-        return $this->expansions;
-    }
 
     /**
      * Game constructor.
@@ -128,11 +113,48 @@ class Game
         return $this->name;
     }
 
+//array collection functions
 
-
-
-    public function addGameUser(User $user)
+    /**
+     * @return mixed
+     */
+    public function getPlaylogs()
     {
-        $this->users[] = $user;
+        return $this->playlogs;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getExpansions()
+    {
+        return $this->expansions;
+    }
+
+    /**
+     * @param mixed $expansions
+     */
+    public function setExpansions($expansions)
+    {
+        $this->expansions = $expansions;
+    }
+
+    public function addExpansion(Expansion $expansion)
+    {
+        $this->expansions->add($expansion);
+        return $this;
+    }
+    public function removeExpansion(Expansion $expansion)
+    {
+        $this->expansions->removeElement($expansion);
+    }
+
+    public function removeAllExpansions()
+    {
+        foreach ($this->expansions as $expansion)
+        {
+            $this->removeExpansion($expansion);
+        }
     }
 }

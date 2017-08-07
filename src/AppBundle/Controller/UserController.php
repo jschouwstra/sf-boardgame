@@ -67,7 +67,6 @@ class UserController extends Controller
     }
 
 
-
     /**
      * Show current user profile.
      *
@@ -81,7 +80,7 @@ class UserController extends Controller
 
         $totalGames = array();
         $totalGameplays = array();
-        
+
         $user = $this->getUser();
         $userGames = $user->getGames();
 
@@ -105,9 +104,9 @@ class UserController extends Controller
             array_push($gameplayArray, count($gameplays));
         }
 
-        for($x=0; $x < count($gameplayArray); $x++){
+        for ($x = 0; $x < count($gameplayArray); $x++) {
 
-            if($gameplayArray[$x] != null ){
+            if ($gameplayArray[$x] != null) {
                 array_push($totalGameplays, $gameplayArray[$x]);
                 array_push($totalGames, $games[$x]);
 

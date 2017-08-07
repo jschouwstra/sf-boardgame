@@ -127,16 +127,5 @@ class Expansion
 
 
 
-    public function removeExpansion(Expansion $expansion){
-        $this->expansions->removeElement($expansion);
-    }
-
-    public function removeAllExpansions()
-    {
-        foreach ($this->expansion as $expansion)
-        {
-            $this->removeExpansion($expansion);
-        }
-    }
 }
 

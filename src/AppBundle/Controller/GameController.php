@@ -179,26 +179,35 @@ class GameController extends Controller
 
     /**
      * @Route("/add/expansion/to/{gameId}", name="add_expansion_to_game")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function addExpansionAction(Game $gameId,Request $request)
+    public function addExpansionAction(Game $gameId, Request $request)
     {
-        $game = $gameId;
         $form = $this->createForm('AppBundle\Form\addExpansionToGameType');
         $form->handleRequest($request);
+        $game = $gameId;
 
         if (!$form->isSubmitted()) {
-             //if form not submitted set current known data
+            //if form not submitted set current known data
             $form["expansion"]->setData($game->getExpansions());
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $expansionArray = $form["expansion"]->getData();
+            $game->removeAllExpansions();
+            foreach ($expansionArray as $expansion) {
+                $game->addExpansion($expansion);
+            }
+
+            $em->persist($game);
+            $em->flush();
+            return $this->redirectToRoute('game_index');
+
 
         }
 
-        return $this->render('expansion/addToGame.html.twig', array(
+        return $this->render('game/addExpansion.html.twig', array(
             'game' => $game,
             'form' => $form->createView()
         ));
