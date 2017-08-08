@@ -2,12 +2,14 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\PlayLog;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-
+use const false;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\PlayLog;
+use AppBundle\Entity\Expansion;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class PlayLogType extends AbstractType
 {
@@ -16,14 +18,28 @@ class PlayLogType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date', DateType::class, array(
+        $builder
+        ->add('date', DateType::class, array(
             'widget' => 'single_text',
             'html5' => false,
             'attr' => ['class' => 'datepicker'],
             'label' => 'Choose date ',
             'format' => 'MM/dd/yyyy'
-            )
-        );
+        ));
+
+        /** var Expansion $expansion */
+        $builder->add('expansions', EntityType::class, [
+            'attr' => ['data-select' => 'true'],
+
+            'class' => 'AppBundle:Expansion',
+            'choice_label' => function ($expansion) {
+                return $expansion->getName();
+            },
+            'multiple' => true,
+            'expanded' => false,
+            'required' => false
+        ]);
+
     }
     
     /**

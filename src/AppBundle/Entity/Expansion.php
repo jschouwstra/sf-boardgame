@@ -24,6 +24,13 @@ class Expansion
      */
     private $game;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PlayLog", mappedBy="expansions")
+     */
+    private $playlog;
+
+
+
     /**************************
      *  Properties
      *************************/
@@ -66,6 +73,22 @@ class Expansion
     public function setGame($game)
     {
         $this->game = $game;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlaylog()
+    {
+        return $this->playlog;
+    }
+
+    /**
+     * @param mixed $playlog
+     */
+    public function setPlaylog($playlog)
+    {
+        $this->playlog = $playlog;
     }
 
     /**

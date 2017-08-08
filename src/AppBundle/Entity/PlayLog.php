@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * PlayLog
@@ -16,6 +18,14 @@ class PlayLog
      *  Relations
      *************************/
     /**
+     * @ORM\ManyToMany(targetEntity="Expansion", inversedBy="playlog")
+     *
+     * @ORM\JoinTable(name="playlog_expansion",
+     *      joinColumns={@ORM\JoinColumn(name="playlog_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="expansion_id", referencedColumnName="id")}
+     *      )
+     */
+    private $expansions;
 
      /**
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="playlogs")
@@ -30,7 +40,10 @@ class PlayLog
      */
     private $user;
 
-
+    public function __construct()
+    {
+        $this->expansions = new ArrayCollection();
+    }
     /**************************
      *  Getters and setters
      *************************/
@@ -151,6 +164,42 @@ class PlayLog
     {
         return $this->date;
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getExpansions()
+    {
+        return $this->expansions;
+    }
+
+    /**
+     * @param mixed $expansions
+     */
+    public function setExpansions($expansions)
+    {
+        $this->expansions = $expansions;
+    }
+
+    public function addExpansion(Expansion $expansion)
+    {
+        $this->expansions->add($expansion);
+        return $this;
+    }
+    public function removeExpansion(Expansion $expansion)
+    {
+        $this->expansions->removeElement($expansion);
+    }
+
+    public function removeAllExpansions()
+    {
+        foreach ($this->expansions as $expansion)
+        {
+            $this->removeExpansion($expansion);
+        }
+    }
+
 
 //    /**
 //     * Set gameId

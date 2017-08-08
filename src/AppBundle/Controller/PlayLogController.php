@@ -50,7 +50,6 @@ class PlayLogController extends Controller
         $game = $em->getRepository(Game::class)->find($gameId);
         $playlog->setGame($game);
 
-
         $playlog->setUser($userObject);
         $form = $this->createForm('AppBundle\Form\PlayLogType', $playlog);
         $form->handleRequest($request);
