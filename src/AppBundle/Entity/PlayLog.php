@@ -106,7 +106,7 @@ class PlayLog
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
-     * @ORM\OrderBy({"date" = "DESC"})
+     * @ORM\OrderBy({"date" = "ASC"})
      */
     private $date;
 
