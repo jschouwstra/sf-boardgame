@@ -42,35 +42,40 @@
                 </div>
                 </p>
                 <form>
+                    {% if gamePlayedCount|length > 0 %}
                     <div class=" panel panel-body panel-default">
-                    <div class="table">
-                    <table class="table table-bordered table-responsive table-condensed">
-                        <tr>
-                            <td></td>
-                            <td>Date</td>
-                            <td>Expansions</td>
-                        </tr>
-                        {% if gamePlayedCount|length > 0 %}
-                        {% for playlog in game.playlogs | sortbyfield("date") |reverse %}
-                            <tr>
-                                <td><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
-                                <td>
-                                    {{ playlog.date|date('Y-m-d') }}
-                                </td>
-                                {% set playlogUserId =  playlog.getuserid %}
-                                {% if playlogUserId == currentUserId %}
-                                    <td>
-                                        {% for expansion in playlog.expansions %}
-                                            {{ expansion.name }}<br>
-                                        {% endfor %}
+                        <div class="table">
+                            <table class="table table-bordered table-responsive table-condensed">
+                                <tr>
+                                    <td></td>
+                                    <td>Date</td>
+                                    <td>Expansion</td>
+                                </tr>
+                                {% for playlog in game.playlogs | sortbyfield("date") |reverse %}
+                                    <tr>
+                                        <td><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
+                                        <td>
+                                            {{ playlog.date|date('Y-m-d') }}
+                                        </td>
+                                        {% set playlogUserId =  playlog.getuserid %}
+                                        {% if playlogUserId == currentUserId %}
+                                            <td>
+                                                <ul>
+                                                {% for expansion in playlog.expansions %}
+                                                    {% if expansion %}
+                                                        <li> {{ expansion.name }}</li>
+                                                    {% else %}
+                                                        Nope
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </td>
 
-                                    </td>
-
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </table>
-                    </div>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </form>
                 {% else %}
