@@ -66,7 +66,8 @@ class UserController extends Controller
         ));
     }
 
-    public function getUserGamesForGraph(){
+    public function getUserGamesForGraph()
+    {
         $games = array();
         $gameplayArray = array();
 
