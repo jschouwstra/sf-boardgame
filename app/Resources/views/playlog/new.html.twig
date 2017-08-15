@@ -79,7 +79,13 @@
     <script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
 
     <script type="text/javascript">
-        $('select').select2();
+        $('select').select2({
+
+            minimumInputLength: 3,
+            formatInputTooShort: function () {
+            return "Enter 3 Characters";
+        },
+        });
     </script>
 {% endblock javascripts %}
 
