@@ -66,15 +66,7 @@ class UserController extends Controller
         ));
     }
 
-
-    /**
-     * Show current user profile.
-     *
-     * @Route("user/profile", name="user_profile")
-     * @Method({"GET", "POST"})
-     */
-    public function showUserProfile()
-    {
+    public function getUserGamesForGraph(){
         $games = array();
         $gameplayArray = array();
 
@@ -112,6 +104,20 @@ class UserController extends Controller
 
             }
         }
+        return array($totalGames, $totalGameplays);
+    }
+
+    /**
+     * Show current user profile.
+     *
+     * @Route("user/profile", name="user_profile")
+     * @Method({"GET", "POST"})
+     */
+    public function showUserProfile()
+    {
+        $userGames = $this->getUserGamesForGraph();
+        $totalGames = $userGames[0];
+        $totalGameplays = $userGames[1];
         return $this->render('user/profile.html.twig', array(
             'games' => $totalGames,
             'gameplays' => $totalGameplays,
