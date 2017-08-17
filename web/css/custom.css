@@ -47,3 +47,25 @@ table td a:link,table td a:visited{
         width: 100% !important;
     }
 }
+
+.navbar-inverse{
+    background-color: #283E4A;
+
+}
+.navbar-inverse .navbar-nav > li > a{
+    color: white;
+
+}
+.navbar-inverse .navbar-nav > li > a:hover{
+    color: white;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a{
+    background-color: white;
+}
+
+.dropdown-menu > li > a{
+    color: black !important;
+}
+.dropdown-menu > li > a:hover{
+    background-color: #F7F7F9 !important;
+}
