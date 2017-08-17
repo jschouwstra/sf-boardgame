@@ -9,20 +9,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     /**
      * Social controller.
      *
-     * @Route("social")
+     * @Route("lounge")
      *
      */
-class SocialController extends Controller
+class LoungeController extends Controller
 {
 
 /**
- * @Route("/", name="social_index")
+ * @Route("/", name="lounge_index")
  * @Method("GET")
 
  */
 
     public function indexAction()
     {
-        return $this->render('social/index.html.twig');
+        return $this->render('lounge/index.html.twig');
     }
 }

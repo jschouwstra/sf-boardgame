@@ -44,6 +44,8 @@ security:
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(css|js), roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(_wdt|_profiler), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#       Lounge pages
+        - { path: ^/lounge/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #    Registered user access:
         - { path: ^/, roles: ROLE_USER }
 
