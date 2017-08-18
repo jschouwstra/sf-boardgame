@@ -31,7 +31,6 @@ class GameController extends Controller
          * The FOSUser object (current user) is injected in the container so we can access it globally
          *
         */
-
         /** @var User $usr */
         $usr = $this->getUser();
         $userGames = $usr->getGames();

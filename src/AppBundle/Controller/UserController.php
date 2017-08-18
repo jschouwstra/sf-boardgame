@@ -16,6 +16,7 @@ use function var_export;
 
 class UserController extends Controller
 {
+
     /**
      * Adds game(s) to current user.
      *
@@ -122,7 +123,7 @@ class UserController extends Controller
         return $this->render('user/profile.html.twig', array(
             'games' => $totalGames,
             'gameplays' => $totalGameplays,
-
         ));
     }
+
 }

@@ -62,6 +62,8 @@ class PlayLogController extends Controller
             $em->persist($playlog);
             $em->flush();
 
+            $this->addFlash('success', 'something went well');
+
             return $this->redirect($this->generateUrl('game_show', array(
                 'id' => $gameId
             )));

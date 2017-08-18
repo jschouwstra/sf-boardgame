@@ -8,6 +8,13 @@
     <div class="col-md-8 col-md-offset-2">
     {% set currentUserId =  app.user.id %}
     <hr>
+    {% for type,messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        <div class="alert alert-notice">
+            {{ message | raw }}
+        </div>
+    {% endfor %}
+    {% endfor %}
     <div class="row">
         <div class="col-md-12 col-sm-12 col-lg-12 ">
             <div class="panel panel-primary">

@@ -7,3 +7,9 @@ fos_user:
 
 logout:
     path: /logout
+
+fos_user_registration_confirmed:
+    path: /user/profile
+    defaults: { _controller: MDBUserBundle:User:confirmed }
+    requirements:
+        method: GET
