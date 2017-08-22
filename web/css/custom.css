@@ -54,7 +54,6 @@ table td a:link,table td a:visited{
 }
 .navbar-inverse .navbar-nav > li > a{
     color: white;
-
 }
 .navbar-inverse .navbar-nav > li > a:hover{
     color: white;
@@ -77,4 +76,9 @@ table td a:link,table td a:visited{
 
 .navbar-inverse .navbar-nav > .open > a:focus{
     background-color: #4C9ED9;
+}
+
+.navbar-inverse.btn{
+    margin-left:4px;
+    margin-right:4px;
 }

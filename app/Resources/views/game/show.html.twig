@@ -15,7 +15,17 @@
                     <hr>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-md-6 ">
+                    {% for type, flashMessages in app.session.flashbag.all() %}
+                        {% for flashMessage in flashMessages %}
+                            <div class="alert alert-{{ type }}">
+                                {{ flashMessage|trans }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
 
             {% set gamePlayedCount = [] %}
 
@@ -142,5 +152,8 @@
             });
 
         });
+
+        $('.alert ').hide();
+        $('.alert ').slideDown(1000);
     </script>
 {% endblock javascripts %}
