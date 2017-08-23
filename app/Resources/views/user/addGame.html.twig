@@ -23,7 +23,10 @@
     </div>
     {{ form_rest(form) }}
     {{ form_end(form.game) }}
-
+    {{ dump() }}
+    {% for game in bggGameList %}
+        {{ game }}
+    {% endfor %}
 
 {% endblock content %}
 {% block javascripts %}

@@ -8,6 +8,7 @@ use AppBundle\Entity\Game;
 use Monolog\Logger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,21 @@ use function var_export;
 
 class UserController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Method({"GET", "POST"})
+     */
+
+    public function getBggGameList(){
+        $client = new \Nataniel\BoardGameGeek\Client();
+        $thing = $client->getThing(39856, true);
+
+        return new Response (
+            $thing->getName()
+        );
+
+    }
+
 
     /**
      * Adds game(s) to current user.
@@ -63,7 +79,8 @@ class UserController extends Controller
         }
 
         return $this->render('user/addGame.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'bggGameList' => $this->getBggGameList()
         ));
     }
 
