@@ -35,18 +35,27 @@ padding: 20px;
 
 table td a:link,table td a:visited{
     text-transform: capitalize;
-
 }
 
 .row{
     margin-bottom: 10px;
 }
-
+.select2{
+    width: 100% !important;
+}
 @media screen and (max-width: 767px) {
     .select2 {
         width: 100% !important;
+        min-height: 100px;
     }
 }
+
+@media screen and (max-width: 767px) {
+button .btn{
+    width: 100%;
+}
+}
+
 
 .navbar-inverse{
     background-color: #283E4A;

@@ -2,28 +2,24 @@
 {% import "macros.html.twig" as macro %}
 {% block content %}
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
-    {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h1>Add Games To My List</h1>
+            <h2>Add games</h2>
             <hr>
         </div>
     </div>
-
+    {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            {{ form_widget(form.game) }}
+        {{ form_widget(form.game) }}
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            {{ macro.btnSubmit() }}
-        </div>
+            <button title="Confirm" class="btn btn-success btn-block" type="submit"><i class="fa fa-check"></i>&nbsp; Confirm</button>
     </div>
     {{ form_rest(form) }}
     {{ form_end(form.game) }}
-
 
 {% endblock content %}
 {% block javascripts %}
@@ -31,9 +27,10 @@
 
 
     <script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
-
     <script type="text/javascript">
-        $('select').select2();
+        $('select').select2({
+            tags:true
+        });
     </script>
 {% endblock javascripts %}
 

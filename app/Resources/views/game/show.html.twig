@@ -6,38 +6,27 @@
     {% set playlogs = game.playlogs %}
     {% set currentUserId =  app.user.id %}
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 ">
-
-            <div class="row">
-                <div class="col-md-6 ">
-                    <h2>Game: {{ game.name }}</h2>
-                    <hr>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12  ">
+                <h2>Game: {{ game.name }}</h2>
+                <hr>
             </div>
-            <div class="row">
-                <div class="col-md-6 ">
-                    {% for type, flashMessages in app.session.flashbag.all() %}
-                        {% for flashMessage in flashMessages %}
-                            <div class="alert alert-{{ type }}">
-                                {{ flashMessage|trans }}
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            </div>
+        </div>
 
-            {% set gamePlayedCount = [] %}
 
-            {% for playlog in playlogs %}
-                {#Get the playlog user_id so we count only the current user's playlogs#}
-                {% set playlogUserId =  playlog.getuserid %}
-                {% if playlogUserId == currentUserId %}
-                    {#Make an array with only the playlogs of the user and the game#}
-                    {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
-                {% endif %}
-            {% endfor %}
-            <div class="col-md-6">
+        {% set gamePlayedCount = [] %}
+
+        {% for playlog in playlogs %}
+            {#Get the playlog user_id so we count only the current user's playlogs#}
+            {% set playlogUserId =  playlog.getuserid %}
+            {% if playlogUserId == currentUserId %}
+                {#Make an array with only the playlogs of the user and the game#}
+                {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
+            {% endif %}
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-6 ">
                 <h2>Plays <span class="badge">{{ gamePlayedCount|length }}</span></h2>
                 <hr>
                 <p>
@@ -71,13 +60,13 @@
                                         {% if playlogUserId == currentUserId %}
                                             <td>
                                                 <ul>
-                                                {% for expansion in playlog.expansions %}
-                                                    {% if expansion %}
-                                                        <li> {{ expansion.name }}</li>
-                                                    {% else %}
-                                                        Nope
-                                                    {% endif %}
-                                                {% endfor %}
+                                                    {% for expansion in playlog.expansions %}
+                                                        {% if expansion %}
+                                                            <li> {{ expansion.name }}</li>
+                                                        {% else %}
+                                                            Nope
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </ul>
                                             </td>
 
@@ -97,31 +86,32 @@
                     </div>
                 {% endif %}
             </div>
-            {#<div class="col-md-4">#}
-            {#<h2>Expansions <span class="badge">{{ game.expansions|length }}</span></h2>#}
-            {#<hr>#}
-            {#<p>#}
-            {#<div class="panel panel-default " style="background-color: #BFC9D2">#}
-            {#<div class="panel-body">#}
-            {#<a class="btn btn-primary" href="{{ path('add_expansion_to_game', { 'gameId': game.id}) }}">#}
-            {#<i class="fa fa-plus"></i> <span class="adaptiveText">Add Expansion</span>#}
-            {#</a>#}
-            {#</div>#}
-
-            {#</div>#}
-            {#<ul class="list-group">#}
-            {#{% if game.expansions|length > 0 %}#}
-            {#{% for expansion in game.expansions %}#}
-            {#<label>#}
-            {#<li class="list-group-item">#}
-            {#{{ expansion.name }}#}
-            {#</li>#}
-            {#</label>#}
-            {#{% endfor %}#}
-            {#{% endif %}#}
-            {#</ul>#}
-            {#</div>#}
         </div>
+    </div>
+    {#<div class="col-md-4">#}
+    {#<h2>Expansions <span class="badge">{{ game.expansions|length }}</span></h2>#}
+    {#<hr>#}
+    {#<p>#}
+    {#<div class="panel panel-default " style="background-color: #BFC9D2">#}
+    {#<div class="panel-body">#}
+    {#<a class="btn btn-primary" href="{{ path('add_expansion_to_game', { 'gameId': game.id}) }}">#}
+    {#<i class="fa fa-plus"></i> <span class="adaptiveText">Add Expansion</span>#}
+    {#</a>#}
+    {#</div>#}
+
+    {#</div>#}
+    {#<ul class="list-group">#}
+    {#{% if game.expansions|length > 0 %}#}
+    {#{% for expansion in game.expansions %}#}
+    {#<label>#}
+    {#<li class="list-group-item">#}
+    {#{{ expansion.name }}#}
+    {#</li>#}
+    {#</label>#}
+    {#{% endfor %}#}
+    {#{% endif %}#}
+    {#</ul>#}
+    {#</div>#}
     </div>
 {% endblock %}
 {% block javascripts %}
@@ -154,6 +144,8 @@
         });
 
         $('.alert ').hide();
-        $('.alert ').slideDown(1000);
+        $(".alert").fadeIn(1200);
+        $(".alert").show().delay(5000).fadeOut();
+
     </script>
 {% endblock javascripts %}
