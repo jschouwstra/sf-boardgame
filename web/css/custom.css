@@ -51,9 +51,10 @@ table td a:link,table td a:visited{
 }
 
 @media screen and (max-width: 767px) {
-button .btn{
-    width: 100%;
-}
+    .btn{
+    /*button, .btn{*/
+        width: 100%;
+    }
 }
 
 
