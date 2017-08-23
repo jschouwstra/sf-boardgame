@@ -34,6 +34,32 @@ class GameController extends Controller
         /** @var User $usr */
         $usr = $this->getUser();
         $userGames = $usr->getGames();
+//
+//        $message = (new \Swift_Message('Hello Email'))
+//            ->setFrom('user@sf-boardgame.com')
+//            ->setTo('schouwstra.jelle@gmail.com')
+//            ->setBody('You <b>should</b>  see me from the profiler!')
+//        ;
+//        $this->get('mailer')->send($message);
+
+
+        $header = "Test mail";
+        $message = \Swift_Message::newInstance()
+            ->setSubject($header)
+            ->setFrom($usr->getUsername().'@example.com')
+            ->setTo('admin@example.com')
+            ->setBody(
+                $this->renderView(
+                    'email/test.html.twig',
+                    array(
+                        'name' => 'jelle',
+                        'header' => $header,
+                        'email' => $usr->getEmail()
+                    )
+                )
+            ,'text/html')
+        ;
+        $this->get('mailer')->send($message);
 
         return $this->render('game/index.html.twig', array(
             'games' => $userGames,
