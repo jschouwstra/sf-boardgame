@@ -26,15 +26,18 @@ class UserController extends Controller
     public function addGameAction(Request $request)
     {
         /** @var  $form */
+        $emailform = $this->createForm('AppBundle\Form\requestGame');
         $form = $this->createForm('AppBundle\Form\addGameToUserType');
+
         $form->handleRequest($request);
+        $emailform->handleRequest($request);
 
         /** Get current User
          * @var User $userObject
          */
         $userObject = $this->getUser();
 
-
+        //Add game
         //If form is not submitted get all user's games and set the selectbox accordingly
         if (!$form->isSubmitted()) {
             // games selecteren
@@ -62,8 +65,52 @@ class UserController extends Controller
             return $this->redirectToRoute('game_index');
         }
 
+        //send mail
+        if ($emailform->isSubmitted() && $emailform->isValid()) {
+
+//
+//        $message = (new \Swift_Message('Hello Email'))
+//            ->setFrom('user@sf-boardgame.com')
+//            ->setTo('schouwstra.jelle@gmail.com')
+//            ->setBody('You <b>should</b>  see me from the profiler!')
+//        ;
+//        $this->get('mailer')->send($message);
+
+            $feedbackType = $request->request->get('feedbackType');
+            $subject = "";
+            if ($feedbackType == 'requestGame') {
+                $subject = "New game request";
+            }
+            /** @var User $usr */
+            $usr = $this->getUser();
+            $feedback = $emailform->getData('feedback');
+            $message = \Swift_Message::newInstance()
+                ->setSubject($subject)
+                ->setFrom($usr->getUsername() . '@example.com')
+                ->setTo('admin@example.com')
+                ->setBody(//Get template for email
+                    $this->renderView(
+                        'email/ForAdmin.html.twig',
+                        array(
+                            'subject' => $subject,
+                            'username' => $usr->getUsername(),
+                            'user_id' => $usr->getId(),
+                            'feedbackType' => $feedbackType,
+                            'email' => $usr->getEmail(),
+                            'feedback' => $feedback,
+                        )
+                    )
+                    , 'text/html');
+            if($feedback !== null ){
+
+            }
+            $this->get('mailer')->send($message);
+
+        }
         return $this->render('user/addGame.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'emailform' => $emailform->createView()
+
         ));
     }
 

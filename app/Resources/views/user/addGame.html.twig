@@ -8,7 +8,7 @@
             <hr>
         </div>
     </div>
-    {{ form_start(form.game) }}
+    {{ form_start(form) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             {{ form_widget(form.game) }}
@@ -21,23 +21,27 @@
         </div>
     </div>
     {{ form_rest(form) }}
-    {{ form_end(form.game) }}
+    {{ form_end(form) }}
 
+    {{ form_start(emailform) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <p>Not the game you're looking for?<br>Help us by requesting your game here:</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 col-md-offset-3">
+        <div class="col-md-4 col-md-offset-3">
             <div class="input-group ">
-                <input placeholder="e.g Monopoly My Little Pony" type="text" class="form-control ">
+                {{ form_widget(emailform.feedback) }}
+                <input type="hidden" name="feedbackType" value="requestGame">
+                {#<input placeholder="e.g Monopoly My Little Pony" type="text" class="form-control ">#}
                 <div class="input-group-btn">
                     <button class="btn btn-success">Request game</button>
                 </div>
             </div>
         </div>
     </div>
+    {{ form_end(emailform) }}
 
 
 {% endblock content %}
