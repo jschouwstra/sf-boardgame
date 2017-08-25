@@ -11,10 +11,9 @@ use AppBundle\Entity\User;
  */
 class GameRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllOrdered ($user_id){
+    public function findAllOrdered (){
         // test if method is called
 
-        echo $user_id;
 //        die("findAllOrdered works!");
 
         ///////////////////////
@@ -29,15 +28,17 @@ class GameRepository extends \Doctrine\ORM\EntityRepository
         //Query builder:
         ///////////////////////
 
-        $qb = $this->createQueryBuilder('game')
-            ->addOrderBy('game.name', 'ASC')
-            ->andWhere('game.id = :user')
+        $fields = array('n.name');
+        $query = $this->getEntityManager()->createQueryBuilder();
 
-            ->setParameter('user', $user_id);
-        ;
+        $query
+        ->select($fields)
+        ->from('AppBundle:Game','n');
 
-        $query = $qb->getQuery();
-        return $query->execute();
+        $results = $query->getQuery()->getResult();
+
+
+        return $results;
 
 
     }
@@ -70,5 +71,7 @@ class GameRepository extends \Doctrine\ORM\EntityRepository
 
 
     }
+
+
 
 }

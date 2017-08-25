@@ -6,12 +6,12 @@ use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Expansion;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 /**
  * Game controller.
  *
@@ -44,7 +44,7 @@ class GameController extends Controller
     /**
      * Lists all user's game entities as JSON.
      *
-     * @Route("/json", name="user_games_json")
+     * @Route("user/json", name="user_games_json")
      * @Method("GET")
      */
     public function returnUserGamesAsJson(Request $request)
@@ -62,6 +62,29 @@ class GameController extends Controller
         foreach ($userGames as $game) {
             array_push($games, $game->getName());
         }
+        $serializer = $this->get('jms_serializer');
+
+        $jsonContent = $serializer->serialize($games, 'json');
+        return new Response(
+            $jsonContent
+        );
+    }
+
+    /**
+     * Lists all game entities as JSON.
+     *
+     * @Route("/all/json", name="all_games_json")
+     * @Method("GET")
+     */
+    public function returnAllGamesAsJson(Request $request)
+    {
+        //Use existing GameRepository, Appbundle:Game
+        $gameRepository = $this->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Game');
+        $games = $gameRepository->findAllOrdered();
+
+
         $serializer = $this->get('jms_serializer');
 
         $jsonContent = $serializer->serialize($games, 'json');
