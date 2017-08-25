@@ -11,7 +11,7 @@
     {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-        {{ form_widget(form.game) }}
+            {{ form_widget(form.game) }}
         </div>
     </div>
 
@@ -23,6 +23,23 @@
     {{ form_rest(form) }}
     {{ form_end(form.game) }}
 
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <p>Not the game you're looking for?<br>Help us by requesting your game here:</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+            <div class="input-group ">
+                <input placeholder="e.g Monopoly My Little Pony" type="text" class="form-control ">
+                <div class="input-group-btn">
+                    <button class="btn btn-success">Request game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock content %}
 {% block javascripts %}
     {{ parent() }}
@@ -31,7 +48,7 @@
     <script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
     <script type="text/javascript">
         $('select').select2({
-            tags:true
+            tags: true
         });
     </script>
 {% endblock javascripts %}
