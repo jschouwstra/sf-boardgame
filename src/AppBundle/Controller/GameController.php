@@ -129,12 +129,11 @@ class GameController extends Controller
      */
     public function showAction(Game $game)
     {
-//        $deleteForm = $this->createDeleteForm($game);
-
-
+        $client = new \Nataniel\BoardGameGeek\Client();
+        $thing = $client->getThing($game->getBggId(), true);
         return $this->render('game/show.html.twig', array(
             'game' => $game,
-//            'delete_form' => $deleteForm->createView(),
+            'PlayingTime' => $thing->getPlayingTime()
         ));
     }
 

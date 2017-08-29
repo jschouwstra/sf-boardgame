@@ -14,6 +14,9 @@
             </div>
         </div>
 
+        {% if PlayingTime > 0  %}
+            Duration: {{ PlayingTime }} minutes
+        {% endif %}
 
         {% set gamePlayedCount = [] %}
 
