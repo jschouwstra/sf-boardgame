@@ -131,9 +131,17 @@ class GameController extends Controller
     {
         $client = new \Nataniel\BoardGameGeek\Client();
         $thing = $client->getThing($game->getBggId(), true);
+
+
+
         return $this->render('game/show.html.twig', array(
+            //bgg game properties:
+            'playingTime'  => $thing->getPlayingTime(),
+            'minPlayers' => $thing->getMinPlayers(),
+            'maxPlayers' => $thing->getMaxPlayers(),
+            'publishedBy' => $thing->getBoardgamePublishers(),
+
             'game' => $game,
-            'PlayingTime' => $thing->getPlayingTime()
         ));
     }
 

@@ -14,9 +14,16 @@
             </div>
         </div>
 
-        {% if PlayingTime > 0  %}
-            Duration: {{ PlayingTime }} minutes
-        {% endif %}
+        <div class="row">
+            <div class="col-md-4">
+                {{ playingTime }} minutes<br> Playing Time
+            </div>
+            <div class="col-md-4">
+                {% if minPlayers > 0 and  maxPlayers > 0 %}
+                    {{ minPlayers}}-{{ maxPlayers}}
+                {% endif %} <br>Players
+            </div>
+        </div>
 
         {% set gamePlayedCount = [] %}
 
