@@ -42,7 +42,22 @@ class GameRepository extends \Doctrine\ORM\EntityRepository
 
 
     }
+    public function findByName($name)
+    {
+        $fields = array('n.name');
+        $query = $this->getEntityManager()->createQueryBuilder();
 
+        $query
+            ->select($fields)
+            ->from('AppBundle:Game','n')
+            ->where('n.name LIKE :name' )
+            ->setParameter('name','%'.$name.'%');
+        $results = $query->getQuery()->getResult();
+
+
+        return $results;
+
+    }
     public function findAllForUser($user_id){
         // test if method is called
 

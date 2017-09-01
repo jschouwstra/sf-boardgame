@@ -73,7 +73,7 @@ class GameController extends Controller
     /**
      * Lists all game entities as JSON.
      *
-     * @Route("/all/json", name="all_games_json")
+     * @Route("/all/json", name="find_games_json")
      * @Method("GET")
      */
     public function returnAllGamesAsJson(Request $request)
@@ -82,8 +82,8 @@ class GameController extends Controller
         $gameRepository = $this->getDoctrine()
         ->getManager()
         ->getRepository('AppBundle:Game');
-        $games = $gameRepository->findAllOrdered();
-
+        $name = $request->get('name');
+        $games = $gameRepository->findByName($name);
 
         $serializer = $this->get('jms_serializer');
 
@@ -136,6 +136,7 @@ class GameController extends Controller
 
         return $this->render('game/show.html.twig', array(
             //bgg game properties:
+            'image' => $thing->getImage(),
             'playingTime'  => $thing->getPlayingTime(),
             'minPlayers' => $thing->getMinPlayers(),
             'maxPlayers' => $thing->getMaxPlayers(),

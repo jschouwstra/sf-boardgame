@@ -52,7 +52,25 @@
     <script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
     <script type="text/javascript">
         $('select').select2({
-            tags: true
+            ajax: {
+                url: "{{ path('find_games_json') }}",
+                data: function (params) {
+                    return {
+                        name: params.name,
+                    };
+                },
+                success: function(data) {
+                    data = JSON.parse(data);
+                    alert(data);
+                    $.each(data, function (i,data) {
+                        var div_data = "<option class='select2-results__option loading-results' role='treeitem'>" + data + "</option>";
+                        $(div_data).appendTo('#select2-test_game-results');
+                    });
+                }
+
+            },
+            tags: true,
+            minimumInputLength: 3
         });
     </script>
 {% endblock javascripts %}

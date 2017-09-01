@@ -67,15 +67,6 @@ class UserController extends Controller
 
         //send mail
         if ($emailform->isSubmitted() && $emailform->isValid()) {
-
-//
-//        $message = (new \Swift_Message('Hello Email'))
-//            ->setFrom('user@sf-boardgame.com')
-//            ->setTo('schouwstra.jelle@gmail.com')
-//            ->setBody('You <b>should</b>  see me from the profiler!')
-//        ;
-//        $this->get('mailer')->send($message);
-
             $feedbackType = $request->request->get('feedbackType');
             $subject = "";
             if ($feedbackType == 'requestGame') {
@@ -101,7 +92,7 @@ class UserController extends Controller
                         )
                     )
                     , 'text/html');
-            if($feedback !== null ){
+            if ($feedback !== null) {
 
             }
             $this->get('mailer')->send($message);

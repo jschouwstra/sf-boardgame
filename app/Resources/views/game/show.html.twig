@@ -14,16 +14,40 @@
             </div>
         </div>
 
+
         <div class="row">
+            <div class="col-md-4  ">
+                {% if image %}
+                <img src="{{ image }}" style="width: 200px;" class="img-circle">
+                {% endif %}
+            </div>
+
             <div class="col-md-4">
-                {{ playingTime }} minutes<br> Playing Time
+
+                {% if playingTime %}
+                    {{ playingTime }} minutes<br> <b>Playing Time</b>
+                <hr>
+                {% endif %}
             </div>
             <div class="col-md-4">
-                {% if minPlayers > 0 and  maxPlayers > 0 %}
-                    {{ minPlayers}}-{{ maxPlayers}}
-                {% endif %} <br>Players
+                {% if minPlayers and  maxPlayers %}
+                    {{ minPlayers}}-{{ maxPlayers}}<br> <b>Players</b>
+                <hr>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    {% if publishedBy %}
+                        <b>Publisher: </b>{{ publishedBy| first }}
+                    {% endif %}
+                </div>
             </div>
         </div>
+
+
+
+
 
         {% set gamePlayedCount = [] %}
 
