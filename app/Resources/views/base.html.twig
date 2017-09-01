@@ -48,7 +48,7 @@
     <div class="col-md-6 ">
         {% for type, flashMessages in app.session.flashbag.all() %}
             {% for flashMessage in flashMessages %}
-                <div class="alert alert-{{ type }}">
+                <div class="alert alert-{{ type }} fadeAway">
                     {{ flashMessage|trans }}
                 </div>
             {% endfor %}

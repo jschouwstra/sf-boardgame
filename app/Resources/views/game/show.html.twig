@@ -16,37 +16,35 @@
 
 
         <div class="row">
-            <div class="col-md-4  ">
-                {% if image %}
-                <img src="{{ image }}" style="width: 200px;" class="img-circle">
-                {% endif %}
-            </div>
+            {% if image %}
+                <div class="col-md-4  ">
+                    <img src="{{ image }}" style="width: 200px;" class="img-circle">
+                </div>
+            {% endif %}
 
-            <div class="col-md-4">
+            {% if playingTime %}
+                <div class="col-md-4">
 
-                {% if playingTime %}
                     {{ playingTime }} minutes<br> <b>Playing Time</b>
-                <hr>
-                {% endif %}
-            </div>
-            <div class="col-md-4">
-                {% if minPlayers and  maxPlayers %}
-                    {{ minPlayers}}-{{ maxPlayers}}<br> <b>Players</b>
-                <hr>
-                {% endif %}
-            </div>
+                    <hr>
+                </div>
+            {% endif %}
+            {% if minPlayers and  maxPlayers %}
+                <div class="col-md-4">
+                    {{ minPlayers }}-{{ maxPlayers }}<br> <b>Players</b>
+                    <hr>
+                </div>
+            {% endif %}
 
             <div class="row">
-                <div class="col-md-4">
-                    {% if publishedBy %}
+                {% if publishedBy %}
+                    <div class="col-md-4">
                         <b>Publisher: </b>{{ publishedBy| first }}
-                    {% endif %}
-                </div>
+                    </div>
+                    <hr>
+                {% endif %}
             </div>
         </div>
-
-
-
 
 
         {% set gamePlayedCount = [] %}
@@ -177,9 +175,9 @@
 
         });
 
-        $('.alert ').hide();
-        $(".alert").fadeIn(1200);
-        $(".alert").show().delay(5000).fadeOut();
+        $('.alert.fadeAway').hide();
+        $(".alert.fadeAway").fadeIn(1200);
+        $(".alert.fadeAway").show().delay(5000).fadeOut();
 
     </script>
 {% endblock javascripts %}
