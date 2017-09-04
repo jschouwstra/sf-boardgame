@@ -18,7 +18,7 @@
         <div class="row">
             {% if image %}
                 <div class="col-md-4  ">
-                    <img src="{{ image }}" style="width: 200px;" class="img-circle">
+                    <img src="{{ image }}" style="width: 150px; height: 150px;" class="img-circle">
                 </div>
             {% endif %}
 
@@ -44,23 +44,32 @@
                     <hr>
                 {% endif %}
             </div>
+            <div class="row">
+                {% if playlogs | length > 0 %}
+
+                    {% set gamePlayedCount = [] %}
+
+                    {% for playlog in playlogs %}
+                        {#Get the playlog user_id so we count only the current user's playlogs#}
+                        {% set playlogUserId =  playlog.getuserid %}
+                        {% if playlogUserId == currentUserId %}
+                            {#Make an array with only the playlogs of the user and the game#}
+                            {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="col-md-4">
+                        <b>Your plays: </b>{{ gamePlayedCount| length}}
+                    </div>
+                    <hr>
+                {% endif %}
+            </div>
         </div>
 
 
-        {% set gamePlayedCount = [] %}
 
-        {% for playlog in playlogs %}
-            {#Get the playlog user_id so we count only the current user's playlogs#}
-            {% set playlogUserId =  playlog.getuserid %}
-            {% if playlogUserId == currentUserId %}
-                {#Make an array with only the playlogs of the user and the game#}
-                {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
-            {% endif %}
-        {% endfor %}
         <div class="row">
             <div class="col-md-6 ">
-                <h2>Plays <span class="badge">{{ gamePlayedCount|length }}</span></h2>
-                <hr>
+
                 <p>
                 <div class="panel panel-default " style="background-color: #BFC9D2">
                     <div class="panel-body">
@@ -79,12 +88,14 @@
                             <table class="table table-bordered table-responsive table-condensed">
                                 <tr>
                                     <td></td>
+                                    <td>#</td>
                                     <td>Date</td>
                                     <td>Expansion</td>
                                 </tr>
                                 {% for playlog in game.playlogs | sortbyfield("date") |reverse %}
                                     <tr>
                                         <td><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
+                                        <td>{{ loop.index }}</td>
                                         <td>
                                             {{ playlog.date|date('Y-m-d') }}
                                         </td>
