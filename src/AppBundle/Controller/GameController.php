@@ -40,11 +40,12 @@ class GameController extends Controller
             'max_limit_error' => 25
         ));
     }
+    
 
     /**
      * Lists all user's game entities as JSON.
      *
-     * @Route("user/json", name="user_games_json")
+     * @Route("/user/json", name="user_games_json")
      * @Method("GET")
      */
     public function returnUserGamesAsJson(Request $request)

@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\PlayLog;
+use AppBundle\Entity\User;
+
 use AppBundle\Entity\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -26,12 +28,15 @@ class PlayLogController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $this->getUser();
+        $playlogs = $user->getPlaylogs();
 
-        $playLogs = $em->getRepository('AppBundle:PlayLog')->findAll();
+//        $em = $this->getDoctrine()->getManager();
+//        $playLogs = $em->getRepository('AppBundle:PlayLog')->findAll();
 
         return $this->render('playlog/index.html.twig', array(
-            'playlogs' => $playLogs,
+            'playlogs' => $playlogs,
         ));
     }
 
