@@ -17,6 +17,7 @@
                         <th>Date</th>
 
                         {#<th>{{ knp_pagination_sortable(Playlogs, 'Type', 'type.name') }}</th>#}
+                        <th>Expansion</th>
                         <th>Actions</th>
                     </tr>
 
@@ -28,7 +29,6 @@
                                     {% if playlog.expansions | length > 0 %}
                                     {% for expansion in playlog.expansions  %}
                                         {{ expansion.name }}<br>
-
                                     {% endfor %}
                                     {% else %}
                                     None
@@ -36,11 +36,8 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playlog.id }) }}"><i
-                                                    class="fa fa-search"></i> Show</a>
-                                        <a class="btn btn-primary" href="{{ path('playlog_edit', { 'id': playlog.id }) }}"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-
+                                        <a class="btn btn-primary" href="{{ path('playlog_show', { 'id': playlog.id }) }}"><i class="fa fa-search"></i> Show</a>
+                                        <a class="btn btn-primary" href="{{ path('playlog_edit', { 'id': playlog.id }) }}"><i class="fa fa-pencil"></i> Edit</a>
                                     </div>
                                 </td>
                             </tr>

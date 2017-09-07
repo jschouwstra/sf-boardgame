@@ -58,13 +58,12 @@
                         {% endif %}
                     {% endfor %}
                     <div class="col-md-4">
-                        <b>Your plays: </b>{{ gamePlayedCount| length}}
+                        <b>Your plays: </b>{{ gamePlayedCount| length }}
                     </div>
                     <hr>
                 {% endif %}
             </div>
         </div>
-
 
 
         <div class="row">
@@ -102,15 +101,13 @@
                                         {% set playlogUserId =  playlog.getuserid %}
                                         {% if playlogUserId == currentUserId %}
                                             <td>
-                                                <ul>
+                                                {% if playlog.expansions| length > 0 %}
                                                     {% for expansion in playlog.expansions %}
-                                                        {% if expansion %}
-                                                            <li> {{ expansion.name }}</li>
-                                                        {% else %}
-                                                            Nope
-                                                        {% endif %}
+                                                        {{ expansion.name }}<br>
                                                     {% endfor %}
-                                                </ul>
+                                                {% else %}
+                                                    None
+                                                {% endif %}
                                             </td>
 
                                         {% endif %}

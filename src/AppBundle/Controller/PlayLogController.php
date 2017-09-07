@@ -32,8 +32,7 @@ class PlayLogController extends Controller
         $user = $this->getUser();
         $playlogs = $user->getPlaylogs();
 
-//        $em = $this->getDoctrine()->getManager();
-//        $playLogs = $em->getRepository('AppBundle:PlayLog')->findAll();
+
 
         return $this->render('playlog/index.html.twig', array(
             'playlogs' => $playlogs,
