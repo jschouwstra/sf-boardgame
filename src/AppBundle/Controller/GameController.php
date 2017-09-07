@@ -6,12 +6,12 @@ use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Expansion;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 /**
  * Game controller.
  *
@@ -40,11 +40,12 @@ class GameController extends Controller
             'max_limit_error' => 25
         ));
     }
+    
 
     /**
      * Lists all user's game entities as JSON.
      *
-     * @Route("/json", name="user_games_json")
+     * @Route("/user/json", name="user_games_json")
      * @Method("GET")
      */
     public function returnUserGamesAsJson(Request $request)
@@ -62,6 +63,29 @@ class GameController extends Controller
         foreach ($userGames as $game) {
             array_push($games, $game->getName());
         }
+        $serializer = $this->get('jms_serializer');
+
+        $jsonContent = $serializer->serialize($games, 'json');
+        return new Response(
+            $jsonContent
+        );
+    }
+
+    /**
+     * Lists all game entities as JSON.
+     *
+     * @Route("/all/json", name="find_games_json")
+     * @Method("GET")
+     */
+    public function returnAllGamesAsJson(Request $request)
+    {
+        //Use existing GameRepository, Appbundle:Game
+        $gameRepository = $this->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Game');
+        $name = $request->get('name');
+        $games = $gameRepository->findByName($name);
+
         $serializer = $this->get('jms_serializer');
 
         $jsonContent = $serializer->serialize($games, 'json');
@@ -106,12 +130,20 @@ class GameController extends Controller
      */
     public function showAction(Game $game)
     {
-//        $deleteForm = $this->createDeleteForm($game);
+        $client = new \Nataniel\BoardGameGeek\Client();
+        $thing = $client->getThing($game->getBggId(), true);
+
 
 
         return $this->render('game/show.html.twig', array(
+            //bgg game properties:
+            'image' => $thing->getImage(),
+            'playingTime'  => $thing->getPlayingTime(),
+            'minPlayers' => $thing->getMinPlayers(),
+            'maxPlayers' => $thing->getMaxPlayers(),
+            'publishedBy' => $thing->getBoardgamePublishers(),
+
             'game' => $game,
-//            'delete_form' => $deleteForm->createView(),
         ));
     }
 

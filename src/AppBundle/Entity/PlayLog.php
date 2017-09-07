@@ -27,7 +27,7 @@ class PlayLog
      */
     private $expansions;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="playlogs")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
@@ -123,13 +123,6 @@ class PlayLog
      */
     private $date;
 
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(name="game_id", type="integer")
-//     */
-//    private $gameId;
-
 
     /**
      * Get id
@@ -187,6 +180,7 @@ class PlayLog
         $this->expansions->add($expansion);
         return $this;
     }
+
     public function removeExpansion(Expansion $expansion)
     {
         $this->expansions->removeElement($expansion);
@@ -194,49 +188,10 @@ class PlayLog
 
     public function removeAllExpansions()
     {
-        foreach ($this->expansions as $expansion)
-        {
+        foreach ($this->expansions as $expansion) {
             $this->removeExpansion($expansion);
         }
     }
-
-
-//    /**
-//     * Set gameId
-//     *
-//     * @param integer $gameId
-//     *
-//     * @return PlayLog
-//     */
-//    public function setGameId($gameId)
-//    {
-//        $this->gameId = $gameId;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get gameId
-//     *
-//     * @return int
-//     */
-//    public function getGameId()
-//    {
-//        return $this->gameId;
-//    }
-
-
-//    public function setGame(Game $game)
-//    {
-//        $this->game = $game;
-//    }
-
-
-//    public function removeGame(Game $game)
-//    {
-//        $this->games->removeElement($game);
-//    }
-
 
 }
 

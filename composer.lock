@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7778b7f39ebcda4266fa350336102e5d",
+    "content-hash": "d2be84a431712db95c15bf560ba68aca",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1468,6 +1468,42 @@
                 "psr-3"
             ],
             "time": "2017-06-19T01:22:40+00:00"
+        },
+        {
+            "name": "nataniel/bggxmlapi2",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nataniel/bggxmlapi2.git",
+                "reference": "6c75bba387d50e81889c9d9842b1d84c056666d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nataniel/bggxmlapi2/zipball/6c75bba387d50e81889c9d9842b1d84c056666d8",
+                "reference": "6c75bba387d50e81889c9d9842b1d84c056666d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Nataniel\\BoardGameGeek": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artur Jedlinski",
+                    "email": "artur@jedlinski.pl"
+                }
+            ],
+            "description": "BoardGameGeek.com XML API2 - PHP Client Library",
+            "time": "2017-06-08T20:03:49+00:00"
         },
         {
             "name": "paragonie/random_compat",

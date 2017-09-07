@@ -2,14 +2,13 @@
 {% import "macros.html.twig" as macro %}
 {% block content %}
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
-    {{ form_start(form.game) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h1>Add Games To My List</h1>
+            <h2>Add games</h2>
             <hr>
         </div>
     </div>
-
+    {{ form_start(form) }}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             {{ form_widget(form.game) }}
@@ -17,12 +16,32 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            {{ macro.btnSubmit() }}
+        <div class="col-md-6 col-md-offset-3 ">
+            <button title="Confirm" class="btn btn-success pull-right" type="submit"><i class="fa fa-check"></i>&nbsp; Confirm</button>
         </div>
     </div>
     {{ form_rest(form) }}
-    {{ form_end(form.game) }}
+    {{ form_end(form) }}
+
+    {{ form_start(emailform) }}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <p>Not the game you're looking for?<br>Help us by requesting your game here:</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-3">
+            <div class="input-group ">
+                {{ form_widget(emailform.feedback) }}
+                <input type="hidden" name="feedbackType" value="requestGame">
+                {#<input placeholder="e.g Monopoly My Little Pony" type="text" class="form-control ">#}
+                <div class="input-group-btn">
+                    <button class="btn btn-success">Request game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(emailform) }}
 
 
 {% endblock content %}
@@ -31,9 +50,12 @@
 
 
     <script type="text/javascript" src="{{ asset('asset/chosen2/dist/js/select2.min.js') }}"></script>
-
     <script type="text/javascript">
-        $('select').select2();
+        $('select').select2({
+
+            tags: true,
+            minimumInputLength: 3
+        });
     </script>
 {% endblock javascripts %}
 

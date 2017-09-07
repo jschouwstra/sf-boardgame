@@ -68,6 +68,17 @@ class Game
     private $id;
 
     /**
+     * Boardgamegeek ID
+     *
+     * @var int
+     *
+     * @ORM\Column(name="bgg_id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $bgg_id;
+
+
+    /**
      * @var string
      * @Assert\NotBlank()
      * @Assert\Length(
@@ -86,6 +97,16 @@ class Game
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get bgg_id
+     *
+     * @return int
+     */
+    public function getBggId()
+    {
+        return $this->bgg_id;
     }
 
 
