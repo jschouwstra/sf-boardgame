@@ -1,2 +1,0 @@
-sf-boardgame
-db: sf-boardgame
