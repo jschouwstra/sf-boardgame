@@ -15,7 +15,7 @@ class User extends BaseUser
     /**
      * @ORM\ManyToMany(targetEntity="Game")
      *
-     * @ORM\JoinTable(name="users_games",
+     * @ORM\JoinTable(name="user_game",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")}
      *      )

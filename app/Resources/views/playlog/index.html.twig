@@ -1,51 +1,59 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+
     <h1>Playlogs list</h1>
     <hr>
     <div class="row">
         <div class="col-md-12 ">
+            {% for year in years %}
+            <h2>{{ year }}</h2><br>
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
-                    <div class="btn-group pull-right">
-                        {#<a class="btn btn-default btn-sm" href="{{ path('playlog_new') }}"><i class="fa fa-plus"></i> New playlog</a>#}
-                    </div>
+
                 </div>
-                <table class="table table-bordered table-striped table-hover">
+                <table class="table table-bordered table-striped">
+                    <thead>
                     <tr>
-                        <th>Game</th>
-                        <th>Date</th>
-
-                        {#<th>{{ knp_pagination_sortable(Playlogs, 'Type', 'type.name') }}</th>#}
-                        <th>Expansion</th>
-                        <th>Actions</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Game</th>
+                        <th scope="col">Expansion</th>
+                        <th scope="col">Actions</th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    {% for playlog in playlogs |sortbyfield("date")|reverse %}
 
-                        {% for playlog in playlogs |sortbyfield("date")|reverse %}
+                        {% if year in  playlog.date|date("Y") %}
                             <tr>
-                                <td><a href="{{ path('game_show', { 'id': playlog.game.id}) }}">{{ playlog.game.name }}</td>
-                                <td>{{ playlog.date|date("Y-m-d") }}</td>
-                                <td>
+                                <td data-label="Date">{{ playlog.date|date("Y-m-d") }}
+                                <td data-label="Game"><a href="{{ path('game_show', { 'id': playlog.game.id}) }}">{{ playlog.game.name }}</td>
+                                {#{% if playlog.date|date ("Y") == 2017 %}#}
+                                {#2017!#}
+                                {#{% endif %}#}
+                                </td>
+                                <td data-label="Expansion">
                                     {% if playlog.expansions | length > 0 %}
-                                    {% for expansion in playlog.expansions  %}
-                                        {{ expansion.name }}<br>
-                                    {% endfor %}
+                                        {% for expansion in playlog.expansions %}
+                                            {{ expansion.name }}<br>
+                                        {% endfor %}
                                     {% else %}
-                                    None
+                                        None
                                     {% endif %}
                                 </td>
-                                <td>
-                                    <div class="btn-group" role="group">
+                                <td data-label="Actions">
+                                    <div class="btn-toolbar" role="group">
                                         <a class="btn btn-primary" href="{{ path('game_show', { 'id': playlog.game.id}) }}"><i class="fa fa-search"></i> Show</a>
                                         <a class="btn btn-primary" href="{{ path('playlog_edit', { 'id': playlog.id }) }}"><i class="fa fa-pencil"></i> Edit</a>
                                     </div>
                                 </td>
                             </tr>
-                        {% endfor %}
-
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
                 </table>
             </div>
+            {% endfor %}<br>
         </div>
     </div>
-
 {% endblock %}
