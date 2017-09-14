@@ -10,7 +10,7 @@ namespace AppBundle\Repository;
 
 class SuggestionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllOrdered (){
+    public function findLeastPlayedGames (){
         // test if method is called
 
 //        die("findAllOrdered works!");

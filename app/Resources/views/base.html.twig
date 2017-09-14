@@ -87,6 +87,25 @@
                         <li><a href="{{ path('game_add') }}">Manage Game List</a></li>
                     </ul>
                 </li>
+                    <li class="dropdown">
+                        <a href="{{ path('playlog_index') }}" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">Plays</a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('game_index') }}">My Game List</a></li>
+                            <li><a href="{{ path('game_add') }}">Manage Game List</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{{ path('suggestion_show') }}" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">Suggest Game</a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('game_index') }}">My Game List</a></li>
+                            <li><a href="{{ path('game_add') }}">Manage Game List</a></li>
+                        </ul>
+                    </li>
+
+
+
                 {% endif %}
 
                 {% if app.user.username is defined %}

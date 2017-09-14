@@ -18,16 +18,18 @@ class SuggestionController extends Controller
     }
 
     /**
-     * @Route("/show")
+     * @Route("/show", name="suggestion_show")
      *
      */
+
+
     public function getLeastPlayedSuggestion(Request $request)
     {
         //Use existing GameRepository, Appbundle:Game
-        $gameRepository = $this->getDoctrine()
+        $suggestionRepository = $this->getDoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Game');
-        $games = $gameRepository->findAllOrdered();
+            ->getRepository('AppBundle:Suggestion');
+        $suggestion = $suggestionRepository->findLeastPlayedGames();
 
         //SuggestionRepository
 
