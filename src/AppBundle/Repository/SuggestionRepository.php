@@ -1,5 +1,7 @@
 <?php
 namespace AppBundle\Repository;
+use AppBundle\Entity\Game;
+use AppBundle\Entity\User;
 
 /**
  * Created by PhpStorm.
@@ -10,34 +12,19 @@ namespace AppBundle\Repository;
 
 class SuggestionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findLeastPlayedGames (){
-        // test if method is called
+    public function findLeastPlayedGames ($user_id){
 
-//        die("findAllOrdered works!");
+        /** var User $user */
+        $userGames = $user->getGames();
+    foreach($userGames as $game){
+        /** @var Game $game **/
+        var_dump($game->getPlaylogs());
+//         die( $game->getPlaylogs() );
+    return $game->getPlaylogs();
 
-        ///////////////////////
-        //dql get all games:
-        ///////////////////////
-
-        //$dql = 'SELECT game FROM AppBundle:Game game ORDER BY game.name ASC';
-        //$query = $this->getEntityManager()->createQuery($dql);
-
-
-        ///////////////////////
-        //Query builder:
-        ///////////////////////
-
-        $fields = array('n.name');
-        $query = $this->getEntityManager()->createQueryBuilder();
-
-        $query
-            ->select($fields)
-            ->from('AppBundle:Game','n');
-
-        $results = $query->getQuery()->getResult();
+    }
 
 
-        return $results;
 
 
     }
