@@ -28,35 +28,32 @@ class SuggestionController extends Controller
     {
         /** @var User $user */
         $user = $this->getUser();
-        $normalizers = new \Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer();
 
         $usergames = $user->getGames();
-        $plays = [];
-        foreach($usergames as $game){
-
-            //push to array:
-            // array(
-            //  count($game->getPlayLogs),
-            //  $game-> getId()
-            //)
-            //Get game with least plays
-            // return Game with least plays
-            $playCount = count($game->getPlaylogs()->getValues());
-
-            /** @var Game $game */
-            array_push($plays, $playCount );
+        $plays = array();
+        foreach($usergames as $usergame){
+            $playCount = count($usergame->getPlaylogs()->getValues());
+            /** @var Game $usergame */
+            $gameName = $usergame->getName();
+//            array_push($plays, 1, $gameName);
+            $plays[] = array(
+                "plays"=>$playCount,
+                "name" =>$usergame->getName(),
+                "expansions" =>$usergame->getExpansions()
+            );
         }
-//        asort($plays);
-//        array_slice($plays, 1, 1, true);
-        foreach($plays as $play){
-            echo $play."<br>";
-        }
-        die();
+        asort($plays);
+        $sliced_array = array_slice($plays, 0, 3);
+
+        $suggestion = $sliced_array;
+
+
+//        die();
         //Get user's 3 least played games
 
         return $this->render('suggestion/show.html.twig', array(
 //            'games' => $games,
-            'suggestion' => $suggestion
+            'suggestionList' => $suggestion
         ));
     }
 }

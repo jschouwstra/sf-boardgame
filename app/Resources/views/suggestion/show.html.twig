@@ -1,4 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-{{ dump() }}
+{#{{ dump() }}#}
+The 3 games that you've played the least times are the following:<br>
+    {% for suggestion in suggestionList %}
+        {{ suggestion.name }}  with  <span class="badge">{{ suggestion.plays }}</span> plays<br>
+    {% endfor %}
 {% endblock content %}
