@@ -1,15 +1,16 @@
 <?php
 
 namespace AppBundle\Entity;
-
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Nataniel\BoardGameGeek\Thing;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Game
  *
- * @ORM\Table(name="game")
+ * @ORM\Table(name="game" , uniqueConstraints={@UniqueConstraint(name="unique", columns={"bgg_id", "name"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
  */
 class Game
@@ -46,8 +47,6 @@ class Game
     }
 
 
-
-
     /**
      * Game constructor.
      */
@@ -72,7 +71,7 @@ class Game
      *
      * @var int
      *
-     * @ORM\Column(name="bgg_id", type="integer")
+     * @ORM\Column(name="bgg_id", type="integer", unique=false)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $bgg_id;
@@ -80,12 +79,7 @@ class Game
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *     min = "3",
-     *  max = "100"
-     * )
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", unique=false)
      */
     private $name;
 
@@ -131,7 +125,16 @@ class Game
      */
     public function getName()
     {
-        return $this->name;
+        if ($this->name == null) {
+            $client = new \Nataniel\BoardGameGeek\Client();
+            $thing = $client->getThing($this->getBggId(), true);
+            /** @var Thing $thing */
+            return $thing->getName();
+
+        } else {
+            return $this->name;
+        }
+
     }
 
 //array collection functions
@@ -166,6 +169,7 @@ class Game
         $this->expansions->add($expansion);
         return $this;
     }
+
     public function removeExpansion(Expansion $expansion)
     {
         $this->expansions->removeElement($expansion);
@@ -173,8 +177,7 @@ class Game
 
     public function removeAllExpansions()
     {
-        foreach ($this->expansions as $expansion)
-        {
+        foreach ($this->expansions as $expansion) {
             $this->removeExpansion($expansion);
         }
     }
