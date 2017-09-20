@@ -42,7 +42,7 @@
                             {% for game in games %}
                                 {#Prepare empty array#}
                                 {% set gamePlayedCount = [] %}
-                                <tr>
+                                <tr row="{{ game.id }}">
                                     <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
                                     <td><span class="badge">
                                         {#Playlogs of current games    #}
@@ -65,6 +65,9 @@
                                         <a class="btn btn-primary"
                                            href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> <span class="adaptiveText">Add Play</span>
                                         </a>
+                                        <a class="btn btn-danger deleteBtn " gameId="{{ game.id }}" gameName="{{ game.name }}"
+                                           href=""><i class="fa fa-minus"></i> <span class="adaptiveText">Remove from list</span>
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -76,3 +79,28 @@
         </div>
     </div>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.deleteBtn').click(function(){
+        var gameId = $(this).attr('gameId');
+        var gameName = $(this).attr('gameName');
+              var confirmText = "Are you sure you want to delete the selected game - "+ gameName +" - ?";
+                if (confirm(confirmText)) {
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ path('remove_user_game') }}',//path to the route of PlayLogController->deleteBulkAction method
+                        data: JSON.stringify(gameId),
+                        success: function () {
+                            $('[row='+gameId+']').fadeOut().css("background", "#C9302C");
+                            return false;
+//                            window.location.reload();
+                        },
+                    });
+                }
+                return false;
+            });
+});
+</script>
+{% endblock javascripts %}

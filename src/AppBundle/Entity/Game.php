@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -79,7 +80,12 @@ class Game
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string", unique=false)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = "3",
+     *  max = "100"
+     * )
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
@@ -125,15 +131,7 @@ class Game
      */
     public function getName()
     {
-        if ($this->name == null) {
-            $client = new \Nataniel\BoardGameGeek\Client();
-            $thing = $client->getThing($this->getBggId(), true);
-            /** @var Thing $thing */
-            return $thing->getName();
-
-        } else {
-            return $this->name;
-        }
+        return $this->name;
 
     }
 
@@ -174,6 +172,7 @@ class Game
     {
         $this->expansions->removeElement($expansion);
     }
+
 
     public function removeAllExpansions()
     {

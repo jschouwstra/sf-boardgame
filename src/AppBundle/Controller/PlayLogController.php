@@ -39,7 +39,8 @@ class PlayLogController extends Controller
         ));
     }
 
-    public function getYears(){
+    public function getYears()
+    {
         $user = $this->getUser();
         $playlogs = $user->getPlaylogs();
 
@@ -47,12 +48,12 @@ class PlayLogController extends Controller
         $years = array();
 
         //Fill in items if they're not in the array already
-        foreach($playlogs as $playlog){
+        foreach ($playlogs as $playlog) {
             //Get only the year from date property
             $year = $playlog->getDate()->format('Y');
 
             //If value isn't in the array
-            if(!in_array($year, $years, true)) {
+            if (!in_array($year, $years, true)) {
 
                 //Add year to years list
                 array_push($years, $year);
@@ -63,12 +64,6 @@ class PlayLogController extends Controller
 
     }
 
-    public function getYearsMonth(){
-        $years = $this->getYears();
-        foreach($year as $years){
-
-        }
-    }
 
     /**
      * Creates a new playLog entity.
@@ -97,7 +92,7 @@ class PlayLogController extends Controller
             $em->persist($playlog);
             $em->flush();
 
-            $this->addFlash('success', 'Playlog added for '.$game->getName());
+            $this->addFlash('success', 'Playlog added for ' . $game->getName());
             return $this->redirect($this->generateUrl('game_show', array(
                 'id' => $gameId
             )));
@@ -125,7 +120,6 @@ class PlayLogController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-
 
 
     /**

@@ -5,7 +5,7 @@
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
     {% set playlogs = game.playlogs %}
     {% set currentUserId =  app.user.id %}
-                    {% set gamePlayedCount = [] %}
+    {% set gamePlayedCount = [] %}
 
     <div class="container">
         <div class="row">
@@ -171,9 +171,7 @@
                         type: "POST",
                         url: '{{ path('playlog_delete_bulk') }}',//path to the route of PlayLogController->deleteBulkAction method
                         data: JSON.stringify(playlogs),
-//                        data: plays: playlogs,
                         success: function () {
-//                            alert("selected playlogs: " + playlogs.join(", "));
                             window.location.reload();
                         },
                     });
