@@ -29,8 +29,9 @@
                 {#<div id="container"></div>#}
                 <div id="container" style="width:100%; height:400px;"></div>
             {% else %}
-
-                <p class="alert alert-info">To show You don't have any playlogs, <a href="{{ path('game_index') }}">add one here</a></p>
+                <div class="col-md-4">
+                <p class="alert alert-info">You don't have any playlogs &nbsp; <a class="btn btn-primary" href="{{ path('game_index') }}">Add one here</a></p>
+                </div>
             {% endif %}
         </div>
     </div>

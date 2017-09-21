@@ -2,7 +2,9 @@
 {% block content %}
 {#{{ dump() }}#}
 The 3 games that you've played the least times are the following:<br>
+    <div class="btn-group-vertical" role="group" aria-label="...">
     {% for suggestion in suggestionList %}
-        {{ suggestion.name }}  with  <span class="badge">{{ suggestion.plays }}</span> plays<br>
+        <a class="btn btn-default" href="#">{{ suggestion.name }}  with  <span class="badge">{{ suggestion.plays }}</span> plays</a>
     {% endfor %}
+    </div>
 {% endblock content %}
