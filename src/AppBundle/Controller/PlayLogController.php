@@ -6,10 +6,11 @@ use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\User;
 
 use AppBundle\Entity\Game;
+use function array_push;
+use function in_array;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,16 +29,41 @@ class PlayLogController extends Controller
      */
     public function indexAction()
     {
-        /** @var User $user */
         $user = $this->getUser();
         $playlogs = $user->getPlaylogs();
-
-
+        $years = $this->getYears();
 
         return $this->render('playlog/index.html.twig', array(
             'playlogs' => $playlogs,
+            'years' => $years
         ));
     }
+
+    public function getYears()
+    {
+        $user = $this->getUser();
+        $playlogs = $user->getPlaylogs();
+
+        //Start with empty array
+        $years = array();
+
+        //Fill in items if they're not in the array already
+        foreach ($playlogs as $playlog) {
+            //Get only the year from date property
+            $year = $playlog->getDate()->format('Y');
+
+            //If value isn't in the array
+            if (!in_array($year, $years, true)) {
+
+                //Add year to years list
+                array_push($years, $year);
+            }
+        }
+
+        return $years;
+
+    }
+
 
     /**
      * Creates a new playLog entity.
@@ -66,7 +92,7 @@ class PlayLogController extends Controller
             $em->persist($playlog);
             $em->flush();
 
-            $this->addFlash('success', 'Playlog added for '.$game->getName());
+            $this->addFlash('success', 'Playlog added for ' . $game->getName());
             return $this->redirect($this->generateUrl('game_show', array(
                 'id' => $gameId
             )));
@@ -94,6 +120,7 @@ class PlayLogController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
 
     /**
      * Displays a form to edit an existing playLog entity.

@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Expansion;
 
 use Doctrine\DBAL\Connection;
+use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -171,6 +172,26 @@ class GameController extends Controller
             'delete_form' => $deleteForm->createView(),
 
         ));
+    }
+
+    /**
+     * Removes a game entity from User collection.
+     *
+     * @Route("/remove/game/user", name="remove_user_game")
+     */
+    public function removeGameFromUser(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $gameId = json_decode($request->getContent());
+        $game = $em->getRepository(Game::class)->find($gameId);
+        $user = $this->getUser();
+
+        /** @var User $user */
+        $user->removeGame($game);
+        $em->persist($user);
+        $em->flush();
+
+        return new Response("Game remove from User collection: success");
+
     }
 
     /**

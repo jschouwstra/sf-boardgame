@@ -148,20 +148,23 @@ class UserController extends Controller
     }
 
     /**
-     * Show current user profile.
+     * Show current user's dashboard.
      *
-     * @Route("user/profile", name="user_profile")
+     * @Route("user/dashboard", name="user_dashboard")
      * @Method({"GET", "POST"})
      */
-    public function showUserProfile()
+    public function showDashboard()
     {
         $userGames = $this->getUserGamesForGraph();
         $totalGames = $userGames[0];
         $totalGameplays = $userGames[1];
-        return $this->render('user/profile.html.twig', array(
+        return $this->render('user/dashboard.html.twig', array(
             'games' => $totalGames,
             'gameplays' => $totalGameplays,
         ));
     }
+
+
+
 
 }

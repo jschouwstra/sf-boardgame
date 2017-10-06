@@ -56,6 +56,19 @@ table td a:link,table td a:visited{
         width: 100%;
     }
 }
+.alert, .custom{
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #00a7d0;
+    color: white;
+}
+.alert, .custom a:link{
+    color: white;
+
+}
+
 
 
 .navbar-inverse{

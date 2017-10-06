@@ -2,14 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Nataniel\BoardGameGeek\Thing;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Game
  *
- * @ORM\Table(name="game")
+ * @ORM\Table(name="game" , uniqueConstraints={@UniqueConstraint(name="unique", columns={"bgg_id", "name"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
  */
 class Game
@@ -46,8 +48,6 @@ class Game
     }
 
 
-
-
     /**
      * Game constructor.
      */
@@ -72,7 +72,7 @@ class Game
      *
      * @var int
      *
-     * @ORM\Column(name="bgg_id", type="integer")
+     * @ORM\Column(name="bgg_id", type="integer", unique=false)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $bgg_id;
@@ -132,6 +132,7 @@ class Game
     public function getName()
     {
         return $this->name;
+
     }
 
 //array collection functions
@@ -166,15 +167,16 @@ class Game
         $this->expansions->add($expansion);
         return $this;
     }
+
     public function removeExpansion(Expansion $expansion)
     {
         $this->expansions->removeElement($expansion);
     }
 
+
     public function removeAllExpansions()
     {
-        foreach ($this->expansions as $expansion)
-        {
+        foreach ($this->expansions as $expansion) {
             $this->removeExpansion($expansion);
         }
     }
