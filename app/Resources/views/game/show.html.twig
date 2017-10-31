@@ -55,7 +55,6 @@
                                     <div class="row">
                                         {% if playingTime %}
                                             <div class="col-md-3">
-
                                                 {{ playingTime }} minutes<br> <b>Playing Time</b>
                                                 <hr>
                                             </div>
@@ -66,8 +65,6 @@
                                                 <hr>
                                             </div>
                                         {% endif %}
-
-
                                     </div>
                                     {% if publishedBy %}
                                         <div class="row">
@@ -84,7 +81,7 @@
                                         <h3>Plays ({{ gamePlayedCount| length }})</h3>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 ">
+                                        <div class="col-md-12 ">
                                             <p>
                                             <div class="panel panel-default " style="">
                                                 <div class="panel-body">
@@ -126,9 +123,11 @@
                                                                     {% if playlogUserId == currentUserId %}
                                                                         <td data-label="expansions">
                                                                             {% if playlog.expansions| length > 0 %}
+                                                                                <ul>
                                                                                 {% for expansion in playlog.expansions %}
-                                                                                    {{ expansion.name }}<br>
+                                                                                    <li>{{ expansion.name }}</li><br>
                                                                                 {% endfor %}
+                                                                                </ul>
                                                                             {% else %}
                                                                                 None
                                                                             {% endif %}

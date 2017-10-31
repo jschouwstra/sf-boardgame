@@ -16,6 +16,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Game
 {
+    /****************************************
+     *
+     *          Relations
+     *
+     ***************************************/
+
     /**
      * @ORM\OneToMany(targetEntity="PlayLog", mappedBy="game")
      */
@@ -31,32 +37,12 @@ class Game
      */
     private $users;
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
+    /****************************************
+     *
+     *          Properties
+     *
+     ***************************************/
 
-    /**
-     * @param ArrayCollection $users
-     */
-    public function setUsers($users)
-    {
-        $this->users = $users;
-    }
-
-
-    /**
-     * Game constructor.
-     */
-    public function __construct()
-    {
-        $this->playlogs = new ArrayCollection();
-        $this->expansions = new ArrayCollection();
-        $this->users = new ArrayCollection();
-    }
 
     /**
      * @var int
@@ -88,6 +74,39 @@ class Game
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
+    /****************************************
+     *
+     *          Methods
+     *
+     ***************************************/
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
+
+    /**
+     * Game constructor.
+     */
+    public function __construct()
+    {
+        $this->playlogs = new ArrayCollection();
+        $this->expansions = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * Get id

@@ -2,7 +2,7 @@
 {% block content %}
     <h1>My Game list</h1>
     <hr>
-        <div class="col-md-12 ">
+    <div class="col-md-12">
     {% set currentUserId =  app.user.id %}
     {% for type,messages in app.session.flashbag.all() %}
         {% for message in messages %}
@@ -12,7 +12,7 @@
         {% endfor %}
     {% endfor %}
     <div class="row">
-        <div class="col-md-12 ">
+        <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
                     <div class="btn-group pull-right">
@@ -41,7 +41,7 @@
                                 {#Prepare empty array#}
                                 {% set gamePlayedCount = [] %}
                                 <tr row="{{ game.id }}">
-                                    <td data-label="Game"><a style="width: 100%;" class="btn btn-default" href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</a></td>
+                                    <td data-label="Game"><a class="btn btn-default text-limit" style="width: 100%;" href="{{ path('game_show', { 'id': game.id }) }}" title="{{ game.name }}">{{ game.name }}</a></td>
                                     <td data-label="Plays">
                                         <span class="badge">
                                         {#Playlogs of current games    #}
@@ -99,6 +99,13 @@ $(document).ready(function(){
                 }
                 return false;
             });
+
+
 });
+
+
+
 </script>
+
+
 {% endblock javascripts %}
