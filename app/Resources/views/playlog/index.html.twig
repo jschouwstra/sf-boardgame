@@ -16,6 +16,7 @@
                         <th scope="col">Date</th>
                         <th scope="col">Game</th>
                         <th scope="col">Expansion</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -24,8 +25,8 @@
 
                         {% if year in  playlog.date|date("Y") %}
                             <tr>
-                                <td data-label="Date">{{ playlog.date|date("Y-m-d") }}
-                                <td data-label="Game"><a href="{{ path('game_show', { 'id': playlog.game.id}) }}">{{ playlog.game.name }}</td>
+                                <td data-label="Date">{{ playlog.date|date("M") }} ({{ playlog.date|date("Y") }})
+                                <td data-label="Game"><a class="btn btn-default" href="{{ path('game_show', { 'id': playlog.game.id}) }}">{{ playlog.game.name }}</td>
                                 {#{% if playlog.date|date ("Y") == 2017 %}#}
                                 {#2017!#}
                                 {#{% endif %}#}
@@ -35,6 +36,13 @@
                                         {% for expansion in playlog.expansions %}
                                             {{ expansion.name }}<br>
                                         {% endfor %}
+                                    {% else %}
+                                        None
+                                    {% endif %}
+                                </td>
+                                <td data-label="Description">
+                                    {% if playlog.description %}
+                                        {{ playlog.description }}
                                     {% else %}
                                         None
                                     {% endif %}

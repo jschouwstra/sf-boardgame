@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    <h1>Game list</h1>
+    <h1>My Game list</h1>
     <hr>
         <div class="col-md-12 ">
     {% set currentUserId =  app.user.id %}
@@ -41,7 +41,7 @@
                                 {#Prepare empty array#}
                                 {% set gamePlayedCount = [] %}
                                 <tr row="{{ game.id }}">
-                                    <td data-label="Game"><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</td>
+                                    <td data-label="Game"><a style="width: 100%;" class="btn btn-default" href="{{ path('game_show', { 'id': game.id }) }}">{{ game.name }}</a></td>
                                     <td data-label="Plays">
                                         <span class="badge">
                                         {#Playlogs of current games    #}
@@ -59,9 +59,7 @@
                                         </span>
                                     </td>
                                     <td data-label="Actions">
-                                        <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}">
-                                            <i class="fa fa-search"></i> Show
-                                        </a>
+
                                         <a class="btn btn-primary"
                                            href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> Add Play
                                         </a>

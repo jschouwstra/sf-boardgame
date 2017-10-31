@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use const false;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -19,29 +20,41 @@ class PlayLogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('date', DateType::class, array(
-            'widget' => 'single_text',
-            'html5' => false,
-            'attr' => ['class' => 'datepicker form-control'],
-            'label' => 'Choose date ',
-            'format' => 'MM/dd/yyyy'
-        ));
+            ->add('date', DateType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'date-picker form-control'
+                ],
+                'label' => 'Choose date ',
+                'format' => 'MM/yyyy'
+            ));
+
+        $builder
+            ->add('description', TextareaType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'required' => false
+
+            ]);
 
         /** var Expansion $expansion */
-        $builder->add('expansions', EntityType::class, [
-            'attr' => ['data-select' => 'true'],
+        $builder->
+            add('expansions', EntityType::class, [
+                'attr' => ['data-select' => 'true'],
 
-            'class' => 'AppBundle:Expansion',
-            'choice_label' => function ($expansion) {
-                return $expansion->getName();
-            },
-            'multiple' => true,
-            'expanded' => false,
-            'required' => false
+                'class' => 'AppBundle:Expansion',
+                'choice_label' => function ($expansion) {
+                    return $expansion->getName();
+                },
+                'multiple' => true,
+                'expanded' => false,
+                'required' => false
         ]);
 
     }
-    
+
     /**
      * {@inheritdoc}
      */
