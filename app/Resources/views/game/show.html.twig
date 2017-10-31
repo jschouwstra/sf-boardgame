@@ -55,7 +55,6 @@
                                     <div class="row">
                                         {% if playingTime %}
                                             <div class="col-md-3">
-
                                                 {{ playingTime }} minutes<br> <b>Playing Time</b>
                                                 <hr>
                                             </div>
@@ -124,9 +123,11 @@
                                                                     {% if playlogUserId == currentUserId %}
                                                                         <td data-label="expansions">
                                                                             {% if playlog.expansions| length > 0 %}
+                                                                                <ul>
                                                                                 {% for expansion in playlog.expansions %}
-                                                                                    {{ expansion.name }}<br>
+                                                                                    <li>{{ expansion.name }}</li><br>
                                                                                 {% endfor %}
+                                                                                </ul>
                                                                             {% else %}
                                                                                 None
                                                                             {% endif %}
