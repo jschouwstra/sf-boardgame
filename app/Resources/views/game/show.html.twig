@@ -26,14 +26,14 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12  ">
+            <div class="col-md-12">
                 <h2>Game</h2>
                 <h3> {{ game.name }}</h3>
                 <hr>
                 <div class="row">
                     {% if image %}
                         <div class="col-md-4  ">
-                            <img src="{{ image }}" style="width: 200px; height: 200px; border-radius: 6px;">
+                            <img src="{{ image }}" style="width:60%; border-radius: 6px;">
                         </div>
                     {% endif %}
                 </div>
@@ -49,38 +49,36 @@
                         <div class="container">
                             <div class="tab-content">
                                 <div id="stats" class="tab-pane fade in active">
-                                    <div id="stats">
-                                        <div class="row">
-                                            <h3>Stats</h3>
-                                        </div>
-                                        <div class="row">
-                                            {% if playingTime %}
-                                                <div class="col-md-4">
-
-                                                    {{ playingTime }} minutes<br> <b>Playing Time</b>
-                                                    <hr>
-                                                </div>
-                                            {% endif %}
-                                            {% if minPlayers and  maxPlayers %}
-                                                <div class="col-md-4">
-                                                    {{ minPlayers }}-{{ maxPlayers }}<br> <b>Players</b>
-                                                    <hr>
-                                                </div>
-                                            {% endif %}
-
-                                            <div class="row">
-                                                {% if publishedBy %}
-                                                    <div class="col-md-4">
-                                                        <b>Publisher: </b>{{ publishedBy| first }}
-                                                    </div>
-                                                    <hr>
-                                                {% endif %}
-                                            </div>
-                                            <div class="row">
-                                            </div>
-                                        </div>
+                                    <div class="row">
+                                        <h3>Stats</h3>
                                     </div>
+                                    <div class="row">
+                                        {% if playingTime %}
+                                            <div class="col-md-3">
+
+                                                {{ playingTime }} minutes<br> <b>Playing Time</b>
+                                                <hr>
+                                            </div>
+                                        {% endif %}
+                                        {% if minPlayers and  maxPlayers %}
+                                            <div class="col-md-3">
+                                                {{ minPlayers }}-{{ maxPlayers }}<br> <b>Players</b>
+                                                <hr>
+                                            </div>
+                                        {% endif %}
+
+
+                                    </div>
+                                    {% if publishedBy %}
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <b>Publisher: </b>{{ publishedBy| first }}
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    {% endif %}
                                 </div>
+
                                 <div id="plays" class="tab-pane fade">
                                     <div class="row">
                                         <h3>Plays ({{ gamePlayedCount| length }})</h3>
@@ -90,11 +88,10 @@
                                             <p>
                                             <div class="panel panel-default " style="">
                                                 <div class="panel-body">
-
-                                                    <a id="deleteBtn" class="btn btn-danger" href="#"><i class="fa fa-remove"></i> <span class="adaptiveText">Delete</span></a>
                                                     <a class="btn btn-primary"
-                                                       href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-plus"></i> <span class="adaptiveText">Add Play</span>
+                                                       href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-plus"></i> Add Play
                                                     </a>
+                                                    <a id="deleteBtn" class="btn btn-danger" href="#"><i class="fa fa-remove"></i> Delete Play</a>
                                                 </div>
                                             </div>
                                             </p>
@@ -103,20 +100,31 @@
                                                 <div class=" panel panel-body panel-default">
                                                     <div class="table">
                                                         <table class="table table-bordered table-responsive table-condensed">
+                                                            <thead>
                                                             <tr>
-                                                                <td>Select</td>
-                                                                <td>Date</td>
-                                                                <td>Expansion</td>
+                                                                <td scope="col">Select</td>
+                                                                <td scope="col">Date</td>
+                                                                <td scope="col">Description</td>
+                                                                <td scope="col">Expansions</td>
                                                             </tr>
+                                                            </thead>
                                                             {% for playlog in game.playlogs | sortbyfield("date") |reverse %}
+                                                                <tbody>
                                                                 <tr>
-                                                                    <td><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
-                                                                    <td>
+                                                                    <td data-label="select"><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
+                                                                    <td data-label="date">
                                                                         {{ playlog.date|date('Y-m-d') }}
+                                                                    </td>
+                                                                    <td>
+                                                                        {% if playlog.description %}
+                                                                        {{ playlog.description }}
+                                                                        {% else %}
+                                                                        None
+                                                                        {% endif %}
                                                                     </td>
                                                                     {% set playlogUserId =  playlog.getuserid %}
                                                                     {% if playlogUserId == currentUserId %}
-                                                                        <td>
+                                                                        <td data-label="expansions">
                                                                             {% if playlog.expansions| length > 0 %}
                                                                                 {% for expansion in playlog.expansions %}
                                                                                     {{ expansion.name }}<br>
@@ -128,6 +136,7 @@
 
                                                                     {% endif %}
                                                                 </tr>
+                                                                </tbody>
                                                             {% endfor %}
                                                         </table>
                                                     </div>
@@ -150,6 +159,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
     </div>

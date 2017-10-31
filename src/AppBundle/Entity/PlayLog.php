@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -14,9 +15,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class PlayLog
 {
-    /**************************
-     *  Relations
-     *************************/
+    /****************************************
+     *
+     *          Relations
+     *
+     ***************************************/
     /**
      * @ORM\ManyToMany(targetEntity="Expansion", inversedBy="playlog")
      *
@@ -44,9 +47,49 @@ class PlayLog
     {
         $this->expansions = new ArrayCollection();
     }
-    /**************************
-     *  Getters and setters
-     *************************/
+    /****************************************
+     *
+     *          Properties
+     *
+     ***************************************/
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * @var int
+     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $user_id;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     * @ORM\OrderBy({"date" = "ASC"})
+     */
+    private $date;
+
+    /**
+     * @var string
+     * @ORM\Column(name="description", type="string", length=255, unique=false, nullable=true)
+     */
+    private $description;
+
+    /****************************************
+     *
+     *          Methods
+     *
+     ***************************************/
 
     /**
      * @return mixed
@@ -82,23 +125,6 @@ class PlayLog
 
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-
-    /**
-     * @var int
-     * @ORM\Column(name="user_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $user_id;
-
-    /**
      * @return int
      */
     public function getUserId()
@@ -113,15 +139,6 @@ class PlayLog
     {
         $this->user_id = $user_id;
     }
-
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date")
-     * @ORM\OrderBy({"date" = "ASC"})
-     */
-    private $date;
 
 
     /**
@@ -192,6 +209,23 @@ class PlayLog
             $this->removeExpansion($expansion);
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
 
 }
 
