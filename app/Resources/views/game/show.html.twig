@@ -43,12 +43,12 @@
                 <div class="container">
                     <div class="col-md-12  ">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#stats"><i class="fa fa-info-circle"></i> Stats</a></li>
-                            <li><a data-toggle="tab" href="#plays"><i class="fa fa-book"></i> Plays ({{ gamePlayedCount| length }})</a></li>
+                            <li class="active"><a data-toggle="tab" href="#plays"><i class="fa fa-book"></i> Plays ({{ gamePlayedCount| length }})</a></li>
+                            <li><a data-toggle="tab" href="#stats"><i class="fa fa-info-circle"></i> Stats</a></li>
                         </ul>
                         <div class="container">
                             <div class="tab-content">
-                                <div id="stats" class="tab-pane fade in active">
+                                <div id="stats" class="tab-pane ">
                                     <div class="row">
                                         <h3>Stats</h3>
                                     </div>
@@ -79,7 +79,7 @@
                                     {% endif %}
                                 </div>
 
-                                <div id="plays" class="tab-pane fade">
+                                <div id="plays" class="tab-pane fade in active">
                                     <div class="row">
                                         <h3>Plays ({{ gamePlayedCount| length }})</h3>
                                     </div>
@@ -113,13 +113,13 @@
                                                                 <tr>
                                                                     <td data-label="select"><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
                                                                     <td data-label="date">
-                                                                        {{ playlog.date|date('Y-m-d') }}
+                                                                        {{ playlog.date|date("M") }} ({{ playlog.date|date("Y") }})
                                                                     </td>
                                                                     <td>
                                                                         {% if playlog.description %}
-                                                                        {{ playlog.description }}
+                                                                            {{ playlog.description }}
                                                                         {% else %}
-                                                                        None
+                                                                            None
                                                                         {% endif %}
                                                                     </td>
                                                                     {% set playlogUserId =  playlog.getuserid %}
