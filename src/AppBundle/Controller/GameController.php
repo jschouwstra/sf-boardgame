@@ -13,6 +13,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nataniel\BoardGameGeek\Thing;
+use function var_dump;
+
+
 /**
  * Game controller.
  *
@@ -41,7 +45,7 @@ class GameController extends Controller
             'max_limit_error' => 25
         ));
     }
-    
+
 
     /**
      * Lists all user's game entities as JSON.
@@ -82,8 +86,8 @@ class GameController extends Controller
     {
         //Use existing GameRepository, Appbundle:Game
         $gameRepository = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Game');
+            ->getManager()
+            ->getRepository('AppBundle:Game');
         $name = $request->get('name');
         $games = $gameRepository->findByName($name);
 
@@ -103,14 +107,16 @@ class GameController extends Controller
      */
     public function newAction(Request $request)
     {
-
+        $client = new \Nataniel\BoardGameGeek\Client();
         $game = new Game();
-
         $form = $this->createForm('AppBundle\Form\GameType', $game);
         $form->handleRequest($request);
 
-        $game->setUser($this->getUser());
         if ($form->isSubmitted() && $form->isValid()) {
+            $bgg_id = $form->get('bgg_id')->getData();
+            $thing = $client->getThing($bgg_id, true);
+            $game->setName($thing->getName());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($game);
             $em->flush($game);
@@ -135,11 +141,10 @@ class GameController extends Controller
         $thing = $client->getThing($game->getBggId(), true);
 
 
-
         return $this->render('game/show.html.twig', array(
             //bgg game properties:
             'image' => $thing->getImage(),
-            'playingTime'  => $thing->getPlayingTime(),
+            'playingTime' => $thing->getPlayingTime(),
             'minPlayers' => $thing->getMinPlayers(),
             'maxPlayers' => $thing->getMaxPlayers(),
             'publishedBy' => $thing->getBoardgamePublishers(),
@@ -179,7 +184,8 @@ class GameController extends Controller
      *
      * @Route("/remove/game/user", name="remove_user_game")
      */
-    public function removeGameFromUser(Request $request){
+    public function removeGameFromUser(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $gameId = json_decode($request->getContent());
         $game = $em->getRepository(Game::class)->find($gameId);
