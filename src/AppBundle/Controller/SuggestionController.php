@@ -2,10 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use FOS\UserBundle\FOSUserBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +26,26 @@ class SuggestionController extends Controller
     }
 
     /**
+     * @Route("/test", name="suggestion_test")
+     *
+     */
+    public function suggestionShow()
+    {
+
+            $leastPlayedGames = $this->getLeastPlayedGames();
+
+        return $this->render('suggestion/show.html.twig', array(
+            'leastPlayedGames' => $leastPlayedGames,
+            'leastPlayedGames' => $leastPlayedGames
+        ));
+
+    }
+
+    /**
      * @Route("/show", name="suggestion_show")
      *
      */
-    public function getLeastPlayedSuggestion(Request $request)
+    public function getLeastPlayedSuggestion()
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -59,30 +77,57 @@ class SuggestionController extends Controller
         ));
     }
 
-    /**
-     * @Route("/test", name="suggestion_test")
-     *
-     */
-    public function getPlayedGames(Request $request)
-    {
-        $manager = $this->getDoctrine()->getManager();
 
+    public function getLeastPlayedGames()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $userID = $user->getId();
+        $manager = $this->getDoctrine()->getManager();
         /** @var QueryBuilder $qb */
         $qb = $manager->createQueryBuilder();
 
         $query = $qb
             ->select('g.name, count(p.game) as plays')
             ->from(PlayLog::class, 'p')
+            ->from(User::class, 'u')
+            ->where('u.id ='.$userID)
             ->leftJoin('p.game', 'g')
-            ->groupby('g.name')
+            ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
+            ->orderBy('plays', 'asc')
+            ->setMaxResults(5)
             ->getQuery();
+
         $results = $query->getResult();
 
-        return $this->render('suggestion/show.html.twig', array(
-            'suggestionList' => $results
-        ));
+        return $results;
+    }
+    public function getMostPlayedGames()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $userID = $user->getId();
+        $manager = $this->getDoctrine()->getManager();
+        /** @var QueryBuilder $qb */
+        $qb = $manager->createQueryBuilder();
 
+        $query = $qb
+            ->select('g.name, count(p.game) as plays')
+            ->
+            ->from(PlayLog::class, 'p')
+            ->from(User::class, 'u')
+            ->where('u.id ='.$userID)
+            ->leftJoin('p.game', 'g')
+            ->groupby('g.name', 'p.user_id')
+            ->having('count(plays) > 0')
+            ->orderBy('plays', 'asc')
+            ->setMaxResults(5)
+            ->getQuery();
+
+        $results = $query->getResult();
+
+        return $results;
     }
 
 
