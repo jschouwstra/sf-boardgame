@@ -19,7 +19,7 @@
                 <div class="panel-heading">Your 5 most played games</div>
                 <div class="panel-body">
                     <div class="btn-group-vertical" role="group" aria-label="...">
-                        {% for suggestion in mostPlayedGames %}
+                        {% for suggestion in leastPlayedGames %}
                             <a class="btn btn-default" href="#">{{ suggestion.name }} with <span class="badge">{{ suggestion.plays }}</span> plays</a>
                         {% endfor %}
                     </div>

@@ -35,7 +35,6 @@ class SuggestionController extends Controller
             $leastPlayedGames = $this->getLeastPlayedGames();
 
         return $this->render('suggestion/show.html.twig', array(
-            'leastPlayedGames' => $leastPlayedGames,
             'leastPlayedGames' => $leastPlayedGames
         ));
 
@@ -103,32 +102,7 @@ class SuggestionController extends Controller
 
         return $results;
     }
-    public function getMostPlayedGames()
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-        $userID = $user->getId();
-        $manager = $this->getDoctrine()->getManager();
-        /** @var QueryBuilder $qb */
-        $qb = $manager->createQueryBuilder();
 
-        $query = $qb
-            ->select('g.name, count(p.game) as plays')
-            ->
-            ->from(PlayLog::class, 'p')
-            ->from(User::class, 'u')
-            ->where('u.id ='.$userID)
-            ->leftJoin('p.game', 'g')
-            ->groupby('g.name', 'p.user_id')
-            ->having('count(plays) > 0')
-            ->orderBy('plays', 'asc')
-            ->setMaxResults(5)
-            ->getQuery();
-
-        $results = $query->getResult();
-
-        return $results;
-    }
 
 
 }
