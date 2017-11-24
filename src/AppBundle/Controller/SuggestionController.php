@@ -26,16 +26,18 @@ class SuggestionController extends Controller
     }
 
     /**
-     * @Route("/test", name="suggestion_test")
+     * @Route("/show", name="suggestion_test")
      *
      */
     public function suggestionShow()
     {
 
             $leastPlayedGames = $this->getLeastPlayedGames();
+            $mostPlayedGames = $this->getMostPlayedGames();
 
         return $this->render('suggestion/show.html.twig', array(
-            'leastPlayedGames' => $leastPlayedGames
+            'leastPlayedGames' => $leastPlayedGames,
+            'mostPlayedGames' => $mostPlayedGames
         ));
 
     }
@@ -44,36 +46,59 @@ class SuggestionController extends Controller
      * @Route("/show", name="suggestion_show")
      *
      */
-    public function getLeastPlayedSuggestion()
-    {
+//    public function getLeastPlayedSuggestion()
+//    {
+//        /** @var User $user */
+//        $user = $this->getUser();
+//
+//        $usergames = $user->getGames();
+//        $plays = array();
+//        foreach ($usergames as $usergame) {
+//            $playCount = count($usergame->getPlaylogs()->getValues());
+//            /** @var Game $usergame */
+//            $gameName = $usergame->getName();
+////            array_push($plays, 1, $gameName);
+//            $plays[] = array(
+//                "plays" => $playCount,
+//                "name" => $usergame->getName(),
+//                "expansions" => $usergame->getExpansions()
+//            );
+//        }
+//        //Reverse array order:
+//        asort($plays);
+//
+//        //Show only 3 array elements:
+//        $sliced_array = array_slice($plays, 0, 3);
+//
+//
+//        $suggestion = $sliced_array;
+//
+//        return $this->render('suggestion/show.html.twig', array(
+//            'suggestionList' => $suggestion
+//        ));
+//    }
+    public function getMostPlayedGames(){
         /** @var User $user */
         $user = $this->getUser();
+        $userID = $user->getId();
+        $manager = $this->getDoctrine()->getManager();
+        /** @var QueryBuilder $qb */
+        $qb = $manager->createQueryBuilder();
 
-        $usergames = $user->getGames();
-        $plays = array();
-        foreach ($usergames as $usergame) {
-            $playCount = count($usergame->getPlaylogs()->getValues());
-            /** @var Game $usergame */
-            $gameName = $usergame->getName();
-//            array_push($plays, 1, $gameName);
-            $plays[] = array(
-                "plays" => $playCount,
-                "name" => $usergame->getName(),
-                "expansions" => $usergame->getExpansions()
-            );
-        }
-        //Reverse array order:
-        asort($plays);
+        $query = $qb
+            ->select('g.name, count(p.game) as plays')
+            ->from(PlayLog::class, 'p')
+            ->where('p.user_id ='.$userID)
+            ->leftJoin('p.game', 'g')
+            ->groupby('g.name', 'p.user_id')
+            ->having('count(plays) > 0')
+            ->orderBy('plays', 'desc')
+            ->setMaxResults(3)
+            ->getQuery();
 
-        //Show only 3 array elements:
-        $sliced_array = array_slice($plays, 0, 3);
+        $results = $query->getResult();
 
-
-        $suggestion = $sliced_array;
-
-        return $this->render('suggestion/show.html.twig', array(
-            'suggestionList' => $suggestion
-        ));
+        return $results;
     }
 
 
@@ -89,13 +114,12 @@ class SuggestionController extends Controller
         $query = $qb
             ->select('g.name, count(p.game) as plays')
             ->from(PlayLog::class, 'p')
-            ->from(User::class, 'u')
-            ->where('u.id ='.$userID)
+            ->where('p.user_id ='.$userID)
             ->leftJoin('p.game', 'g')
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
             ->orderBy('plays', 'asc')
-            ->setMaxResults(5)
+            ->setMaxResults(3)
             ->getQuery();
 
         $results = $query->getResult();
