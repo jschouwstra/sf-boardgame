@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class PlayLogRepository extends \Doctrine\ORM\EntityRepository
 {
+    //count game->playlogs
+    //
+
+
 }
+//
+//$qb = $this->em->getRepository( Game::class )->createQueryBuilder( 'game_t' );
+//$qb->join( 'users_games.user_id', 'ug' )
+//->where( 'ug.user_id = :userId' )
+//->setParameter( 'userId', $user_id);
+//return $qb->getQuery()->getResult();

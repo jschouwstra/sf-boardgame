@@ -54,24 +54,15 @@ class Game
     private $id;
 
     /**
-     * Boardgamegeek ID
-     *
      * @var int
-     *
-     * @ORM\Column(name="bgg_id", type="integer", unique=false)
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="bgg_id", type="integer", length=255)
      */
     private $bgg_id;
 
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *     min = "3",
-     *  max = "100"
-     * )
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -126,6 +117,14 @@ class Game
     public function getBggId()
     {
         return $this->bgg_id;
+    }
+    /**
+     * Set bgg_id
+     *
+     */
+    public function setBggId($bgg_id)
+    {
+        $this->bgg_id = $bgg_id;
     }
 
 

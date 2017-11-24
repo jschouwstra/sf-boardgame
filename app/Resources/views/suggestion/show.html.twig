@@ -1,10 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-{#{{ dump() }}#}
-The 3 games that you've played the least times are the following:<br>
-    <div class="btn-group-vertical" role="group" aria-label="...">
-    {% for suggestion in suggestionList %}
-        <a class="btn btn-default" href="#">{{ suggestion.name }}  with  <span class="badge">{{ suggestion.plays }}</span> plays</a>
-    {% endfor %}
+    <div class="col-md-4">
+        <h1>Least played</h1>
+        <div class="btn-group-vertical" role="group" aria-label="...">
+            {% for suggestion in leastPlayedGames %}
+                <a class="btn btn-default" href="#">{{ suggestion.name }} with <span
+                            class="badge">{{ suggestion.plays }}</span> plays</a>
+            {% endfor %}
+        </div>
     </div>
+    <div class="col-md-4">
+        <h1>Most played</h1>
+        <div class="btn-group-vertical" role="group" aria-label="...">
+            {% for suggestion in mostPlayedGames %}
+                <a class="btn btn-default" href="#">{{ suggestion.name }} with <span
+                            class="badge">{{ suggestion.plays }}</span> plays</a>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    {#<div class="col-md-4">#}
+    {#<div class="panel panel-default">#}
+    {#<div class="panel-heading">Most played games</div>#}
+    {#<div class="panel-body">#}
+    {#<div class="btn-group-vertical" role="group" aria-label="...">#}
+    {#{% for suggestion in leastPlayedGames %}#}
+    {#<a class="btn btn-default" href="#">{{ suggestion.name }} with <span class="badge">{{ suggestion.plays }}</span> plays</a>#}
+    {#{% endfor %}#}
+    {#</div>#}
+
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
 {% endblock content %}
