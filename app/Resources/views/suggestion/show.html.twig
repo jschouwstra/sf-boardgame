@@ -13,11 +13,50 @@
         <h1>Most played</h1>
         <div class="btn-group-vertical" role="group" aria-label="...">
             {% for suggestion in mostPlayedGames %}
-                <a class="btn btn-default" href="#">{{ suggestion.name }} with <span
-                            class="badge">{{ suggestion.plays }}</span> plays</a>
+                <a class="btn btn-default" href="#">{{ suggestion.name }} with
+
+                    {% if suggestion.plays > 1 %}
+                        <span class="badge">{{ suggestion.plays }}</span> plays
+                    {% else %}
+                        <span class="badge">{{ suggestion.plays }}</span> play
+                    {% endif %}
+                </a>
             {% endfor %}
         </div>
     </div>
+    <div class="col-md-4">
+        <h1>Unplayed</h1>
+        <div class="btn-group-vertical" role="group" aria-label="...">
+            {% for suggestion in unplayedGames %}
+                <a class="btn btn-default" href="#">{{ suggestion.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <table class=" table-striped">
+            <thead>
+            <tr>
+                <th>Game</th>
+                <th>Plays</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><span style="width: 100%;" class="btn btn-default">Splendor</span></td>
+                <td><span style="width: 100%;" class="btn btn-primary">1</span></td>
+            </tr>
+            <tr>
+                <td><span style="width: 100%;" class="btn btn-default">Jenga</span></td>
+                <td><span style="width: 100%;" class="btn btn-primary">3</span></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
 
 
     {#<div class="col-md-4">#}

@@ -31,13 +31,14 @@ class SuggestionController extends Controller
      */
     public function suggestionShow()
     {
-
-            $leastPlayedGames = $this->getLeastPlayedGames();
-            $mostPlayedGames = $this->getMostPlayedGames();
+        $leastPlayedGames = $this->getLeastPlayedGames();
+        $mostPlayedGames = $this->getMostPlayedGames();
+        $getUnplayedGames = $this->getUnplayedGames();
 
         return $this->render('suggestion/show.html.twig', array(
             'leastPlayedGames' => $leastPlayedGames,
-            'mostPlayedGames' => $mostPlayedGames
+            'mostPlayedGames' => $mostPlayedGames,
+            'unplayedGames' => $getUnplayedGames
         ));
 
     }
@@ -46,38 +47,8 @@ class SuggestionController extends Controller
      * @Route("/show", name="suggestion_show")
      *
      */
-//    public function getLeastPlayedSuggestion()
-//    {
-//        /** @var User $user */
-//        $user = $this->getUser();
-//
-//        $usergames = $user->getGames();
-//        $plays = array();
-//        foreach ($usergames as $usergame) {
-//            $playCount = count($usergame->getPlaylogs()->getValues());
-//            /** @var Game $usergame */
-//            $gameName = $usergame->getName();
-////            array_push($plays, 1, $gameName);
-//            $plays[] = array(
-//                "plays" => $playCount,
-//                "name" => $usergame->getName(),
-//                "expansions" => $usergame->getExpansions()
-//            );
-//        }
-//        //Reverse array order:
-//        asort($plays);
-//
-//        //Show only 3 array elements:
-//        $sliced_array = array_slice($plays, 0, 3);
-//
-//
-//        $suggestion = $sliced_array;
-//
-//        return $this->render('suggestion/show.html.twig', array(
-//            'suggestionList' => $suggestion
-//        ));
-//    }
-    public function getMostPlayedGames(){
+    public function getMostPlayedGames()
+    {
         /** @var User $user */
         $user = $this->getUser();
         $userID = $user->getId();
@@ -87,9 +58,9 @@ class SuggestionController extends Controller
 
         $query = $qb
             ->select('g.name, count(p.game) as plays')
-            ->from(PlayLog::class, 'p')
-            ->where('p.user_id ='.$userID)
-            ->leftJoin('p.game', 'g')
+            ->from(Game::class, 'g')
+            ->where('p.user_id =' . $userID)
+            ->leftJoin('g.playlogs', 'p')
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
             ->orderBy('plays', 'desc')
@@ -114,7 +85,7 @@ class SuggestionController extends Controller
         $query = $qb
             ->select('g.name, count(p.game) as plays')
             ->from(PlayLog::class, 'p')
-            ->where('p.user_id ='.$userID)
+            ->where('p.user_id =' . $userID)
             ->leftJoin('p.game', 'g')
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
@@ -127,6 +98,46 @@ class SuggestionController extends Controller
         return $results;
     }
 
+    public function getUserGamesWithPlayCount()
+    {
+        /**
+         * Get all User's games with playlog count
+         * e.g User 1: Monopoly with (3) plays
+         */
+        $user = $this->getUser();
+        $userGames = $user->getGames();
+        $currentUserGamesWithPlayCount = array();
+        foreach ($userGames as $game) {
+            $currentUserGamesWithPlayCount[] = array(
+                'name' => $game->getName(),
+                'plays' => count($game->getPlaylogs())
+            );
+        }
+        return $currentUserGamesWithPlayCount;
+
+    }
+
+    public function getUnplayedGames()
+    {
+        /**
+         * Get all User's games with playlog count
+         * e.g User 1: Monopoly with (3) plays
+         */
+        $user = $this->getUser();
+        $userGames = $user->getGames();
+        $currentUnplayedGames = array();
+        foreach ($userGames as $game) {
+            $numberOfPlays = count($game->getPlaylogs());
+            if( $numberOfPlays == 0){
+                $currentUnplayedGames[] = array(
+                    'name' => $game->getName(),
+                    'plays' => count( $game->getPlaylogs() )
+                );
+            }
+        }
+        return $currentUnplayedGames;
+
+    }
 
 
 }
