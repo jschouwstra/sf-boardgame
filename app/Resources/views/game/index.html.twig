@@ -41,7 +41,7 @@
                                 {#Prepare empty array#}
                                 {% set gamePlayedCount = [] %}
                                 <tr row="{{ game.id }}">
-                                    <td data-label="Game"><a class="btn btn-default text-limit" style="width: 100%;" href="{{ path('game_show', { 'id': game.id }) }}" title="{{ game.name }}">{{ game.name }}</a></td>
+                                    <td data-label="Game"><a class="btn btn-default text-limit" style="width: 100%;" href="{{ path('game_show', { 'id': game.id }) }}" title="{{ game.name }}"><span class="excerpt">{{ game.name }}</span></a></td>
                                     <td data-label="Plays">
                                         <span class="badge">
                                         {#Playlogs of current games    #}
@@ -93,15 +93,12 @@ $(document).ready(function(){
                         success: function () {
                             $('[row='+gameId+']').fadeOut().css("background", "#C9302C");
                             return false;
-//                            window.location.reload();
                         },
                     });
                 }
                 return false;
             });
-
-
-});
+ });
 
 
 

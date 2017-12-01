@@ -1,75 +1,80 @@
 {% extends 'base.html.twig' %}
 {% block content %}
     <div class="col-md-4">
-        <h1>Least played</h1>
-        <div class="btn-group-vertical" role="group" aria-label="...">
-            {% for suggestion in leastPlayedGames %}
-                <a class="btn btn-default" href="#">{{ suggestion.name }} with <span
-                            class="badge">{{ suggestion.plays }}</span> plays</a>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="col-md-4">
         <h1>Most played</h1>
-        <div class="btn-group-vertical" role="group" aria-label="...">
-            {% for suggestion in mostPlayedGames %}
-                <a class="btn btn-default" href="#">{{ suggestion.name }} with
+        <div class="table">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Plays</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for suggestion in mostPlayedGames %}
+                    <tr>
+                        <td><a href="#" style="width: 100%;" class="btn btn-default"><span class="excerpt">{{ suggestion.name }}</span></a></td>
+                        <td><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
 
-                    {% if suggestion.plays > 1 %}
-                        <span class="badge">{{ suggestion.plays }}</span> plays
-                    {% else %}
-                        <span class="badge">{{ suggestion.plays }}</span> play
-                    {% endif %}
-                </a>
-            {% endfor %}
+            </table>
         </div>
     </div>
     <div class="col-md-4">
-        <h1>Unplayed</h1>
-        <div class="btn-group-vertical" role="group" aria-label="...">
-            {% for suggestion in unplayedGames %}
-                <a class="btn btn-default" href="#">{{ suggestion.name }}
-                </a>
-            {% endfor %}
+        <h1>Least played</h1>
+        <div class="table">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Plays</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for suggestion in leastPlayedGames %}
+                    <tr>
+                        <td><a href="#" style="width: 100%;" class="btn btn-default">{{ suggestion.name }}</a></td>
+                        <td><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h1>Unplayed games</h1>
+        <p>You haven't got any plays for these games. <br>Let's play a game, what do you say?</p>
+
+        <div class="table">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Game</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for suggestion in unplayedGames %}
+                    <tr>
+                        <td class="info"><a href="#" style="width: 100%;" class="btn btn-default">{{ suggestion.name }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
         </div>
     </div>
 
-    <div class="col-md-6">
-        <table class=" table-striped">
-            <thead>
-            <tr>
-                <th>Game</th>
-                <th>Plays</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><span style="width: 100%;" class="btn btn-default">Splendor</span></td>
-                <td><span style="width: 100%;" class="btn btn-primary">1</span></td>
-            </tr>
-            <tr>
-                <td><span style="width: 100%;" class="btn btn-default">Jenga</span></td>
-                <td><span style="width: 100%;" class="btn btn-primary">3</span></td>
-            </tr>
-            </tbody>
+    <script type="text/javascript">
+        $('document').ready(function () {
+//            $('.excerpt').each(function () {
+//                if ($('.excerpt').val().length > 5) {
+//                    $(this).text($(this).text().substring(0, 8) + "...");
+//                }
+//            })
+        });
 
-        </table>
-    </div>
-
-
-
-
-    {#<div class="col-md-4">#}
-    {#<div class="panel panel-default">#}
-    {#<div class="panel-heading">Most played games</div>#}
-    {#<div class="panel-body">#}
-    {#<div class="btn-group-vertical" role="group" aria-label="...">#}
-    {#{% for suggestion in leastPlayedGames %}#}
-    {#<a class="btn btn-default" href="#">{{ suggestion.name }} with <span class="badge">{{ suggestion.plays }}</span> plays</a>#}
-    {#{% endfor %}#}
-    {#</div>#}
-
-    {#</div>#}
-    {#</div>#}
-    {#</div>#}
+    </script>
 {% endblock content %}

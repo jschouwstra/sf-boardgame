@@ -64,7 +64,7 @@ class SuggestionController extends Controller
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
             ->orderBy('plays', 'desc')
-            ->setMaxResults(3)
+            ->setMaxResults(5)
             ->getQuery();
 
         $results = $query->getResult();
@@ -90,7 +90,7 @@ class SuggestionController extends Controller
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
             ->orderBy('plays', 'asc')
-            ->setMaxResults(3)
+            ->setMaxResults(5)
             ->getQuery();
 
         $results = $query->getResult();
