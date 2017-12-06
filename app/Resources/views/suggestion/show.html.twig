@@ -8,6 +8,7 @@
                 <tr>
                     <th>Game</th>
                     <th>Plays</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -15,6 +16,7 @@
                     <tr>
                         <td><a href="#" style="width: 100%;" class="btn btn-default"><span class="excerpt">{{ suggestion.name }}</span></a></td>
                         <td><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
+                        <td><a href="#" style="width: 100%;" class="btn btn-danger hide-suggestion"><i class="fa fa-ban hide-suggestion"></i> <span class="adaptive-text">Hide Suggestion</span></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -74,6 +76,11 @@
 //                    $(this).text($(this).text().substring(0, 8) + "...");
 //                }
 //            })
+
+            $('.hide-suggestion').click(function(){
+                alert("clicked");
+            })
+
         });
 
     </script>

@@ -66,11 +66,37 @@ class Game
      */
     private $name;
 
+
+    /**
+     * @ORM\Column(name="hidden",nullable=false, type="integer", options={"unsigned": true, "default" :0})
+     */
+    private $hidden;
+
+
     /****************************************
      *
      *          Methods
      *
      ***************************************/
+
+    /**
+     * @return int
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param int $hidden
+     */
+    public function setHidden($hidden)
+    {
+        if($this->hidden == 'NULL'){
+            $this->hidden = 0;
+        }
+//        $this->hidden = $hidden;
+    }
 
     /**
      * @return ArrayCollection

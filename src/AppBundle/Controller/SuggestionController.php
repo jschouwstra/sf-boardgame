@@ -60,6 +60,7 @@ class SuggestionController extends Controller
             ->select('g.name, count(p.game) as plays')
             ->from(Game::class, 'g')
             ->where('p.user_id =' . $userID)
+            ->andWhere('g.hidden = 0')
             ->leftJoin('g.playlogs', 'p')
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
@@ -86,6 +87,7 @@ class SuggestionController extends Controller
             ->select('g.name, count(p.game) as plays')
             ->from(PlayLog::class, 'p')
             ->where('p.user_id =' . $userID)
+            ->andWhere('g.hidden = 0')
             ->leftJoin('p.game', 'g')
             ->groupby('g.name', 'p.user_id')
             ->having('count(plays) > 0')
@@ -128,11 +130,19 @@ class SuggestionController extends Controller
         $currentUnplayedGames = array();
         foreach ($userGames as $game) {
             $numberOfPlays = count($game->getPlaylogs());
-            if( $numberOfPlays == 0){
-                $currentUnplayedGames[] = array(
-                    'name' => $game->getName(),
-                    'plays' => count( $game->getPlaylogs() )
-                );
+
+            //If game has zero plays
+            if ($numberOfPlays == 0) {
+
+                //If game is not hidden
+                if ($game->getHidden() == 0) {
+
+                    //Add to array
+                    $currentUnplayedGames[] = array(
+                        'name' => $game->getName(),
+                        'plays' => count($game->getPlaylogs())
+                    );
+                }
             }
         }
         return $currentUnplayedGames;
