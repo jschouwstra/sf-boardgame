@@ -1,51 +1,53 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    <div class="col-md-4">
+
+<div class="col-md-12">
+
+    <div class="col-md-6">
         <h1>Most played</h1>
-        <div class="table">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Game</th>
-                    <th>Plays</th>
-                    <th></th>
+                    <th scope="col">Game</th>
+                    <th scope="col">Plays</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for suggestion in mostPlayedGames %}
                     <tr>
-                        <td><a href="#" style="width: 100%;" class="btn btn-default"><span class="excerpt">{{ suggestion.name }}</span></a></td>
-                        <td><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
-                        <td><a href="#" style="width: 100%;" class="btn btn-danger hide-suggestion"><i class="fa fa-ban hide-suggestion"></i> <span class="adaptive-text">Hide Suggestion</span></a></td>
+                        <td data-label="Game"><a href="#" style="width: 100%;" class="btn btn-default"><span style=" white-space: normal; display: block;">{{ suggestion.name }}</span></a></td>
+                        <td data-label="Plays"><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
+                        <td data-label="Action"><a href="#" style="width: 100%;"  class="btn btn-danger hide-suggestion"><i class="fa fa-ban hide-suggestion"></i></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
 
             </table>
-        </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <h1>Least played</h1>
-        <div class="table">
-            <table class="table table-striped">
-                <thead>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Game</th>
+                <th scope="col">Plays</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for suggestion in leastPlayedGames %}
                 <tr>
-                    <th>Game</th>
-                    <th>Plays</th>
+                    <td data-label="Game"><a href="#" style="width: 100%;" class="btn btn-default"><span style=" white-space: normal; display: block;">{{ suggestion.name }}</span></a></td>
+                    <td data-label="Plays"><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
+                    <td data-label="Action"><a href="#" style="width: 100%;"  class="btn btn-danger hide-suggestion"><i class="fa fa-ban hide-suggestion"></i></a></td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for suggestion in leastPlayedGames %}
-                    <tr>
-                        <td><a href="#" style="width: 100%;" class="btn btn-default">{{ suggestion.name }}</a></td>
-                        <td><span style="width: 100%;" class="btn btn-primary">{{ suggestion.plays }}</span></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
+            {% endfor %}
+            </tbody>
 
-            </table>
-        </div>
+        </table>
     </div>
+
     <div class="col-md-4">
         <h1>Unplayed games</h1>
         <p>You haven't got any plays for these games. <br>Let's play a game, what do you say?</p>
@@ -60,7 +62,7 @@
                 <tbody>
                 {% for suggestion in unplayedGames %}
                     <tr>
-                        <td class="info"><a href="#" style="width: 100%;" class="btn btn-default">{{ suggestion.name }}</a></td>
+                        <td class="info"><a href="#" style="width: 100%;" class="btn btn-default"><span class="excerpt-text">{{ suggestion.name }}</span></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -71,17 +73,10 @@
 
     <script type="text/javascript">
         $('document').ready(function () {
-//            $('.excerpt').each(function () {
-//                if ($('.excerpt').val().length > 5) {
-//                    $(this).text($(this).text().substring(0, 8) + "...");
-//                }
-//            })
+               
+        })
 
-            $('.hide-suggestion').click(function(){
-                alert("clicked");
-            })
-
-        });
 
     </script>
+</div>
 {% endblock content %}

@@ -120,4 +120,11 @@ table td a:link, table td a:visited {
 }
 
 
+.btn{
+    white-space: normal !important;
+    max-width: 100px;
+
+}
+
+
 
