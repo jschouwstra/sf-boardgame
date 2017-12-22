@@ -11,6 +11,7 @@ use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nataniel\BoardGameGeek\Thing;
@@ -39,10 +40,12 @@ class GameController extends Controller
         /** @var User $usr */
         $usr = $this->getUser();
         $userGames = $usr->getGames();
+        $games = array();
+
 
         return $this->render('game/index.html.twig', array(
             'games' => $userGames,
-            'max_limit_error' => 25
+            'max_limit_error' => 25,
         ));
     }
 
@@ -98,6 +101,8 @@ class GameController extends Controller
             $jsonContent
         );
     }
+
+
 
     /**
      * Creates a new game entity.
@@ -269,5 +274,25 @@ class GameController extends Controller
             'game' => $game,
             'form' => $form->createView()
         ));
+    }
+
+    public function getAllUserGames(){
+        /** @var User $user */
+        $user = $this->getUser();
+        $userGames = $user->getGames();
+
+        return $userGames;
+
+    }
+
+
+    public function getPlays(){
+        $userGames = $this->getAllUserGames();
+        $gamePlays = array();
+        foreach($userGames as $game){
+            /** @var Game $game */
+          array_push($gamePlays, count($game->getPlaylogs()));
+        }
+        return $gamePlays;
     }
 }
