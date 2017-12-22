@@ -11,3 +11,8 @@ services:
         class: Snilius\Twig\SortByFieldExtension
         tags:
             - { name: twig.extension }
+    app.redirect_after_registration_subscriber:
+      class: AppBundle\EventListener\RedirectAfterRegistrationSubscriber
+      autowire: true
+      tags:
+        - {name: kernel.event_subscriber}

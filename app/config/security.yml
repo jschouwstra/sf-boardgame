@@ -23,6 +23,10 @@ security:
 
         main:
             anonymous: ~
+            remember_me:
+              secret: '%secret%'
+              lifetime: 604800 # 1 week in seconds
+              path: /
 
             pattern: ^/
             form_login:
