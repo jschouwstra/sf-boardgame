@@ -150,21 +150,35 @@ class UserController extends Controller
     /**
      * Show current user's dashboard.
      *
-     * @Route("user/dashboard", name="user_dashboard")
+     * @Route("user/home", name="user_dashboard")
      * @Method({"GET", "POST"})
      */
     public function showDashboard()
     {
+//        $userGames = $this->getUserGamesForGraph();
+//        $totalGames = $userGames[0];
+//        $totalGameplays = $userGames[1];
+        return $this->render('user/dashboard.html.twig', array(
+//            'games' => $totalGames,
+//            'gameplays' => $totalGameplays,
+        ));
+    }
+
+    /**
+     *
+     * @Route("/user/graphs", name="user_graphs")
+     *
+     */
+    public function showGraphsAction()
+    {
         $userGames = $this->getUserGamesForGraph();
         $totalGames = $userGames[0];
         $totalGameplays = $userGames[1];
-        return $this->render('user/dashboard.html.twig', array(
+        return $this->render('user/graphs.html.twig', array(
             'games' => $totalGames,
             'gameplays' => $totalGameplays,
         ));
     }
-
-
 
 
 }
