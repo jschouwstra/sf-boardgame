@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nataniel\BoardGameGeek\Thing;
@@ -200,8 +201,9 @@ class GameController extends Controller
         $user->removeGame($game);
         $em->persist($user);
         $em->flush();
+        return $this->redirectToRoute('game_index');
 
-        return new Response("Game remove from User collection: success");
+//        return new Response("Game remove from User collection: success");
 
     }
 

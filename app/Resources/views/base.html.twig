@@ -46,11 +46,11 @@
     max-width: 50%;
     z-index:9999;
     border-radius:0px">
-    <div class="col-md-6 ">
+    <div class="col-md-12 ">
         {% for type, flashMessages in app.session.flashbag.all() %}
             {% for flashMessage in flashMessages %}
                 <div class="alert alert-{{ type }} fadeAway">
-                    {{ flashMessage|trans }}
+                    <span class="fa fa-check"></span> {{ flashMessage|trans }}
                 </div>
             {% endfor %}
         {% endfor %}

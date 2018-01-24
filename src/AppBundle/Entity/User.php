@@ -18,7 +18,10 @@ class User extends BaseUser
      * @ORM\JoinTable(name="user_game",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")}
-     *      )
+     * )
+     *
+     * @ORM\OrderBy({"name" = "ASC"})
+     *
      */
     private $games;
 
@@ -78,9 +81,10 @@ class User extends BaseUser
     public function addGame(Game $game)
     {
         $this->games->add($game);
-   //     $this->games[] = $game;
+        //     $this->games[] = $game;
         return $this;
     }
+
     public function removeGame(Game $game)
     {
         $this->games->removeElement($game);
@@ -88,8 +92,7 @@ class User extends BaseUser
 
     public function removeAllGames()
     {
-        foreach ($this->games as $game)
-        {
+        foreach ($this->games as $game) {
             $this->removeGame($game);
         }
     }
