@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Expansion;
 
 use Doctrine\DBAL\Connection;
+use function json_decode;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -146,7 +147,6 @@ class GameController extends Controller
         $client = new \Nataniel\BoardGameGeek\Client();
         $thing = $client->getThing($game->getBggId(), true);
 
-
         return $this->render('game/show.html.twig', array(
             //bgg game properties:
             'image' => $thing->getImage(),
@@ -201,9 +201,10 @@ class GameController extends Controller
         $user->removeGame($game);
         $em->persist($user);
         $em->flush();
-        return $this->redirectToRoute('game_index');
+//        return $this->redirectToRoute('game_index');
+        $this->addFlash('warning', 'Game '.$game->getName().' removed' );
 
-//        return new Response("Game remove from User collection: success");
+        return new Response("Game remove from User collection: success");
 
     }
 

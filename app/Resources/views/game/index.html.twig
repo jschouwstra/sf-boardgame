@@ -21,29 +21,29 @@
                             Add Game</a>
                     </div>
                 </div>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Game</th>
-                            <th scope="col">Plays</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        {#Show error if pagination page number exceeds given limit#}
-                        {% if games.params.limit is defined and games.params.limit > max_limit_error %}
-                            <div class="alert alert-warning text-center">
-                                <p>
-                                    There was an error (2123).<br>
-                                    Please report this to the administrator </p>
-                            </div>
-                        {% else %}
-                            <tbody>
-                            {% for game in games %}
-                                {#Prepare empty array#}
-                                {% set gamePlayedCount = [] %}
-                                <tr row="{{ game.id }}">
-                                    <td data-label="Game"><a class="btn btn-default" style="width: 100%;" href="{{ path('game_show', { 'id': game.id }) }}" title="{{ game.name }}">{{ game.name }} </a></td>
-                                    <td data-label="Plays">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Game</th>
+                        <th scope="col">Plays</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    {#Show error if pagination page number exceeds given limit#}
+                    {% if games.params.limit is defined and games.params.limit > max_limit_error %}
+                        <div class="alert alert-warning text-center">
+                            <p>
+                                There was an error (2123).<br>
+                                Please report this to the administrator </p>
+                        </div>
+                    {% else %}
+                        <tbody>
+                        {% for game in games %}
+                            {#Prepare empty array#}
+                            {% set gamePlayedCount = [] %}
+                            <tr row="{{ game.id }}">
+                                <td data-label="Game"><a class="btn btn-default" style="width: 100%;" href="{{ path('game_show', { 'id': game.id }) }}" title="{{ game.name }}">{{ game.name }} </a></td>
+                                <td data-label="Plays">
                                         <span class="badge">
                                         {#Playlogs of current games    #}
                                             {% set playlogs = game.playlogs %}
@@ -58,22 +58,20 @@
                                             {% endfor %}
                                             {{ gamePlayedCount|length }}
                                         </span>
-                                    </td>
-                                    <td data-label="Actions">
+                                </td>
+                                <td data-label="Actions">
 
-                                        <a class="btn btn-primary"
-                                           href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> Add Play
-                                        </a>
-                                        {#<a class="btn btn-danger deleteBtn " gameId="{{ game.id }}" gameName="{{ game.name }}"#}
-                                           {#href=""><i class="fa fa-minus"></i> Remove#}
-                                        {#</a>#}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
+                                    <a class="btn btn-primary"
+                                       href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> Add Play
+                                    </a>
 
-                        {% endif %}
-                    </table>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    {% endif %}
+                </table>
             </div>
         </div>
     </div>

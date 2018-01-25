@@ -50,7 +50,7 @@
         {% for type, flashMessages in app.session.flashbag.all() %}
             {% for flashMessage in flashMessages %}
                 <div class="alert alert-{{ type }} fadeAway">
-                    <span class="fa fa-check"></span> {{ flashMessage|trans }}
+                    <span></span> {{ flashMessage|raw }}
                 </div>
             {% endfor %}
         {% endfor %}
