@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nataniel\BoardGameGeek\Thing;
+use Nataniel\BoardGameGeek\Thing as BoardGameGeekClient;
 use function var_dump;
 
 
@@ -105,38 +105,37 @@ class GameController extends Controller
     }
 
 
-
     /**
-     * Creates a new game entity.
      *
-     * @Route("/new", name="game_new")
-     * @Method({"GET", "POST"})
+     * @Route("/findBy/bggId", name="findGameByBggId")
+     * @Method("POST")
      */
-    public function newAction(Request $request)
-    {
+    public function getGameByBggId(Request $request){
+        $bgg_id = $request->request->get('bggId');
+
+        $bggClient = BoardGameGeekClient::class;
+
         $client = new \Nataniel\BoardGameGeek\Client();
-        $game = new Game();
-        $form = $this->createForm('AppBundle\Form\GameType', $game);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bgg_id = $form->get('bgg_id')->getData();
-            $thing = $client->getThing($bgg_id, true);
-            $game->setName($thing->getName());
+        $thing = $client->getThing($bgg_id, true);
+        $bggGame = array(
+            array(
+                'name' => $thing->getName(),
+            )
+        );
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($game);
-            $em->flush($game);
-            return $this->redirectToRoute('game_show', array('id' => $game->getId()));
-        }
+        $serializer = $this->get('jms_serializer');
+        $data = $serializer->serialize($bggGame, 'json');
+        return new Response(
+            $data
+        );
 
-        return $this->render('game/new.html.twig', array(
-            'game' => $game,
-            'form' => $form->createView(),
-        ));
+
+
     }
 
     /**
+     *
      * Finds and displays a game entity.
      *
      * @Route("/{id}", name="game_show")
