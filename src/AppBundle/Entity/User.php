@@ -52,6 +52,7 @@ class User extends BaseUser
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
