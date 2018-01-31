@@ -2,7 +2,6 @@
  * Created by Jelle on 19-6-2017.
  */
 $(document).ready(function() {
-
     function goBack() {
         window.history.go(-1);
     }
@@ -14,3 +13,4 @@ $(document).ready(function() {
         }
     });
 });
+
