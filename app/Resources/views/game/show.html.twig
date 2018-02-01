@@ -27,9 +27,12 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                    <a class="btn btn-danger deleteBtn " gameId="{{ game.id }}" gameName="{{ game.name }}"
-                       href=""><i class="fa fa-remove"></i> Remove
-                    </a>
+                        <a class="btn btn-danger deleteBtn " gameId="{{ game.id }}" gameName="{{ game.name }}"
+                           href=""><i class="fa fa-remove"></i> Remove
+                        </a>
+                        <a class="btn btn-primary"
+                           href="{{ path('playlog_new', { 'gameId': game.id }) }}"> Log Play
+                        </a>
                     </div>
                 </div>
 
@@ -42,189 +45,32 @@
                     {% endif %}
                 </div>
             </div>
-
+            <div class="container">
             <div class="row">
-                <div class="container">
-                    <div class="col-md-12  ">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#plays"><i class="fa fa-book"></i> Plays ({{ gamePlayedCount| length }})</a></li>
-                            <li><a data-toggle="tab" href="#stats"><i class="fa fa-info-circle"></i> Stats</a></li>
-                        </ul>
-                        <div class="container">
-                            <div class="tab-content">
-                                <div id="stats" class="tab-pane ">
-                                    <div class="row">
-                                        <h3>Stats</h3>
-                                    </div>
-                                    <div class="row">
-                                        {% if playingTime %}
-                                            <div class="col-md-3">
-                                                {{ playingTime }} minutes<br> <b>Playing Time</b>
-                                                <hr>
-                                            </div>
-                                        {% endif %}
-                                        {% if minPlayers and  maxPlayers %}
-                                            <div class="col-md-3">
-                                                {{ minPlayers }}-{{ maxPlayers }}<br> <b>Players</b>
-                                                <hr>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                    {% if publishedBy %}
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <b>Publisher: </b>{{ publishedBy| first }}
-                                            </div>
-                                            <hr>
-                                        </div>
-                                    {% endif %}
-                                </div>
-
-                                <div id="plays" class="tab-pane fade in active">
-                                    <div class="row">
-                                        <h3>Plays ({{ gamePlayedCount| length }})</h3>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 ">
-                                            <p>
-                                            <div class="panel panel-default " style="">
-                                                <div class="panel-body">
-                                                    <a class="btn btn-primary"
-                                                       href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-plus"></i> Add Play
-                                                    </a>
-                                                    <a id="deleteBtn" class="btn btn-danger" href="#"><i class="fa fa-remove"></i> Delete Play</a>
-                                                </div>
-                                            </div>
-                                            </p>
-                                            <form>
-                                                {% if gamePlayedCount|length > 0 %}
-                                                <div class=" panel panel-body panel-default">
-                                                    <div class="table">
-                                                        <table class="table table-bordered table-responsive table-condensed">
-                                                            <thead>
-                                                            <tr>
-                                                                <td scope="col">Select</td>
-                                                                <td scope="col">Date</td>
-                                                                <td scope="col">Description</td>
-                                                                <td scope="col">Expansions</td>
-                                                            </tr>
-                                                            </thead>
-                                                            {% for playlog in game.playlogs | sortbyfield("date") |reverse %}
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td data-label="select"><input name="playlog" type="checkbox" value="{{ playlog.Id }}"></td>
-                                                                    <td data-label="date">
-                                                                        {{ playlog.date|date("M") }} ({{ playlog.date|date("Y") }})
-                                                                    </td>
-                                                                    <td>
-                                                                        {% if playlog.description %}
-                                                                            {{ playlog.description }}
-                                                                        {% else %}
-                                                                            None
-                                                                        {% endif %}
-                                                                    </td>
-                                                                    {% set playlogUserId =  playlog.getuserid %}
-                                                                    {% if playlogUserId == currentUserId %}
-                                                                        <td data-label="expansions">
-                                                                            {% if playlog.expansions| length > 0 %}
-                                                                                <ul>
-                                                                                    {% for expansion in playlog.expansions %}
-                                                                                        <li>{{ expansion.name }}</li><br>
-                                                                                    {% endfor %}
-                                                                                </ul>
-                                                                            {% else %}
-                                                                                None
-                                                                            {% endif %}
-                                                                        </td>
-
-                                                                    {% endif %}
-                                                                </tr>
-                                                                </tbody>
-                                                            {% endfor %}
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            {% else %}
-                                                <div class="alert alert-info" role="alert">
-                                                    <p>You haven't played this game (yet).</p>
-                                                    <p>
-                                                        If you've played this game before, <a class="label label-info" href="{{ path('playlog_new', { 'gameId': game.id }) }}">you may add a play here</a>
-                                                    </p>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-3">
+                    {{ playlogs|length }}<br>
+                    <b>Plays</b>
+                    <hr>
                 </div>
+                {% if playingTime %}
+                    <div class="col-md-3">
+                        {{ playingTime }} minutes<br> <b>Playing Time</b>
+                        <hr>
+                    </div>
+                {% endif %}
+                {% if minPlayers and  maxPlayers %}
+                    <div class="col-md-3">
+                        {{ minPlayers }}-{{ maxPlayers }}<br> <b>Players</b>
+                        <hr>
+                    </div>
+                {% endif %}
+            </div>
             </div>
         </div>
-    </div>
-
-
-    </div>
-    {#<div class="col-md-4">#}
-    {#<h2>Expansions <span class="badge">{{ game.expansions|length }}</span></h2>#}
-    {#<hr>#}
-    {#<p>#}
-    {#<div class="panel panel-default " style="background-color: #BFC9D2">#}
-    {#<div class="panel-body">#}
-    {#<a class="btn btn-primary" href="{{ path('add_expansion_to_game', { 'gameId': game.id}) }}">#}
-    {#<i class="fa fa-plus"></i> <span class="adaptiveText">Add Expansion</span>#}
-    {#</a>#}
-    {#</div>#}
-
-    {#</div>#}
-    {#<ul class="list-group">#}
-    {#{% if game.expansions|length > 0 %}#}
-    {#{% for expansion in game.expansions %}#}
-    {#<label>#}
-    {#<li class="list-group-item">#}
-    {#{{ expansion.name }}#}
-    {#</li>#}
-    {#</label>#}
-    {#{% endfor %}#}
-    {#{% endif %}#}
-    {#</ul>#}
-    {#</div>#}
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-
-    {#<script type="text/javascript">#}
-    {#$(document).ready(function () {#}
-    {#$('#deleteBtn').click(function () {#}
-    {#var playlogs = [];#}
-    {#//Add all checked boxes with corresponding id's to array "playlogs"#}
-    {#$.each($("input[name='playlog']:checked"), function () {#}
-    {#playlogs.push($(this).val());#}
-    {#});#}
-    {#var confirmText = "Are you sure you want to delete the selected plays?";#}
-    {#if (confirm(confirmText)) {#}
-    {#$.ajax({#}
-    {#type: "POST",#}
-    {#url: '{{ path('playlog_delete_bulk') }}',//path to the route of PlayLogController->deleteBulkAction method#}
-    {#data: JSON.stringify(playlogs),#}
-    {#success: function () {#}
-    {#window.location.reload();#}
-    {#},#}
-    {#});#}
-    {#}#}
-    {#return false;#}
-    {#});#}
-
-    {#});#}
-
-    {#$('.alert.fadeAway').hide();#}
-    {#$(".alert.fadeAway").fadeIn(1200);#}
-    {#$(".alert.fadeAway").show().delay(5000).fadeOut();#}
-
-    {#</script>#}
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('.deleteBtn').click(function () {

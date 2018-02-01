@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block content %}
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
     <h1>My Game list</h1>
-    <hr>
+
+    </div>
+    </div>
     <div class="col-md-12">
     {% set currentUserId =  app.user.id %}
     {% for type,messages in app.session.flashbag.all() %}
@@ -26,7 +30,7 @@
                     <tr>
                         <th scope="col">Game</th>
                         <th scope="col">Plays</th>
-                        <th scope="col">Actions</th>
+                        {#<th scope="col">Actions</th>#}
                     </tr>
                     </thead>
                     {#Show error if pagination page number exceeds given limit#}
@@ -59,13 +63,13 @@
                                             {{ gamePlayedCount|length }}
                                         </span>
                                 </td>
-                                <td data-label="Actions">
+                                {#<td data-label="Actions">#}
 
-                                    <a class="btn btn-primary"
-                                       href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> Add Play
-                                    </a>
+                                    {#<a class="btn btn-primary"#}
+                                       {#href="{{ path('playlog_new', { 'gameId': game.id }) }}"><i class="fa fa-book"></i> Add Play#}
+                                    {#</a>#}
 
-                                </td>
+                                {#</td>#}
                             </tr>
                         {% endfor %}
                         </tbody>

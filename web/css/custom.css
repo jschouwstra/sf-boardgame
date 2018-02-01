@@ -124,6 +124,9 @@ table td a:link, table td a:visited {
     white-space: normal !important;
     /*max-width: 200px;*/
 }
-
+/*Chosen2 bigger options */
+.select2-selection__choice{
+    font-size: 19px !important;
+}
 
 
