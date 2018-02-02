@@ -11,6 +11,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,7 +26,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  * @Security("is_granted('ROLE_ADMIN')")
  * @Route("/admin")
  */
-
 class AdminController extends Controller
 {
     /**
@@ -54,7 +55,7 @@ class AdminController extends Controller
         $em->persist($user);
         $em->flush();
         return new Response(
-            '<html><body>Roll toegevoegd: <br/><pre> '.var_dump($user).'</pre></body></html>'
+            '<html><body>Role toegevoegd: <br/><pre> ' . var_dump($user) . '</pre></body></html>'
         );
     }
 
@@ -68,11 +69,18 @@ class AdminController extends Controller
     public function insertNewGameWithBggId(Request $request)
     {
         $fill = 'fill()';
-        $form = $this->createFormBuilder()
-            ->add('bgg_id', TextType::class, array(
+        $retrieveGameForm = $this->createFormBuilder()
+            ->add('bgg_id', TextType::class
+            )
+            ->getForm();
+
+        $fillGameForm = $this->createFormBuilder()
+            ->add('bgg_id_retrieved', TextType::class, array(
                     'attr' => array(
+                        'id' => 'bgg_id_retrieved',
+                        'label' => false,
                         'class' => 'form-control',
-                        'id' => 'fill',
+                        'disabled' => 'disabled'
                     ),
                 )
             )
@@ -83,17 +91,58 @@ class AdminController extends Controller
                         'class' => 'form-control'
                     ),
                 )
-
             )
-            ->getForm();
+            ->add('playtime', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'playtime',
+                        'label' => 'Play time',
+                        'class' => 'form-control'
+                    ),
+                )
+            )
+            ->add('image', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'image',
+                        'label' => 'Image',
+                        'class' => 'form-control'
+                    ),
+                )
+            )
+            ->add('no_of_players', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'no_of_players',
+                        'label' => 'Players',
+                        'class' => 'form-control'
+                    ),
+                )
+            )
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            echo $form->get('bgg_id')->getData();
+            ->add('submit', SubmitType::class, array(
+                    'attr' => array(
+                        'label' => 'Add game',
+                        'class' => 'form-control btn btn-success'
+                    ),
+                )
+            )
+
+//            ->add('bgg_id', TextType::class, array(
+//                    'attr' => array(
+//                        'id' => 'bgg_id',
+//                        'label' => 'bgg_id',
+//                        'class' => 'form-control',
+//                    ),
+//                )
+//            )
+            ->getForm();
+        $retrieveGameForm->handleRequest($request);
+        $fillGameForm->handleRequest($request);
+        if ($fillGameForm->isSubmitted() && $fillGameForm->isValid()) {
+            echo $fillGameForm->get('name')->getData();
         }
 
         return $this->render('admin/new_game_bgg_input.html.twig', array(
-            'form' => $form->createView(),
+            'retrieveGameForm' => $retrieveGameForm->createView(),
+            'fillGameForm' => $fillGameForm->createView(),
         ));
     }
 

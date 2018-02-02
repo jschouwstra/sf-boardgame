@@ -112,15 +112,17 @@ class GameController extends Controller
      */
     public function getGameByBggId(Request $request){
         $bgg_id = $request->request->get('bggId');
-
-        $bggClient = BoardGameGeekClient::class;
-
         $client = new \Nataniel\BoardGameGeek\Client();
 
         $thing = $client->getThing($bgg_id, true);
         $bggGame = array(
             array(
                 'name' => $thing->getName(),
+                'playtime' => $thing->getPlayingTime(),
+                'image' => $thing->getImage(),
+                'min_players' => $thing->getMinPlayers(),
+                'max_players' => $thing->getMaxPlayers(),
+
             )
         );
 
