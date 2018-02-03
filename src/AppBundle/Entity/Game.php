@@ -66,6 +66,27 @@ class Game
      */
     private $name;
 
+    /**
+     * @var string
+     * @ORM\Column(name="no_of_players", type="string", length=255, nullable=true)
+     */
+    private $no_of_players;
+
+
+    /**
+     * @var string
+     * @ORM\Column(name="playtime", type="string", length=255, nullable=true)
+     */
+    private $playtime;
+
+
+    /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+
 
     /**
      * @ORM\Column(name="hidden",nullable=false, type="integer", options={"unsigned": true, "default" :0})

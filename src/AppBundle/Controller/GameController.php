@@ -105,36 +105,6 @@ class GameController extends Controller
     }
 
 
-    /**
-     *
-     * @Route("/findBy/bggId", name="findGameByBggId")
-     * @Method("POST")
-     */
-    public function getGameByBggId(Request $request){
-        $bgg_id = $request->request->get('bggId');
-        $client = new \Nataniel\BoardGameGeek\Client();
-
-        $thing = $client->getThing($bgg_id, true);
-        $bggGame = array(
-            array(
-                'name' => $thing->getName(),
-                'playtime' => $thing->getPlayingTime(),
-                'image' => $thing->getImage(),
-                'min_players' => $thing->getMinPlayers(),
-                'max_players' => $thing->getMaxPlayers(),
-
-            )
-        );
-
-        $serializer = $this->get('jms_serializer');
-        $data = $serializer->serialize($bggGame, 'json');
-        return new Response(
-            $data
-        );
-
-
-
-    }
 
     /**
      *
@@ -299,4 +269,37 @@ class GameController extends Controller
         }
         return $gamePlays;
     }
+
+
+    /**
+     *
+     * @Route("/findBy/bggId", name="findGameByBggId")
+     * @Method("POST")
+     */
+    public function getGameByBggId(Request $request){
+        $bgg_id = $request->request->get('bggId');
+        $client = new \Nataniel\BoardGameGeek\Client();
+        /**
+         * @var \Nataniel\BoardGameGeek\Client() $thing
+         */
+        $thing = $client->getThing($bgg_id, true);
+        $bggGame = array(
+            array(
+                'name' => $thing->getName(),
+                'playtime' => $thing->getPlayingTime(),
+                'image' => $thing->getImage(),
+                'min_players' => $thing->getMinPlayers(),
+                'max_players' => $thing->getMaxPlayers(),
+                'isExpansion' => $thing->isBoardgameExpansion()
+            )
+        );
+
+
+        $serializer = $this->get('jms_serializer');
+        $data = $serializer->serialize($bggGame, 'json');
+        return new Response(
+            $data
+        );
+    }
+
 }

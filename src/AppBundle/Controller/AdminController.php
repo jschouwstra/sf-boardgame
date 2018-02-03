@@ -84,6 +84,7 @@ class AdminController extends Controller
                     ),
                 )
             )
+
             ->add('name', TextType::class, array(
                     'attr' => array(
                         'id' => 'name',
@@ -124,15 +125,16 @@ class AdminController extends Controller
                     ),
                 )
             )
+            ->add('isExpansion', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'isExpansion',
+                        'label' => 'Expansion',
+                        'class' => 'form-control',
+                        'disabled' => 'disabled'
+                    ),
+                )
+            )
 
-//            ->add('bgg_id', TextType::class, array(
-//                    'attr' => array(
-//                        'id' => 'bgg_id',
-//                        'label' => 'bgg_id',
-//                        'class' => 'form-control',
-//                    ),
-//                )
-//            )
             ->getForm();
         $retrieveGameForm->handleRequest($request);
         $fillGameForm->handleRequest($request);
