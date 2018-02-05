@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Controller\GameController;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -99,6 +100,8 @@ class Game
      *          Methods
      *
      ***************************************/
+
+
 
     /**
      * @return int
@@ -245,4 +248,61 @@ class Game
             $this->removeExpansion($expansion);
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNoOfPlayers()
+    {
+        return $this->no_of_players;
+    }
+
+    /**
+     * @param mixed $no_of_players
+     */
+    public function setNoOfPlayers($no_of_players)
+    {
+        $this->no_of_players = $no_of_players;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaytime()
+    {
+        return $this->playtime;
+    }
+
+    /**
+     * @param string $playtime
+     */
+    public function setPlaytime($playtime)
+    {
+        $this->playtime = $playtime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getPlays(){
+        /**
+         * @var GameController $gamecontroller
+         */
+        $plays = $gamecontroller->getPlayCountByGameId($this->getId());
+        return $plays;
+    }
+
 }

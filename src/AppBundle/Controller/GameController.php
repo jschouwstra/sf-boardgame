@@ -3,10 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Expansion;
 
+use function array_push;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use function json_decode;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,7 +53,6 @@ class GameController extends Controller
             'max_limit_error' => 25,
         ));
     }
-
 
     /**
      * Lists all user's game entities as JSON.
@@ -105,7 +107,6 @@ class GameController extends Controller
     }
 
 
-
     /**
      *
      * Finds and displays a game entity.
@@ -113,21 +114,42 @@ class GameController extends Controller
      * @Route("/{id}", name="game_show")
      * @Method("GET")
      */
-    public function showAction(Game $game)
+    public function showAction(Game $game, $id)
     {
-        $client = new \Nataniel\BoardGameGeek\Client();
-        $thing = $client->getThing($game->getBggId(), true);
+        $gameId = $id;
+        /**
+         * User $user
+         */
+        $userId = $this->getUser()->getId();
+
+        /**
+         * Game $game
+         */
+        $game = $this->getDoctrine()
+            ->getRepository(Game::class)
+            ->find($gameId);
 
         return $this->render('game/show.html.twig', array(
-            //bgg game properties:
-            'image' => $thing->getImage(),
-            'playingTime' => $thing->getPlayingTime(),
-            'minPlayers' => $thing->getMinPlayers(),
-            'maxPlayers' => $thing->getMaxPlayers(),
-            'publishedBy' => $thing->getBoardgamePublishers(),
-
             'game' => $game,
+            'plays' => $this->getPlaysByGameId($gameId)
+
+
         ));
+    }
+
+    public function getPlaysByGameId($gameId){
+        $userId = $this->getUser()->getId();
+        $manager = $this->getDoctrine()->getManager();
+
+        $qb = $manager->createQueryBuilder();
+        $query = $qb->select('p')
+            ->from(PlayLog::class, 'p')
+            ->where('p.user_id = ' . $userId)
+            ->andWhere('p.game = ' . $gameId)
+            ->getQuery();
+
+        $plays = count($query->getResult());
+        return $plays;
     }
 
     /**
@@ -173,7 +195,7 @@ class GameController extends Controller
         $em->persist($user);
         $em->flush();
 //        return $this->redirectToRoute('game_index');
-        $this->addFlash('warning', 'Game '.$game->getName().' removed' );
+        $this->addFlash('warning', 'Game ' . $game->getName() . ' removed');
 
         return new Response("Game remove from User collection: success");
 
@@ -250,7 +272,8 @@ class GameController extends Controller
         ));
     }
 
-    public function getAllUserGames(){
+    public function getAllUserGames()
+    {
         /** @var User $user */
         $user = $this->getUser();
         $userGames = $user->getGames();
@@ -260,23 +283,13 @@ class GameController extends Controller
     }
 
 
-    public function getPlays(){
-        $userGames = $this->getAllUserGames();
-        $gamePlays = array();
-        foreach($userGames as $game){
-            /** @var Game $game */
-          array_push($gamePlays, count($game->getPlaylogs()));
-        }
-        return $gamePlays;
-    }
-
-
     /**
      *
      * @Route("/findBy/bggId", name="findGameByBggId")
      * @Method("POST")
      */
-    public function getGameByBggId(Request $request){
+    public function getGameByBggId(Request $request)
+    {
         $bgg_id = $request->request->get('bggId');
         $client = new \Nataniel\BoardGameGeek\Client();
         /**

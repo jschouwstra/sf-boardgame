@@ -3,68 +3,58 @@
 {% block content %}
 
     <a class="btn btn-primary" href="{{ path('game_index') }}"><i class="fa fa-arrow-left"></i> My Game List</a>
-    {% set playlogs = game.playlogs %}
-    {% set currentUserId =  app.user.id %}
-    {% set gamePlayedCount = [] %}
-
-    {% if playlogs | length > 0 %}
-        {% for playlog in playlogs %}
-            {#Get the playlog user_id so we count only the current user's playlogs#}
-            {% set playlogUserId =  playlog.getuserid %}
-            {% if playlogUserId == currentUserId %}
-                {#Make an array with only the playlogs of the user and the game#}
-                {% set gamePlayedCount = gamePlayedCount|merge([game.id]) %}
-            {% endif %}
-        {% endfor %}
-
-    {% endif %}
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2>Game</h2>
                 <h3> {{ game.name }}</h3>
-
+                <p><a target="_blank" href="https://boardgamegeek.com/boardgame/{{ game.bggId }}"> More info ... </a></p>
                 <div class="row">
-                    <div class="col-md-4">
-                        <a class="btn btn-danger deleteBtn " gameId="{{ game.id }}" gameName="{{ game.name }}"
-                           href=""><i class="fa fa-remove"></i> Remove
-                        </a>
-                        <a class="btn btn-primary"
-                           href="{{ path('playlog_new', { 'gameId': game.id }) }}"> Log Play
-                        </a>
+
+                    <div class="col-md-3">
+                        <div class="well">
+                            <a class="btn btn-danger deleteBtn " gameId="{{ game.id }}" gameName="{{ game.name }}"
+                               href=""><i class="fa fa-remove"></i> Remove
+                            </a>
+                            <a class="btn btn-primary"
+                               href="{{ path('playlog_new', { 'gameId': game.id }) }}"> Log Play
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <hr>
                 <div class="row">
-                    {% if image %}
+                    {% if game.image %}
                         <div class="col-md-4  ">
-                            <img src="{{ image }}" style="width:60%; border-radius: 6px;">
+                            <img src="{{ game.image }}" style="width:60%; border-radius: 6px;">
                         </div>
                     {% endif %}
                 </div>
             </div>
             <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    {{ playlogs|length }}<br>
-                    <b>Plays</b>
-                    <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                        {% if plays == 1 %}
+                            {{ plays }} play
+                            <hr>
+                        {% else %}
+                            {{ plays }}<br><b>plays</b>
+                            <hr>
+                        {% endif %}
+                    </div>
+                    {% if game.playtime %}
+                        <div class="col-md-3">
+                            {{ playingTime }} minutes<br> <b>Playing Time</b>
+                            <hr>
+                        </div>
+                    {% endif %}
+                    {% if game.noOfPlayers %}
+                        <div class="col-md-3">
+                            {{ game.noOfPlayers }}<br> <b>Players</b>
+                            <hr>
+                        </div>
+                    {% endif %}
                 </div>
-                {% if playingTime %}
-                    <div class="col-md-3">
-                        {{ playingTime }} minutes<br> <b>Playing Time</b>
-                        <hr>
-                    </div>
-                {% endif %}
-                {% if minPlayers and  maxPlayers %}
-                    <div class="col-md-3">
-                        {{ minPlayers }}-{{ maxPlayers }}<br> <b>Players</b>
-                        <hr>
-                    </div>
-                {% endif %}
-            </div>
             </div>
         </div>
     </div>
