@@ -5,22 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Expansion;
 
 use function array_push;
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
 use function json_decode;
-use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nataniel\BoardGameGeek\Thing as BoardGameGeekClient;
-use function var_dump;
 
 
 /**

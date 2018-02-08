@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -68,6 +69,7 @@ class AdminController extends Controller
      */
     public function insertNewGameWithBggId(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $fill = 'fill()';
         $retrieveGameForm = $this->createFormBuilder()
             ->add('bgg_id', TextType::class
@@ -80,7 +82,6 @@ class AdminController extends Controller
                         'id' => 'bgg_id_retrieved',
                         'label' => false,
                         'class' => 'form-control',
-                        'disabled' => 'disabled'
                     ),
                 )
             )
@@ -117,6 +118,14 @@ class AdminController extends Controller
                     ),
                 )
             )
+            ->add('isExpansion', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'isExpansion',
+                        'label' => 'Expansion',
+                        'class' => 'form-control',
+                    ),
+                )
+            )
 
             ->add('submit', SubmitType::class, array(
                     'attr' => array(
@@ -125,21 +134,16 @@ class AdminController extends Controller
                     ),
                 )
             )
-            ->add('isExpansion', TextType::class, array(
-                    'attr' => array(
-                        'id' => 'isExpansion',
-                        'label' => 'Expansion',
-                        'class' => 'form-control',
-                        'disabled' => 'disabled'
-                    ),
-                )
-            )
-
             ->getForm();
         $retrieveGameForm->handleRequest($request);
         $fillGameForm->handleRequest($request);
+
         if ($fillGameForm->isSubmitted() && $fillGameForm->isValid()) {
-            echo $fillGameForm->get('name')->getData();
+            $game = new Game();
+            $gameObject = $fillGameForm->getData();
+
+             $em->persist($gameObject);
+             $em->flush();
         }
 
         return $this->render('admin/new_game_bgg_input.html.twig', array(

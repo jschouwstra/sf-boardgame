@@ -34,10 +34,7 @@
         {{ form_start(fillGameForm) }}
         {{ form_end(fillGameForm) }}
     </div>
-
-
 {% endblock content %}
-
 {% block javascripts %}
     {{ parent() }}
     <script>
@@ -57,8 +54,6 @@
                     $('#form_image').val(game[0].image);
                     $('#form_no_of_players').val(game[0].min_players + "-" + game[0].max_players);
                     $('#form_isExpansion').val(game[0].isExpansion);
-
-
                 }
             });
 
