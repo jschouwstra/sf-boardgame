@@ -11,7 +11,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -56,7 +58,7 @@ class AdminController extends Controller
         $em->persist($user);
         $em->flush();
         return new Response(
-            '<html><body>Role toegevoegd: <br/><pre> ' . var_dump($user) . '</pre></body></html>'
+            '<html><body>Rol toegevoegd: <br/><pre> ' . var_dump($user) . '</pre></body></html>'
         );
     }
 
@@ -138,13 +140,24 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var Game $game
-             */
             $game = $form->getData();
-
+            try {
             $em->persist($game);
-            $em->flush();
+                $em->flush();
+
+            } catch (\Exception $e) {
+
+//                $error = $e->getTrace();
+//                echo $e->getMessage();
+                $duplicateEntry = '23000';
+                if(strpos($e->getMessage(),$duplicateEntry)){
+                    $message = 'Bgg ID: ' . $form->get('bgg_id')->getData() . ' already exists.';
+                    $this->addFlash('warning',$message);
+                }
+
+
+
+            }
         }
 
         return $this->render('admin/new_game_bgg_input.html.twig', array(

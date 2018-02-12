@@ -124,8 +124,6 @@ class GameController extends Controller
         return $this->render('game/show.html.twig', array(
             'game' => $game,
             'plays' => $this->getPlaysByGameId($gameId)
-
-
         ));
     }
 
@@ -187,6 +185,7 @@ class GameController extends Controller
         $em->persist($user);
         $em->flush();
 //        return $this->redirectToRoute('game_index');
+
         $this->addFlash('warning', 'Game ' . $game->getName() . ' removed');
 
         return new Response("Game remove from User collection: success");

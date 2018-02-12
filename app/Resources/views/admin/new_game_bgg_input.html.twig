@@ -1,17 +1,16 @@
 {% extends 'base.html.twig' %}
+{% import "macros.html.twig" as macro %}
 
 {% block content %}
-        <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-6 col-md-offset-2">
         <div class="row">
             <h3>Add new game</h3>
         </div>
-        </div>
+    </div>
     <div class="col-md-6 col-md-offset-2">
         <div class="row">
             <a href="https://boardgamegeek.com/" target="_blank" class="btn btn-primary"><i class="fa fa-external-link-square"></i> Go to Boardgamegeek.com</a>
         </div>
-
-
         {{ form_start(retrieveGameForm) }}
         <div class="row">
             <label>Bgg ID</label>
@@ -48,9 +47,10 @@
                 data: {bggId: bggId},    // Dit is versturen van data naar de service!
                 success: function (game) {
                     $('#form_bgg_id_retrieved').val(bggId);
+                    $('#form_bgg_id').val(bggId);
                     $('#form_name').val(game[0].name);
                     $('#form_playtime').val(game[0].playtime + " minutes");
-                    $('#thumbnail').attr("src",game[0].image);
+                    $('#thumbnail').attr("src", game[0].image);
                     $('#form_image').val(game[0].image);
                     $('#form_no_of_players').val(game[0].min_players + "-" + game[0].max_players);
                     $('#form_isExpansion').val(game[0].isExpansion);

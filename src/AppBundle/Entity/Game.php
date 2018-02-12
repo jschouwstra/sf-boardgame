@@ -88,10 +88,6 @@ class Game
     private $image;
 
 
-    /**
-     * @ORM\Column(name="hidden",nullable=false, type="integer", options={"unsigned": true, "default" :0})
-     */
-    private $hidden;
 
     /**
      * @ORM\Column(name="is_expansion",nullable=false, type="integer", options={"unsigned": true, "default" :0})
@@ -122,25 +118,7 @@ class Game
         $this->isExpansion = $isExpansion;
     }
 
-    /**
-     * @return int
-     */
-    public function getHidden()
-    {
-        return $this->hidden;
-    }
-
-    /**
-     * @param int $hidden
-     */
-    public function setHidden($hidden)
-    {
-        if ($this->hidden == 'NULL') {
-            $this->hidden = 0;
-        }
-//        $this->hidden = $hidden;
-    }
-
+  
     /**
      * @return ArrayCollection
      */
