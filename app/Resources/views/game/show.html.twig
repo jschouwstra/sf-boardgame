@@ -44,7 +44,9 @@
                     </div>
                     {% if game.playtime %}
                         <div class="col-md-3">
-                            {{ game.playtime }} minutes<br> <b>Playing Time</b>
+                            {{ game.playtime }} /
+                            {{ (game.playtime//60) }} hours <br>
+                            <b>Playing Time</b>
                             <hr>
                         </div>
                     {% endif %}
