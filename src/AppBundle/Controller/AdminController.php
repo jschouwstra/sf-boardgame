@@ -142,19 +142,15 @@ class AdminController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $game = $form->getData();
             try {
-            $em->persist($game);
+                $em->persist($game);
                 $em->flush();
 
             } catch (\Exception $e) {
-
-//                $error = $e->getTrace();
-//                echo $e->getMessage();
                 $duplicateEntry = '23000';
-                if(strpos($e->getMessage(),$duplicateEntry)){
+                if (strpos($e->getMessage(), $duplicateEntry)) {
                     $message = 'Bgg ID: ' . $form->get('bgg_id')->getData() . ' already exists.';
-                    $this->addFlash('warning',$message);
+                    $this->addFlash('warning', $message);
                 }
-
 
 
             }

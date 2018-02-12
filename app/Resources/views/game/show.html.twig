@@ -65,6 +65,7 @@
         $(document).ready(function () {
             $('.deleteBtn').click(function () {
                 var gameId = $(this).attr('gameId');
+                var gameName = $(this).attr('gameName');
                 var confirmText = "Are you sure you want to delete the selected game - " + gameName + " - ?";
                 if (confirm(confirmText)) {
                     $.ajax({
