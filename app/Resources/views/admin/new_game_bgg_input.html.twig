@@ -15,7 +15,7 @@
         {{ form_start(retrieveGameForm) }}
         <div class="row">
             <label>Bgg ID</label>
-            {{ form_widget(retrieveGameForm.bgg_id, {
+            {{ form_widget(retrieveGameForm.bgg_id_to_retrieve, {
                 'attr': {
                     'class': 'form-control',
                     'id': 'fill',
@@ -39,7 +39,7 @@
     {{ parent() }}
     <script>
         function fill() {
-            var bggId = $('#form_bgg_id').val();
+            var bggId = $('#form_bgg_id_to_retrieve').val();
             $.ajax({
                 cache: false,
                 type: "POST",

@@ -69,15 +69,16 @@ class AdminController extends Controller
      */
     public function insertNewGameWithBggId(Request $request)
     {
+        $game = new Game();
         $em = $this->getDoctrine()->getManager();
         $fill = 'fill()';
         $retrieveGameForm = $this->createFormBuilder()
-            ->add('bgg_id', TextType::class
+            ->add('bgg_id_to_retrieve', TextType::class
             )
             ->getForm();
 
-        $fillGameForm = $this->createFormBuilder()
-            ->add('bgg_id_retrieved', TextType::class, array(
+        $form = $this->createFormBuilder($game)
+            ->add('bgg_id', TextType::class, array(
                     'attr' => array(
                         'id' => 'bgg_id_retrieved',
                         'label' => false,
@@ -85,7 +86,6 @@ class AdminController extends Controller
                     ),
                 )
             )
-
             ->add('name', TextType::class, array(
                     'attr' => array(
                         'id' => 'name',
@@ -126,7 +126,6 @@ class AdminController extends Controller
                     ),
                 )
             )
-
             ->add('submit', SubmitType::class, array(
                     'attr' => array(
                         'label' => 'Add game',
@@ -136,19 +135,22 @@ class AdminController extends Controller
             )
             ->getForm();
         $retrieveGameForm->handleRequest($request);
-        $fillGameForm->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($fillGameForm->isSubmitted() && $fillGameForm->isValid()) {
-            $game = new Game();
-            $gameObject = $fillGameForm->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var Game $game
+             */
+            $game = $form->getData();
 
-             $em->persist($gameObject);
-             $em->flush();
+            $em->persist($game);
+            $em->flush();
         }
 
         return $this->render('admin/new_game_bgg_input.html.twig', array(
             'retrieveGameForm' => $retrieveGameForm->createView(),
-            'fillGameForm' => $fillGameForm->createView(),
+            'fillGameForm' => $form->createView(),
+            'game' => $game
         ));
     }
 

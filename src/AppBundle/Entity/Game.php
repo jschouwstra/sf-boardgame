@@ -88,11 +88,15 @@ class Game
     private $image;
 
 
-
     /**
      * @ORM\Column(name="hidden",nullable=false, type="integer", options={"unsigned": true, "default" :0})
      */
     private $hidden;
+
+    /**
+     * @ORM\Column(name="is_expansion",nullable=false, type="integer", options={"unsigned": true, "default" :0})
+     */
+    private $isExpansion;
 
 
     /****************************************
@@ -102,6 +106,21 @@ class Game
      ***************************************/
 
 
+    /**
+     * @return mixed
+     */
+    public function getisExpansion()
+    {
+        return $this->isExpansion;
+    }
+
+    /**
+     * @param mixed $isExpansion
+     */
+    public function setIsExpansion($isExpansion)
+    {
+        $this->isExpansion = $isExpansion;
+    }
 
     /**
      * @return int
@@ -116,7 +135,7 @@ class Game
      */
     public function setHidden($hidden)
     {
-        if($this->hidden == 'NULL'){
+        if ($this->hidden == 'NULL') {
             $this->hidden = 0;
         }
 //        $this->hidden = $hidden;
@@ -168,6 +187,7 @@ class Game
     {
         return $this->bgg_id;
     }
+
     /**
      * Set bgg_id
      *
@@ -297,7 +317,8 @@ class Game
         $this->image = $image;
     }
 
-    public function getPlays(){
+    public function getPlays()
+    {
         /**
          * @var GameController $gamecontroller
          */
