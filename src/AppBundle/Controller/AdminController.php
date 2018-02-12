@@ -71,6 +71,7 @@ class AdminController extends Controller
      */
     public function insertNewGameWithBggId(Request $request)
     {
+
         $game = new Game();
         $em = $this->getDoctrine()->getManager();
         $fill = 'fill()';
@@ -85,6 +86,7 @@ class AdminController extends Controller
                         'id' => 'bgg_id_retrieved',
                         'label' => false,
                         'class' => 'form-control',
+                        'readonly' => true
                     ),
                 )
             )
@@ -92,7 +94,9 @@ class AdminController extends Controller
                     'attr' => array(
                         'id' => 'name',
                         'label' => 'Name',
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'readonly' => true
+
                     ),
                 )
             )
@@ -100,7 +104,8 @@ class AdminController extends Controller
                     'attr' => array(
                         'id' => 'playtime',
                         'label' => 'Play time',
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'readonly' => true
                     ),
                 )
             )
@@ -108,7 +113,8 @@ class AdminController extends Controller
                     'attr' => array(
                         'id' => 'image',
                         'label' => 'Image',
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'readonly' => true
                     ),
                 )
             )
@@ -116,7 +122,8 @@ class AdminController extends Controller
                     'attr' => array(
                         'id' => 'no_of_players',
                         'label' => 'Players',
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'readonly' => true
                     ),
                 )
             )
@@ -125,6 +132,7 @@ class AdminController extends Controller
                         'id' => 'isExpansion',
                         'label' => 'Expansion',
                         'class' => 'form-control',
+                        'readonly' => true
                     ),
                 )
             )
@@ -144,6 +152,9 @@ class AdminController extends Controller
             try {
                 $em->persist($game);
                 $em->flush();
+                $message = 'Object succesfully added: '.$form->get('name')->getData();
+                $this->addFlash('success', $message);
+                return $this->redirect($this->generateUrl('game_new_with_bgg_id'));
 
             } catch (\Exception $e) {
                 $duplicateEntry = '23000';
@@ -156,7 +167,7 @@ class AdminController extends Controller
             }
         }
 
-        return $this->render('admin/new_game_bgg_input.html.twig', array(
+        return $this->render('admin/game/new_game_bgg_input.html.twig', array(
             'retrieveGameForm' => $retrieveGameForm->createView(),
             'fillGameForm' => $form->createView(),
             'game' => $game
