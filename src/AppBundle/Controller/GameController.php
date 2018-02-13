@@ -273,7 +273,19 @@ class GameController extends Controller
 
     }
 
+    /**
+     * @Route("/isExpansion"), name="isExpansion"
+     * @Method("POST")
+     */
+    public function isExpansion(Request $request){
+        $isExpansion = $request->request->get('isExpansion');
 
+        $serializer = $this->get('jms_serializer');
+        $service_isExpansion = $serializer->serialize($isExpansion, 'json');
+        return new Response(
+            $service_isExpansion
+        );
+    }
     /**
      *
      * @Route("/findBy/bggId", name="findGameByBggId")

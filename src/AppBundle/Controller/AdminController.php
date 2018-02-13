@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Expansion;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 use Doctrine\DBAL\DBALException;
@@ -72,13 +73,22 @@ class AdminController extends Controller
     public function insertNewGameWithBggId(Request $request)
     {
 
-        $game = new Game();
         $em = $this->getDoctrine()->getManager();
         $fill = 'fill()';
         $retrieveGameForm = $this->createFormBuilder()
             ->add('bgg_id_to_retrieve', TextType::class
             )
+            ->add('isExpansion_to_retrieve', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'isExpansion_to_retrieve',
+                        'label' => 'Expansion',
+                        'class' => 'form-control',
+                        'readonly' => true
+                    ),
+                )
+            )
             ->getForm();
+        $game = new Game();
 
         $form = $this->createFormBuilder($game)
             ->add('bgg_id', TextType::class, array(
@@ -129,10 +139,10 @@ class AdminController extends Controller
             )
             ->add('isExpansion', TextType::class, array(
                     'attr' => array(
-                        'id' => 'isExpansion',
+                        'id' => 'bggIsExpansion',
                         'label' => 'Expansion',
                         'class' => 'form-control',
-                        'readonly' => true
+                        'readonly' => true,
                     ),
                 )
             )
@@ -148,30 +158,39 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $game = $form->getData();
-            try {
-                $em->persist($game);
-                $em->flush();
-                $message = 'Object succesfully added: '.$form->get('name')->getData();
-                $this->addFlash('success', $message);
-                return $this->redirect($this->generateUrl('game_new_with_bgg_id'));
 
-            } catch (\Exception $e) {
-                $duplicateEntry = '23000';
-                if (strpos($e->getMessage(), $duplicateEntry)) {
-                    $message = 'Bgg ID: ' . $form->get('bgg_id')->getData() . ' already exists.';
-                    $this->addFlash('warning', $message);
+                $game = $form->getData();
+                //Check if it's a game
+                try {
+                    if ($form->get('isExpansion')->getData() == 'false') {
+
+                        $em->persist($game);
+                        $em->flush();
+                        $message = 'Object succesfully added: ' . $form->get('name')->getData();
+                        $this->addFlash('success', $message);
+                        return $this->redirect($this->generateUrl('game_new_with_bgg_id'));
+                    }else{
+                        $this->addFlash('success', 'This is not a game.');
+
+                    }
+                } catch (\Exception $e) {
+                    $duplicateEntry = '23000';
+                    if (strpos($e->getMessage(), $duplicateEntry)) {
+                        $message =  $form->get('name')->getData() . ' already exists.';
+                        $this->addFlash('warning', $message);
+                    }
+
+
                 }
 
 
-            }
-        }
 
-        return $this->render('admin/game/new_game_bgg_input.html.twig', array(
-            'retrieveGameForm' => $retrieveGameForm->createView(),
-            'fillGameForm' => $form->createView(),
-            'game' => $game
-        ));
+
+        }
+            return $this->render('admin/game/new_game_bgg_input.html.twig', array(
+                'retrieveGameForm' => $retrieveGameForm->createView(),
+                'fillGameForm' => $form->createView(),
+            ));
     }
 
 

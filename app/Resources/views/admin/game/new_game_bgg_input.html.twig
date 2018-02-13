@@ -22,6 +22,15 @@
                     'placeholder': 'Boardgamegeek ID'
                 }
             }) }}
+
+            {{ form_widget(retrieveGameForm.isExpansion_to_retrieve, {
+                'attr': {
+                    'class': 'form-control',
+                    'id': 'isExpansion_to_retrieve',
+                    'label': 'Is expansion',
+                    'placeholder': 'Is expansion'
+                }
+            }) }}
         </div>
         <div class="row">
             <span onclick="fill()" class="btn btn-success">Retrieve Game</span>
@@ -30,6 +39,7 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <img id="thumbnail" style="width: 100px;" src="">
+        <h2 id="objectHeader"></h2>
         {{ form_start(fillGameForm) }}
         {{ form_end(fillGameForm) }}
     </div>
@@ -44,7 +54,7 @@
                 type: "POST",
                 dataType: "json",
                 url: '{{ url('findGameByBggId') }}',
-                data: {bggId: bggId},    // Dit is versturen van data naar de service!
+                data: {bggId: bggId,},    // Dit is versturen van data naar de service!
                 success: function (game) {
                     $('#form_bgg_id_retrieved').val(bggId);
                     $('#form_bgg_id').val(bggId);
@@ -54,6 +64,15 @@
                     $('#form_image').val(game[0].image);
                     $('#form_no_of_players').val(game[0].min_players + "-" + game[0].max_players);
                     $('#form_isExpansion').val(game[0].isExpansion);
+                    $('#form_isExpansion_to_retrieve').val(game[0].isExpansion);
+                    if($('#form_isExpansion_to_retrieve').val() === 'true'){
+                        $('#objectHeader').text('Expansion');
+                    }else{
+                        $('#objectHeader').text('Game');
+
+                    }
+
+//                    alert(game[0].isExpansion);
                 }
             });
 

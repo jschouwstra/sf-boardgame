@@ -36,6 +36,8 @@ class Expansion
      *************************/
 
 
+
+
     /**
      * @var int
      *
@@ -56,6 +58,38 @@ class Expansion
      */
     private $name;
 
+
+    /**
+     * @var int
+     * @ORM\Column(name="bgg_id", type="integer", length=255)
+     */
+    private $bgg_id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="no_of_players", type="string", length=255, nullable=true)
+     */
+    private $no_of_players;
+
+
+    /**
+     * @var string
+     * @ORM\Column(name="playtime", type="string", length=255, nullable=true)
+     */
+    private $playtime;
+
+
+    /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(name="is_expansion",nullable=false, type="integer", options={"unsigned": true, "default" :0})
+     */
+    private $isExpansion;
+
     /**************************
      *  Getters and setters
      *************************/
@@ -73,6 +107,86 @@ class Expansion
     public function setGame($game)
     {
         $this->game = $game;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBggId()
+    {
+        return $this->bgg_id;
+    }
+
+    /**
+     * @param int $bgg_id
+     */
+    public function setBggId($bgg_id)
+    {
+        $this->bgg_id = $bgg_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNoOfPlayers()
+    {
+        return $this->no_of_players;
+    }
+
+    /**
+     * @param string $no_of_players
+     */
+    public function setNoOfPlayers($no_of_players)
+    {
+        $this->no_of_players = $no_of_players;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaytime()
+    {
+        return $this->playtime;
+    }
+
+    /**
+     * @param string $playtime
+     */
+    public function setPlaytime($playtime)
+    {
+        $this->playtime = $playtime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisExpansion()
+    {
+        return $this->isExpansion;
+    }
+
+    /**
+     * @param mixed $isExpansion
+     */
+    public function setIsExpansion($isExpansion)
+    {
+        $this->isExpansion = $isExpansion;
     }
 
     /**
