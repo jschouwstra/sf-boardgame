@@ -7,12 +7,16 @@ use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\User;
 
 use function array_push;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use function json_decode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Query\ResultSetMapping;
+use function var_dump;
 
 
 /**
@@ -127,7 +131,8 @@ class GameController extends Controller
         ));
     }
 
-    public function getPlaysByGameId($gameId){
+    public function getPlaysByGameId($gameId)
+    {
         $userId = $this->getUser()->getId();
         $manager = $this->getDoctrine()->getManager();
 
@@ -277,7 +282,8 @@ class GameController extends Controller
      * @Route("/isExpansion"), name="isExpansion"
      * @Method("POST")
      */
-    public function isExpansion(Request $request){
+    public function isExpansion(Request $request)
+    {
         $isExpansion = $request->request->get('isExpansion');
 
         $serializer = $this->get('jms_serializer');
@@ -286,6 +292,7 @@ class GameController extends Controller
             $service_isExpansion
         );
     }
+
     /**
      *
      * @Route("/findBy/bggId", name="findGameByBggId")
@@ -317,5 +324,8 @@ class GameController extends Controller
             $data
         );
     }
+
+
+
 
 }

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\QueryBuilder;
+use function var_dump;
 
 
 /**
@@ -49,14 +50,12 @@ class SuggestionController extends Controller
      */
     public function getMostPlayedGames()
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        $userID = $user->getId();
-        $manager = $this->getDoctrine()->getManager();
-        /** @var QueryBuilder $qb */
-        $qb = $manager->createQueryBuilder();
 
-        $query = $qb
+        $em = $this->getDoctrine()->getManager();
+        /** @var QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb->c
             ->select('g.name, count(p.game) as plays')
             ->from(Game::class, 'g')
             ->where('p.user_id =' . $userID)
@@ -69,7 +68,8 @@ class SuggestionController extends Controller
             ->getQuery();
 
         $results = $query->getResult();
-
+        var_dump($results);
+        die();
         return $results;
     }
 

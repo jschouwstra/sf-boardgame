@@ -9,13 +9,10 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Expansion;
+use AppBundle\Controller\GameController;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -24,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use function var_dump;
 
 
 /**
@@ -35,11 +33,12 @@ class AdminController extends Controller
     /**
      * @Route("/index")
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        return $this->render('admin/index.html.twig', array());
+        return $this->render('admin/index.html.twig', array(
+            'latestGames' => $this->getLatestAction(5)
+        ));
     }
 
     /**
@@ -61,6 +60,55 @@ class AdminController extends Controller
         return new Response(
             '<html><body>Rol toegevoegd: <br/><pre> ' . var_dump($user) . '</pre></body></html>'
         );
+    }
+
+    /**
+     * Creates a new game entity.
+     *
+     * @Route("/game/index", name="admin_game_index")
+     * @Method({"GET", "POST"})
+     */
+    public function gameIndexAction()
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb->select('g')
+            ->from(Game::class, 'g')
+            ->orderBy('g.name','asc')
+            ->getQuery();
+
+        $games = $query->getResult();
+        return $this->render('admin/game/index.html.twig', array(
+            'games' => $games
+        ));
+    }
+
+
+
+    public function getLatestAction($quantity)
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb->select('g')
+            ->from(Game::class, 'g')
+            ->orderBy('g.id','desc')
+            ->setMaxResults($quantity)
+            ->getQuery();
+
+        $games = $query->getResult();
+        return $games;
+
+
     }
 
 
@@ -159,38 +207,32 @@ class AdminController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-                $game = $form->getData();
-                //Check if it's a game
-                try {
-                    if ($form->get('isExpansion')->getData() == 'false') {
+            $game = $form->getData();
+            //Check if it's a game
+            try {
+                if ($form->get('isExpansion')->getData() == 'false') {
 
-                        $em->persist($game);
-                        $em->flush();
-                        $message = 'Object succesfully added: ' . $form->get('name')->getData();
-                        $this->addFlash('success', $message);
-                        return $this->redirect($this->generateUrl('game_new_with_bgg_id'));
-                    }else{
-                        $this->addFlash('success', 'This is not a game.');
-
-                    }
-                } catch (\Exception $e) {
-                    $duplicateEntry = '23000';
-                    if (strpos($e->getMessage(), $duplicateEntry)) {
-                        $message =  $form->get('name')->getData() . ' already exists.';
-                        $this->addFlash('warning', $message);
-                    }
-
+                    $em->persist($game);
+                    $em->flush();
+                    $message = 'Object succesfully added: ' . $form->get('name')->getData();
+                    $this->addFlash('success', $message);
+                    return $this->redirect($this->generateUrl('game_new_with_bgg_id'));
+                } else {
+                    $this->addFlash('success', 'This is not a game.');
 
                 }
-
-
-
-
+            } catch (\Exception $e) {
+                $duplicateEntry = '23000';
+                if (strpos($e->getMessage(), $duplicateEntry)) {
+                    $message = $form->get('name')->getData() . ' already exists.';
+                    $this->addFlash('warning', $message);
+                }
+            }
         }
-            return $this->render('admin/game/new_game_bgg_input.html.twig', array(
-                'retrieveGameForm' => $retrieveGameForm->createView(),
-                'fillGameForm' => $form->createView(),
-            ));
+        return $this->render('admin/game/new_game_bgg_input.html.twig', array(
+            'retrieveGameForm' => $retrieveGameForm->createView(),
+            'fillGameForm' => $form->createView(),
+        ));
     }
 
 
