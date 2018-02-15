@@ -9,6 +9,7 @@ use AppBundle\Entity\User;
 use function array_push;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use function is_numeric;
 use function json_decode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -301,31 +302,35 @@ class GameController extends Controller
     public function getGameByBggId(Request $request)
     {
         $bgg_id = $request->request->get('bggId');
-        $client = new \Nataniel\BoardGameGeek\Client();
-        /**
-         * @var \Nataniel\BoardGameGeek\Client() $thing
-         */
-        $thing = $client->getThing($bgg_id, true);
-        $bggGame = array(
-            array(
-                'name' => $thing->getName(),
-                'playtime' => $thing->getPlayingTime(),
-                'image' => $thing->getImage(),
-                'min_players' => $thing->getMinPlayers(),
-                'max_players' => $thing->getMaxPlayers(),
-                'isExpansion' => $thing->isBoardgameExpansion()
-            )
-        );
+        if (is_numeric($bgg_id)) {
+            $client = new \Nataniel\BoardGameGeek\Client();
+            /**
+             * @var \Nataniel\BoardGameGeek\Client() $thing
+             */
+            $thing = $client->getThing($bgg_id, true);
+            $bggGame = array(
+                array(
+                    'name' => $thing->getName(),
+                    'playtime' => $thing->getPlayingTime(),
+                    'image' => $thing->getImage(),
+                    'min_players' => $thing->getMinPlayers(),
+                    'max_players' => $thing->getMaxPlayers(),
+                    'isExpansion' => $thing->isBoardgameExpansion()
+                )
+            );
 
 
-        $serializer = $this->get('jms_serializer');
-        $data = $serializer->serialize($bggGame, 'json');
-        return new Response(
-            $data
-        );
+            $serializer = $this->get('jms_serializer');
+            $data = $serializer->serialize($bggGame, 'json');
+            return new Response(
+                $data
+            );
+
+        }else{
+            echo "no valid bgg id";
+        }
+
     }
-
-
 
 
 }

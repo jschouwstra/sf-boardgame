@@ -10,9 +10,11 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Controller\GameController;
+use AppBundle\Entity\Expansion;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use function is_numeric;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -37,7 +39,9 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('admin/index.html.twig', array(
-            'latestGames' => $this->getLatestAction(5)
+            'latestGames' => $this->getLatestAction(5),
+            'totalExpansions' => count($this->getAllExpansions()),
+            'totalGames' => count($this->getAllGames())
         ));
     }
 
@@ -70,25 +74,44 @@ class AdminController extends Controller
      */
     public function gameIndexAction()
     {
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder();
-
-        $query = $qb->select('g')
-            ->from(Game::class, 'g')
-            ->orderBy('g.name','asc')
-            ->getQuery();
-
-        $games = $query->getResult();
+        $games = $this->getAllGames();
         return $this->render('admin/game/index.html.twig', array(
             'games' => $games
         ));
     }
 
+    public function getAllGames()
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
 
+        $query = $qb->select('g')
+            ->from(Game::class, 'g')
+            ->orderBy('g.name', 'asc')
+            ->getQuery();
+
+        $games = $query->getResult();
+        return $games;
+    }
+
+    public function getAllExpansions(){
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb->select('exp')
+            ->from(Expansion::class, 'exp')
+            ->orderBy('exp.name', 'asc')
+            ->getQuery();
+
+        $expansions = $query->getResult();
+        return $expansions;
+    }
 
     public function getLatestAction($quantity)
     {
@@ -101,14 +124,12 @@ class AdminController extends Controller
 
         $query = $qb->select('g')
             ->from(Game::class, 'g')
-            ->orderBy('g.id','desc')
+            ->orderBy('g.id', 'desc')
             ->setMaxResults($quantity)
             ->getQuery();
 
         $games = $query->getResult();
         return $games;
-
-
     }
 
 
@@ -210,7 +231,7 @@ class AdminController extends Controller
             $game = $form->getData();
             //Check if it's a game
             try {
-                if ($form->get('isExpansion')->getData() == 'false') {
+                if ($form->get('isExpansion')->getData() == 'false' ) {
 
                     $em->persist($game);
                     $em->flush();
