@@ -5,11 +5,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+
 
 /**
  * Expansion
  *
- * @ORM\Table(name="expansion")
+ * @ORM\Table(name="expansion",uniqueConstraints={@UniqueConstraint(name="unique", columns={"bgg_id", "name"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpansionRepository")
  */
 class Expansion

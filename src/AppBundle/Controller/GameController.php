@@ -280,18 +280,25 @@ class GameController extends Controller
     }
 
     /**
-     * @Route("/isExpansion"), name="isExpansion"
-     * @Method("POST")
+     * @Route("/is/expansion"), name="validateIfExpansion"
+     * @Method({"GET", "POST"})
+     *
      */
     public function isExpansion(Request $request)
     {
-        $isExpansion = $request->request->get('isExpansion');
-
-        $serializer = $this->get('jms_serializer');
-        $service_isExpansion = $serializer->serialize($isExpansion, 'json');
-        return new Response(
-            $service_isExpansion
+        $bgg_id = 223555;
+        $client = new \Nataniel\BoardGameGeek\Client();
+        $thing = $client->getThing($bgg_id, true);
+        $bggGame = array(
+            array(
+                'isExpansion' => $thing->isBoardgameExpansion()
+            )
         );
+        if($bggGame[0]['isExpansion'] == 'true'){
+            return "true";
+        }else{
+            return "false";
+        }
     }
 
     /**

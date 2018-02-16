@@ -39,7 +39,8 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('admin/index.html.twig', array(
-            'latestGames' => $this->getLatestAction(5),
+            'latestGames' => $this->getLatestGamesAction(5),
+            'latestExpansions' => $this->getLatestExpansionsAction(5),
             'totalExpansions' => count($this->getAllExpansions()),
             'totalGames' => count($this->getAllGames())
         ));
@@ -113,7 +114,7 @@ class AdminController extends Controller
         return $expansions;
     }
 
-    public function getLatestAction($quantity)
+    public function getLatestGamesAction($quantity)
     {
         /**
          * @var EntityManager $em
@@ -132,6 +133,147 @@ class AdminController extends Controller
         return $games;
     }
 
+    public function getLatestExpansionsAction($quantity)
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb->select('exp')
+            ->from(Expansion::class, 'exp')
+            ->orderBy('exp.id', 'desc')
+            ->setMaxResults($quantity)
+            ->getQuery();
+
+        $games = $query->getResult();
+        return $games;
+    }
+
+    /**
+     * Creates a new game entity.
+     *
+     * @Route("/new-expansion/with-bgg-id", name="expansion_new_with_bgg_id")
+     * @Method({"GET", "POST"})
+     */
+    public function insertNewExpansionWithBggId(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $fill = 'fill()';
+        $retrieveExpansionForm = $this->createFormBuilder()
+            ->add('bgg_id_to_retrieve', TextType::class
+            )
+            ->add('isExpansion_to_retrieve', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'isExpansion_to_retrieve',
+                        'label' => 'Expansion',
+                        'class' => 'form-control',
+                        'readonly' => true
+                    ),
+                )
+            )
+            ->getForm();
+        $expansion = new Expansion();
+
+        $form = $this->createFormBuilder($expansion)
+            ->add('bgg_id', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'bgg_id_retrieved',
+                        'label' => false,
+                        'class' => 'form-control',
+                        'readonly' => true
+                    ),
+                )
+            )
+            ->add('name', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'name',
+                        'label' => 'Name',
+                        'class' => 'form-control',
+                        'readonly' => true
+
+                    ),
+                )
+            )
+            ->add('playtime', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'playtime',
+                        'label' => 'Play time',
+                        'class' => 'form-control',
+                        'readonly' => true
+                    ),
+                )
+            )
+            ->add('image', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'image',
+                        'label' => 'Image',
+                        'class' => 'form-control',
+                        'readonly' => true
+                    ),
+                )
+            )
+            ->add('no_of_players', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'no_of_players',
+                        'label' => 'Players',
+                        'class' => 'form-control',
+                        'readonly' => true
+                    ),
+                )
+            )
+            ->add('isExpansion', TextType::class, array(
+                    'attr' => array(
+                        'id' => 'bggIsExpansion',
+                        'label' => 'Expansion',
+                        'class' => 'form-control',
+                        'readonly' => true,
+                    ),
+                )
+            )
+            ->add('submit', SubmitType::class, array(
+                    'attr' => array(
+                        'label' => 'Add game',
+                        'class' => 'form-control btn btn-success'
+                    ),
+                )
+            )
+            ->getForm();
+        $retrieveExpansionForm->handleRequest($request);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $expansion = $form->getData();
+            //Check if it's a game
+            try {
+                if ($form->get('isExpansion')->getData() == 'true' ) {
+
+                    $em->persist($expansion);
+                    $em->flush();
+                    $message = 'Object succesfully added: ' . $form->get('name')->getData();
+                    $this->addFlash('success', $message);
+                    return $this->redirect($this->generateUrl('expansion_new_with_bgg_id'));
+                } else {
+                    $this->addFlash('success', 'This is not a expansion.');
+
+                }
+            } catch (\Exception $e) {
+                $duplicateEntry = '23000';
+                if (strpos($e->getMessage(), $duplicateEntry)) {
+                    $message = $form->get('name')->getData() . ' already exists.';
+                    $this->addFlash('warning', $message);
+                }
+            }
+        }
+        return $this->render('admin/expansion/new_expansion_bgg_input.html.twig', array(
+            'retrieveGameForm' => $retrieveExpansionForm->createView(),
+            'fillGameForm' => $form->createView(),
+        ));
+    }
 
     /**
      * Creates a new game entity.
