@@ -358,24 +358,20 @@ class GameController extends Controller
 
         $name = 'catan';
         $url = 'https://www.boardgamegeek.com/xmlapi2/search/?query=' . $name;
-        echo $url . "<br />";
 
-        echo "<pre>";
         $nodes = new SimpleXMLElement(file_get_contents($url));
-        echo $nodes['0']['total'];
-        echo "</pre>";
-
-
-        echo "<ol>";
+        $games = array();
         foreach($nodes->item as $item){
-
-            echo "<li>".$item->name['value']."&nbsp;" .$item['id']. "</li>";
-
+            array_push($games, $item->name['value']);
         }
-        echo "</ol>";
 
-
+        var_dump($games);
         die();
+        $serializer = $this->get('jms_serializer');
+        $data = $serializer->serialize($games, 'json');
+        return new Response(
+            $data
+        );
 
     }
 
