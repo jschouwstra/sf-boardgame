@@ -361,9 +361,20 @@ class GameController extends Controller
         echo $url . "<br />";
 
         echo "<pre>";
-        $xml = new SimpleXMLElement(file_get_contents($url));
-        echo $xml['0']['total'];
+        $nodes = new SimpleXMLElement(file_get_contents($url));
+        echo $nodes['0']['total'];
         echo "</pre>";
+
+
+        echo "<ol>";
+        foreach($nodes->item as $item){
+
+            echo "<li>".$item->name['value']."&nbsp;" .$item['id']. "</li>";
+
+        }
+        echo "</ol>";
+
+
         die();
 
     }
