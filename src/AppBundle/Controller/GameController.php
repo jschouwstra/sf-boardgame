@@ -9,8 +9,14 @@ use AppBundle\Entity\User;
 use function array_push;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use function file_get_contents;
 use function is_numeric;
+use JMS\Serializer\Serializer;
 use function json_decode;
+use function json_encode;
+use function simplexml_load_file;
+use function simplexml_load_string;
+use SimpleXMLElement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,6 +24,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Query\ResultSetMapping;
 use function var_dump;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 /**
@@ -294,9 +303,9 @@ class GameController extends Controller
                 'isExpansion' => $thing->isBoardgameExpansion()
             )
         );
-        if($bggGame[0]['isExpansion'] == 'true'){
+        if ($bggGame[0]['isExpansion'] == 'true') {
             return "true";
-        }else{
+        } else {
             return "false";
         }
     }
@@ -333,9 +342,29 @@ class GameController extends Controller
                 $data
             );
 
-        }else{
+        } else {
             echo "no valid bgg id";
         }
+
+    }
+
+    /**
+     *
+     * @Route("/findBy/bggName", name="findGameByName")
+     * @Method("GET")
+     */
+    public function getBggObjectByNameTest()
+    {
+
+        $name = 'catan';
+        $url = 'https://www.boardgamegeek.com/xmlapi2/search/?query=' . $name;
+        echo $url . "<br />";
+
+        echo "<pre>";
+        $xml = new SimpleXMLElement(file_get_contents($url));
+        echo $xml['0']['total'];
+        echo "</pre>";
+        die();
 
     }
 
