@@ -54,8 +54,11 @@ security:
 #       Lounge pages
         - { path: ^/lounge/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
-#    Registered user access:
+#    <Registered user access>
         - { path: ^/, roles: ROLE_USER }
+#    </Registered user access>
+
+
 
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
