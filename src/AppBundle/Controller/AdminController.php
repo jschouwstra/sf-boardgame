@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Controller\GameController;
 use AppBundle\Entity\Expansion;
@@ -18,7 +19,6 @@ use function is_numeric;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,12 +37,15 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
+        $gamecontroller = $this->get('gamecontroller');
+        $expansioncontroller = $this->get('expansioncontroller');
+
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('admin/index.html.twig', array(
-            'latestGames' => $this->getLatestGamesAction(5),
-            'latestExpansions' => $this->getLatestExpansionsAction(5),
-            'totalExpansions' => count($this->getAllExpansions()),
-            'totalGames' => count($this->getAllGames())
+            'latestGames' => $gamecontroller->getLatestGamesAction(5),
+            'latestExpansions' => $expansioncontroller->getLatestExpansionsAction(5),
+            'totalExpansions' => count($expansioncontroller->getAllExpansions()),
+            'totalGames' => count($gamecontroller->getAllGames())
         ));
     }
 
@@ -75,81 +78,16 @@ class AdminController extends Controller
      */
     public function gameIndexAction()
     {
-        $games = $this->getAllGames();
+//            $gamecontroller = new GameController();
+//            $games = $gamecontroller->getAllGames();
+//        $games = $this->forward('AppBundle:Game:getAllGamesAction');
+//        $games = $this->container->get('app.controller.gamecontroller')->getAllGames();
+        $games = $this->get('gamecontroller')->getAllGames();
+
+//        $games = $this->getAllGames();
         return $this->render('admin/game/index.html.twig', array(
             'games' => $games
         ));
-    }
-
-    public function getAllGames()
-    {
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-
-        $query = $qb->select('g')
-            ->from(Game::class, 'g')
-            ->orderBy('g.name', 'asc')
-            ->getQuery();
-
-        $games = $query->getResult();
-        return $games;
-    }
-
-    public function getAllExpansions(){
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-
-        $query = $qb->select('exp')
-            ->from(Expansion::class, 'exp')
-            ->orderBy('exp.name', 'asc')
-            ->getQuery();
-
-        $expansions = $query->getResult();
-        return $expansions;
-    }
-
-    public function getLatestGamesAction($quantity)
-    {
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder();
-
-        $query = $qb->select('g')
-            ->from(Game::class, 'g')
-            ->orderBy('g.id', 'desc')
-            ->setMaxResults($quantity)
-            ->getQuery();
-
-        $games = $query->getResult();
-        return $games;
-    }
-
-    public function getLatestExpansionsAction($quantity)
-    {
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder();
-
-        $query = $qb->select('exp')
-            ->from(Expansion::class, 'exp')
-            ->orderBy('exp.id', 'desc')
-            ->setMaxResults($quantity)
-            ->getQuery();
-
-        $games = $query->getResult();
-        return $games;
     }
 
     /**
@@ -250,7 +188,7 @@ class AdminController extends Controller
             $expansion = $form->getData();
             //Check if it's a game
             try {
-                if ($form->get('isExpansion')->getData() == 'true' ) {
+                if ($form->get('isExpansion')->getData() == 'true') {
 
                     $em->persist($expansion);
                     $em->flush();
@@ -373,7 +311,7 @@ class AdminController extends Controller
             $game = $form->getData();
             //Check if it's a game
             try {
-                if ($form->get('isExpansion')->getData() == 'false' ) {
+                if ($form->get('isExpansion')->getData() == 'false') {
 
                     $em->persist($game);
                     $em->flush();

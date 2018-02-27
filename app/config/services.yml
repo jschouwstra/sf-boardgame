@@ -16,3 +16,14 @@ services:
       autowire: true
       tags:
         - {name: kernel.event_subscriber}
+
+    gamecontroller:
+      class: AppBundle\Controller\GameController
+      calls:
+        - [setContainer, ["@service_container"]]
+
+
+    expansioncontroller:
+      class: AppBundle\Controller\ExpansionController
+      calls:
+        - [setContainer, ["@service_container"]]
