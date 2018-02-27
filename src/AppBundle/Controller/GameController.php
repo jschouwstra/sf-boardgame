@@ -361,7 +361,7 @@ class GameController extends Controller
 
         $nodes = new SimpleXMLElement(file_get_contents($url));
         $games = array();
-        foreach($nodes->item as $item){
+        foreach ($nodes->item as $item) {
             array_push($games, $item->name['value']);
         }
 
@@ -375,5 +375,39 @@ class GameController extends Controller
 
     }
 
+    public function getAllGames()
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
 
+        $query = $qb->select('g')
+            ->from(Game::class, 'g')
+            ->orderBy('g.name', 'asc')
+            ->getQuery();
+
+        $games = $query->getResult();
+        return $games;
+    }
+
+    public function getLatestGamesAction($quantity)
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb->select('g')
+            ->from(Game::class, 'g')
+            ->orderBy('g.id', 'desc')
+            ->setMaxResults($quantity)
+            ->getQuery();
+
+        $games = $query->getResult();
+        return $games;
+    }
 }
