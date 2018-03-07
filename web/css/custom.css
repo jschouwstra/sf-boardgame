@@ -66,18 +66,23 @@ table td a:link, table td a:visited {
     }
 }
 
-.alert, .custom {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background-color: #00a7d0;
-    color: white;
-}
+/*.alert, .custom {*/
+    /*padding: 15px;*/
+    /*margin-bottom: 20px;*/
+    /*border: 1px solid transparent;*/
+    /*border-radius: 4px;*/
+    /*!*background-color: #00a7d0;*!*/
+    /*color: white;*/
+/*}*/
 
-.alert, .custom a:link {
-    color: white;
+/*.alert, .custom a:link {*/
+    /*color: white;*/
 
+/*}*/
+
+.alert-highlight{
+    background: #00b3ee;
+    color: white;
 }
 
 .navbar-inverse {
