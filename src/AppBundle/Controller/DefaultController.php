@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /*
-* @Route("game")
+* @ Route("game")
 */
 
 class DefaultController extends Controller

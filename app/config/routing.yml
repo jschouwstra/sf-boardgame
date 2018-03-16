@@ -1,6 +1,7 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    prefix:    /sf-boardgame
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
