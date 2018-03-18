@@ -1,8 +1,7 @@
+{% set domainName = "http://localhost/sf-boardgame/" %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,18 +10,20 @@
     <title>Symfony</title>
     <!-- Bootstrap Core CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"/>
+    {#<link rel="stylesheet" href="{{ domainName }}css/bootstrap.css'"/>#}
+    <link rel="stylesheet" href="{{ domainName }}web/css/bootstrap.css"/>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/scrolling-nav.css') }}"/>
-    {#<link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}" />#}
-    <link rel="stylesheet" href="{{ asset('asset/chosen2/dist/css/select2.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('asset/chosen2/dist/css/chosen-bootstrap.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('asset/jquery-ui-1.12.1/jquery-ui.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/responsive-tables.css') }}"/>
-    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    {#<link rel="stylesheet" href="{{ domainName }}css/scrolling-nav.css'"/>#}
+    <link rel="stylesheet" href="{{ domainName }}css/scrolling-nav.css"/>
+    {#<link rel="stylesheet" href="{{ domainName }}DataTables/datatables.css') }}" />#}
+    <link rel="stylesheet" href="{{ domainName }}asset/chosen2/dist/css/select2.min.css"/>
+    <link rel="stylesheet" href="{{ domainName }}asset/chosen2/dist/css/chosen-bootstrap.css"/>
+    <link rel="stylesheet" href="{{ domainName }}css/custom.css"/>
+    <link rel="stylesheet" href="{{ domainName }}asset/jquery-ui-1.12.1/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="{{ domainName }}web/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="{{ domainName }}css/responsive-tables.css"/>
+    <script type="text/javascript" src="{{ domainName }}js/jquery.js"></script>
 
 
     <!--[if lt IE 9]>
@@ -135,11 +136,11 @@ position:fixed;
 </div>
 {% block javascripts %}
     <!-- Bootstrap Core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.easing.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/scrolling-nav.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('asset/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/functions.js') }}"></script>
+    <script type="text/javascript" src="{{ domainName }}js/bootstrap.js"></script>
+    <script type="text/javascript" src="{{ domainName }}js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="{{ domainName }}js/scrolling-nav.js"></script>
+    <script type="text/javascript" src="{{ domainName }}asset/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{ domainName }}js/functions.js"></script>
 
 
 
