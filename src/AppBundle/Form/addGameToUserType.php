@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Game;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,11 +17,15 @@ class addGameToUserType extends AbstractType
             'attr' => ['data-select' => 'true'],
             'class' => 'AppBundle:Game',
             'choice_label' => function ($game) {
+                /**
+                 * @var Game $game
+                 */
                 return $game->getName();
             },
             'multiple' => true,
             'expanded' => false,
         ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

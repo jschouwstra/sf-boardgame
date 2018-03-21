@@ -14,6 +14,7 @@ use function is_numeric;
 use JMS\Serializer\Serializer;
 use function json_decode;
 use function json_encode;
+use Nataniel\BoardGameGeek\Client;
 use function simplexml_load_file;
 use function simplexml_load_string;
 use SimpleXMLElement;
@@ -350,7 +351,6 @@ class GameController extends Controller
 
     /**
      *
-     * @Route("/findBy/bggName", name="findGameByName")
      * @Method("GET")
      */
     public function getBggObjectByNameTest()
@@ -372,6 +372,22 @@ class GameController extends Controller
         return new Response(
             $data
         );
+
+    }
+
+    /**
+     * @Route("/findBy/bggName", name="findGameByName")
+     * @Method("GET")
+     */
+    public function getBggObjectByNameTest2(){
+        $client = new Client();
+        $results = $client->search('warcraft');
+        $things = array();
+        foreach($results as $item){
+            echo $item->getName();
+        }
+
+
 
     }
 
