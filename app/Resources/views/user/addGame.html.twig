@@ -17,11 +17,27 @@
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3 ">
-            <button title="Confirm" class="btn btn-success pull-right" type="submit"><i class="fa fa-check"></i>&nbsp; Confirm</button>
+            <button title="Confirm" class="btn btn-success pull-right" type="submit"><i class="fa fa-check"></i>&nbsp;
+                Confirm
+            </button>
         </div>
     </div>
     {{ form_rest(form) }}
     {{ form_end(form) }}
+
+    {{ form_start(addGameForm) }}
+
+    {{ form_widget(addGameForm.name, {
+        'attr': {
+            'class': 'form-control'}
+    })
+    }}
+    {{ form_widget(addGameForm.add, {
+        'attr': {
+            'class': 'form-control'}
+    })
+    }}
+    {{ form_end(addGameForm) }}
 {% endblock content %}
 {% block javascripts %}
     {{ parent() }}

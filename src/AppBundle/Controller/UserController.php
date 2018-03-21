@@ -5,11 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Game;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Monolog\Logger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,12 +29,20 @@ class UserController extends Controller
      */
     public function addGameAction(Request $request)
     {
+        /**
+         * @var Game $game
+         */
+
         /** @var  $form */
-        $emailform = $this->createForm('AppBundle\Form\requestGame');
         $form = $this->createForm('AppBundle\Form\addGameToUserType');
+        $addGameForm = $this->createFormBuilder()
+        ->add('name', TextType::class)
+        ->add('add', SubmitType::class, array('label' => 'Add Game'))
+        ->getForm();
+
+
 
         $form->handleRequest($request);
-        $emailform->handleRequest($request);
 
         /** Get current User
          * @var User $userObject
@@ -67,42 +77,9 @@ class UserController extends Controller
             return $this->redirectToRoute('game_index');
         }
 
-        //send mail
-        if ($emailform->isSubmitted() && $emailform->isValid()) {
-            $feedbackType = $request->request->get('feedbackType');
-            $subject = "";
-            if ($feedbackType == 'requestGame') {
-                $subject = "New game request";
-            }
-            /** @var User $usr */
-            $usr = $this->getUser();
-            $feedback = $emailform->getData('feedback');
-            $message = \Swift_Message::newInstance()
-                ->setSubject($subject)
-                ->setFrom($usr->getUsername() . '@example.com')
-                ->setTo('admin@example.com')
-                ->setBody(//Get template for email
-                    $this->renderView(
-                        'email/ForAdmin.html.twig',
-                        array(
-                            'subject' => $subject,
-                            'username' => $usr->getUsername(),
-                            'user_id' => $usr->getId(),
-                            'feedbackType' => $feedbackType,
-                            'email' => $usr->getEmail(),
-                            'feedback' => $feedback,
-                        )
-                    )
-                    , 'text/html');
-            if ($feedback !== null) {
-
-            }
-            $this->get('mailer')->send($message);
-
-        }
         return $this->render('user/addGame.html.twig', array(
             'form' => $form->createView(),
-            'emailform' => $emailform->createView()
+            'addGameForm' => $addGameForm->createView()
 
         ));
     }
