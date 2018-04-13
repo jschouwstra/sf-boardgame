@@ -20,11 +20,11 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('name', TextType::class, [
-//                'attr' => [
-//                    'class' => 'form-control',
-//                ],
-//            ])
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
             ->add('bgg_id', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',

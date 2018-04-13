@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DatabaseWrapper;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\PlayLog;
 use AppBundle\Entity\User;
@@ -45,6 +46,10 @@ class GameController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+        $DatabaseWrapper = new DatabaseWrapper();
+        $DatabaseWrapper->insertGames();
+
         /*
          * The FOSUser object (current user) is injected in the container so we can access it globally
          *
@@ -426,4 +431,5 @@ class GameController extends Controller
         $games = $query->getResult();
         return $games;
     }
+
 }
