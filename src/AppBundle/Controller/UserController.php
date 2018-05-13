@@ -36,11 +36,9 @@ class UserController extends Controller
         /** @var  $form */
         $form = $this->createForm('AppBundle\Form\addGameToUserType');
         $addGameForm = $this->createFormBuilder()
-        ->add('name', TextType::class)
-        ->add('add', SubmitType::class, array('label' => 'Add Game'))
-        ->getForm();
-
-
+            ->add('name', TextType::class)
+            ->add('add', SubmitType::class, array('label' => 'Add Game'))
+            ->getForm();
 
         $form->handleRequest($request);
 
@@ -142,7 +140,6 @@ class UserController extends Controller
             'gameplays' => $totalGameplays,
         ));
     }
-
 
 
 }

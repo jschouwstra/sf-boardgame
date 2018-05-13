@@ -31,12 +31,10 @@
             <p>Missing your game in the list? We try our very best to have your game in our database, however, not all exisiting games are there.<br>
             You can help us by entering your game here:</p>
             {{ form_start(addGameForm) }}
-
             {{ form_widget(addGameForm.name, {
                 'id' : 'AddGameInput',
                 'attr': {
                     'class': 'form-control'
-
                 }
             }) }}
             {{ form_widget(addGameForm.add, {

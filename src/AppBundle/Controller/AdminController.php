@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Controller\GameController;
@@ -38,9 +39,7 @@ class AdminController extends Controller
     public function testSheetAction(Request $request)
     {
 
-        return $this->render('admin/test-sheet.html.twig', array(
-
-        ));
+        return $this->render('admin/test-sheet.html.twig', array());
     }
 
     /**
@@ -374,6 +373,59 @@ class AdminController extends Controller
 
         return $this->render('game/new.html.twig', array(
             'game' => $game,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Creates a new game entity.
+     *
+     * @Route("/game-bulk-insert", name="game-bulk-insert")
+     * @Method({"GET", "POST"})
+     */
+    public function gameBulkInsertAction(Request $request)
+    {
+        $list = array(1,2,3,4,5);
+        $listQuantity = count($list);
+        echo $listQuantity."<br>";
+
+        for($x = 0; $x < $listQuantity; $x++){
+            echo "$list[$x]<br>";
+            //select bgg_id FROM game WHERE bgg_id = $x
+            //found match? return exists = true and skip
+            //no match? return exists = false and insert
+        }
+        die();
+        $em = $this->getDoctrine()->getManager();
+        $bggId = $em->getRepository(Game::class)
+            ->getHighestBggId();
+
+        $defaultData = array('range-to' => implode('',$bggId));
+
+        $form = $this->createFormBuilder($defaultData)
+            ->add('range-from', TextType::class, array(
+                    'label' => 'Range from',
+                    'attr' => array(
+                        'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('range-to', TextType::class,
+                array(
+                    'label' => 'Range to',
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                ))
+            ->add('submit', SubmitType::class, array(
+                'label' => 'confirm',
+                'attr' => array(
+                    'class' => 'form-control'
+                )
+            ))
+            ->getForm();
+
+        return $this->render('admin/game/insert-bulk.html.twig', array(
             'form' => $form->createView(),
         ));
     }
