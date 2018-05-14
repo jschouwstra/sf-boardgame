@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+
+use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
@@ -15,7 +17,8 @@ use function var_dump;
 class GameRepository extends EntityRepository
 {
 
-    public function findAllOrdered (){
+    public function findAllOrdered()
+    {
 
 
         // test if method is called
@@ -38,8 +41,8 @@ class GameRepository extends EntityRepository
         $query = $this->getEntityManager()->createQueryBuilder();
 
         $query
-        ->select($fields)
-        ->from('AppBundle:Game','n');
+            ->select($fields)
+            ->from('AppBundle:Game', 'n');
 
         $results = $query->getQuery()->getResult();
 
@@ -48,6 +51,7 @@ class GameRepository extends EntityRepository
 
 
     }
+
     public function findByName($name)
     {
         $fields = array('n.name');
@@ -55,16 +59,18 @@ class GameRepository extends EntityRepository
 
         $query
             ->select($fields)
-            ->from('AppBundle:Game','n')
-            ->where('n.name LIKE :name' )
-            ->setParameter('name','%'.$name.'%');
+            ->from('AppBundle:Game', 'n')
+            ->where('n.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%');
         $results = $query->getQuery()->getResult();
 
 
         return $results;
 
     }
-    public function findAllForUser($user_id){
+
+    public function findAllForUser($user_id)
+    {
         // test if method is called
 
 //        die("findAllOrdered works!");
@@ -83,24 +89,24 @@ class GameRepository extends EntityRepository
         //        $em = $this->getDoctrine()->getManager();
 //
 
-        $qb = $this->em->getRepository( Game::class )->createQueryBuilder( 'game_t' );
-        $qb->join( 'users_games.user_id', 'ug' )
-            ->where( 'ug.user_id = :userId' )
-            ->setParameter( 'userId', $user_id);
+        $qb = $this->em->getRepository(Game::class)->createQueryBuilder('game_t');
+        $qb->join('users_games.user_id', 'ug')
+            ->where('ug.user_id = :userId')
+            ->setParameter('userId', $user_id);
         return $qb->getQuery()->getResult();
-
 
 
     }
 
-    public function getHighestBggId(){
+    public function getHighestBggId()
+    {
         $fields = array('game.bgg_id');
         $query = $this->getEntityManager()->createQueryBuilder();
 
         $query
             ->select($fields)
-            ->from('AppBundle:Game','game')
-            ->addOrderBy('game.bgg_id','DESC')
+            ->from('AppBundle:Game', 'game')
+            ->addOrderBy('game.bgg_id', 'DESC')
             ->setMaxResults(1);
         $results = $query->getQuery()->getResult();
 
@@ -109,27 +115,25 @@ class GameRepository extends EntityRepository
     }
 
 
-
-    public function bggIdExists($bgg_id){
+    public function bggIdExists($bgg_id)
+    {
         $fields = array('game.bgg_id');
         $query = $this->getEntityManager()->createQueryBuilder();
 
         $query
             ->select($fields)
-            ->from('AppBundle:Game','game')
-            ->andWhere('game.bgg_id ='. $bgg_id);
+            ->from('AppBundle:Game', 'game')
+            ->andWhere('game.bgg_id =' . $bgg_id);
 
 //        var_dump($query->getQuery());
 
         $results = $query->getQuery()->getResult();
-        if(count($results) > 0){
+        if (count($results) > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-
-
 
 
 }

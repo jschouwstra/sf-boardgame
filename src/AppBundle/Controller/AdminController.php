@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\GameRepository;
+use Nataniel\BoardGameGeek\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Controller\GameController;
@@ -385,21 +386,31 @@ class AdminController extends Controller
      */
     public function gameBulkInsertAction(Request $request)
     {
-        $list = array(1,2,3,4,174430);
+
+        $list = array(1, 2, 3, 4, 174430);
         $listQuantity = count($list);
-        echo $listQuantity."<br>";
+
+        echo $listQuantity . "<br>";
+
 
         $em = $this->getDoctrine()->getManager();
 //        $bggIdExists = $em->getRepository(Game::class)
 //            ->bggIdExists($bgg_id);
 //        echo "Exists?".$bggIdExists."<br>";
 
-        for($x = 0; $x < $listQuantity; $x++){
+        for ($x = 0; $x < $listQuantity; $x++) {
 //            echo "$list[$x]<br>";
             $exists = $em->getRepository(Game::class)
                 ->bggIdExists($list[$x]);
-            if(!$exists){
-                echo $list[$x]."<br>";
+
+            //insert bgg_id
+
+
+            if (!$exists) {
+
+
+//                echo $list[$x]."<br>";
+                $this->newGameByBggId($list[$x]);
             }
 //            echo $list[$x]." does it exist?".$exists."<br>";
 
@@ -409,7 +420,7 @@ class AdminController extends Controller
         $bggId = $em->getRepository(Game::class)
             ->getHighestBggId();
 
-        $defaultData = array('range-to' => implode('',$bggId));
+        $defaultData = array('range-to' => implode('', $bggId));
 
         $form = $this->createFormBuilder($defaultData)
             ->add('range-from', TextType::class, array(
@@ -437,6 +448,43 @@ class AdminController extends Controller
         return $this->render('admin/game/insert-bulk.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function newGameByBggId($bgg_id)
+    {
+        try {
+            //prepare object by collecting all properties with the bgg API (todo)
+            $bggObject = array(
+                'bgg_id' => $bgg_id,
+                'name' => 'abc',
+                'no_of_players' => '2',
+                'playtime' => '10',
+                'image' => 'apple.jpg',
+                'is_expansion' => 0
+            );
+        } catch (Exception $exception) {
+            echo $exception;
+            die();
+        }
+
+        try {
+            $game = new Game();
+
+            $game->setBggId($bggObject['bgg_id']);
+            $game->setName($bggObject['name']);
+            $game->setNoOfPlayers($bggObject['no_of_players']);
+            $game->setPlaytime($bggObject['playtime']);
+            $game->setImage($bggObject['image']);
+            $game->setIsExpansion($bggObject['is_expansion']);
+        } catch (Exception $exception) {
+            echo $exception;
+        }
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($game);
+        $em->flush();
+
     }
 
 }
