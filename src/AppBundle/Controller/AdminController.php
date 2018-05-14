@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use function var_dump;
+use function var_export;
 
 
 /**
@@ -378,25 +379,36 @@ class AdminController extends Controller
     }
 
     /**
-     * Creates a new game entity.
      *
      * @Route("/game-bulk-insert", name="game-bulk-insert")
      * @Method({"GET", "POST"})
      */
     public function gameBulkInsertAction(Request $request)
     {
-        $list = array(1,2,3,4,5);
+        $list = array(1,2,3,4,174430);
         $listQuantity = count($list);
         echo $listQuantity."<br>";
 
+        $em = $this->getDoctrine()->getManager();
+//        $bggIdExists = $em->getRepository(Game::class)
+//            ->bggIdExists($bgg_id);
+//        echo "Exists?".$bggIdExists."<br>";
+
         for($x = 0; $x < $listQuantity; $x++){
-            echo "$list[$x]<br>";
+//            echo "$list[$x]<br>";
+            $exists = $em->getRepository(Game::class)
+                ->bggIdExists($list[$x]);
+            if(!$exists){
+                echo $list[$x]."<br>";
+            }
+//            echo $list[$x]." does it exist?".$exists."<br>";
+
             //select bgg_id FROM game WHERE bgg_id = $x
             //found match? return exists = true and skip
             //no match? return exists = false and insert
         }
         die();
-        $em = $this->getDoctrine()->getManager();
+        //view
         $bggId = $em->getRepository(Game::class)
             ->getHighestBggId();
 

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
+use function var_dump;
 
 /**
  * GameRepository
@@ -105,6 +106,27 @@ class GameRepository extends EntityRepository
 
 
         return $results[0];
+    }
+
+
+
+    public function bggIdExists($bgg_id){
+        $fields = array('game.bgg_id');
+        $query = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select($fields)
+            ->from('AppBundle:Game','game')
+            ->andWhere('game.bgg_id ='. $bgg_id);
+
+//        var_dump($query->getQuery());
+
+        $results = $query->getQuery()->getResult();
+        if(count($results) > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
