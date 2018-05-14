@@ -403,9 +403,6 @@ class AdminController extends Controller
             }
 //            echo $list[$x]." does it exist?".$exists."<br>";
 
-            //select bgg_id FROM game WHERE bgg_id = $x
-            //found match? return exists = true and skip
-            //no match? return exists = false and insert
         }
         die();
         //view
