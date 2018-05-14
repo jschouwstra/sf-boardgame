@@ -387,23 +387,15 @@ class AdminController extends Controller
     public function gameBulkInsertAction(Request $request)
     {
 
-        $list = array(1,2,3,4,5,6,7,8,9,10);
-        $listQuantity = count($list);
-
-        echo $listQuantity . "<br>";
-
+//        $list = array(1,2,3,4,5,6,7,8,9,10);
+//        $listQuantity = count($list);
+//
+//        echo $listQuantity . "<br>";
+//
+//
 
         $em = $this->getDoctrine()->getManager();
 
-
-        for ($x = 0; $x < $listQuantity; $x++) {
-            $exists = $em->getRepository(Game::class)
-                ->bggIdExists($list[$x]);
-            if (!$exists) {
-                $this->newGameByBggId($list[$x]);
-            }
-        }
-        die();
         //view
         $bggId = $em->getRepository(Game::class)
             ->getHighestBggId();
@@ -411,16 +403,16 @@ class AdminController extends Controller
         $defaultData = array('range-to' => implode('', $bggId));
 
         $form = $this->createFormBuilder($defaultData)
-            ->add('range-from', TextType::class, array(
-                    'label' => 'Range from',
+            ->add('range-min', TextType::class, array(
+                    'label' => 'Minimum range',
                     'attr' => array(
                         'class' => 'form-control'
                     )
                 )
             )
-            ->add('range-to', TextType::class,
+            ->add('range-max', TextType::class,
                 array(
-                    'label' => 'Range to',
+                    'label' => 'Maximum range',
                     'attr' => array(
                         'class' => 'form-control'
                     ),
@@ -432,6 +424,29 @@ class AdminController extends Controller
                 )
             ))
             ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rangeMin = $form->get('range-min')->getData();
+            $rangeMax = $form->get('range-max')->getData();
+            $list = array();
+
+            foreach (range($rangeMin, $rangeMax) as $number) {
+                array_push($list,$number);
+            }
+//
+//
+            $listQuantity = count($list);
+            echo $listQuantity;
+            for ($x = 0; $x < $listQuantity; $x++) {
+                $exists = $em->getRepository(Game::class)
+                    ->bggIdExists($list[$x]);
+                if (!$exists) {
+                    $this->newGameByBggId($list[$x]);
+                }
+            }
+        }
 
         return $this->render('admin/game/insert-bulk.html.twig', array(
             'form' => $form->createView(),
