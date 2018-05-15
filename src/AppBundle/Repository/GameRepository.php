@@ -135,5 +135,22 @@ class GameRepository extends EntityRepository
         }
     }
 
+    public function findAllOrderedByBggId()
+    {
+        $fields = array('bgg_id.bgg_id');
+        $query = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select($fields)
+            ->from('AppBundle:Game', 'bgg_id');
+
+        $results = $query->getQuery()->getResult();
+
+
+        return $results;
+
+
+    }
+
 
 }

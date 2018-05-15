@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Repository\GameRepository;
 use Nataniel\BoardGameGeek\Exception;
+use function range;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Controller\GameController;
@@ -386,14 +387,6 @@ class AdminController extends Controller
      */
     public function gameBulkInsertAction(Request $request)
     {
-
-//        $list = array(1,2,3,4,5,6,7,8,9,10);
-//        $listQuantity = count($list);
-//
-//        echo $listQuantity . "<br>";
-//
-//
-
         $em = $this->getDoctrine()->getManager();
 
         //view
@@ -438,18 +431,26 @@ class AdminController extends Controller
 //
 //
             $listQuantity = count($list);
-            echo $listQuantity;
+            $count = 1;
             for ($x = 0; $x < $listQuantity; $x++) {
+                echo $count;
                 $exists = $em->getRepository(Game::class)
                     ->bggIdExists($list[$x]);
                 if (!$exists) {
                     $this->newGameByBggId($list[$x]);
+                }
+                $count++;
+                if($count == 5){
+                    echo "20 reached!";
+                    $count = 0;
+                    sleep(5);
                 }
             }
         }
 
         return $this->render('admin/game/insert-bulk.html.twig', array(
             'form' => $form->createView(),
+            'allGamesInDataset' => $this->allGamesInDataset()
         ));
     }
 
@@ -458,21 +459,27 @@ class AdminController extends Controller
         $client = new \Nataniel\BoardGameGeek\Client();
         $thing = $client->getThing($bgg_id, true);
         if (!$thing->isBoardgameExpansion()) {
-            $game = new Game();
+            if($thing->getName()){
+                $game = new Game();
 
-            $game->setBggId($bgg_id);
-            $game->setName($thing->getName());
-            $game->setNoOfPlayers($thing->getMinPlayers() . "-" . $thing->getMaxPlayers());
-            $game->setPlaytime($thing->getPlayingTime());
-            $game->setImage($thing->getImage());
-            $game->setIsExpansion($thing->isBoardgameExpansion());
+                $game->setBggId($bgg_id);
+                $game->setName($thing->getName());
+                $game->setNoOfPlayers($thing->getMinPlayers() . "-" . $thing->getMaxPlayers());
+                $game->setPlaytime($thing->getPlayingTime());
+                $game->setImage($thing->getImage());
+                $game->setIsExpansion($thing->isBoardgameExpansion());
 
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($game);
-            $em->flush();
-
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($game);
+                $em->flush();
+            }
         }
+    }
+
+    public function allGamesInDataset(){
+        $em = $this->getDoctrine()->getManager();
+        $allGamesInDataset = $em->getRepository('AppBundle:Game')->findAllOrderedByBggId();
+        return $allGamesInDataset;
     }
 
 }
