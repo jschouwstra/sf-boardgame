@@ -380,6 +380,10 @@ class AdminController extends Controller
         ));
     }
 
+    public function isConsecutive($array) {
+        return ((int)max($array)-(int)min($array) == (count($array)-1));
+    }
+
     /**
      *
      * @Route("/game-bulk-insert", name="game-bulk-insert")
@@ -421,31 +425,39 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Temporary change to script time limit
+            set_time_limit(999999);
+
             $rangeMin = $form->get('range-min')->getData();
             $rangeMax = $form->get('range-max')->getData();
             $list = array();
 
             foreach (range($rangeMin, $rangeMax) as $number) {
-                array_push($list,$number);
+                array_push($list, $number);
             }
 //
 //
             $listQuantity = count($list);
             $count = 1;
+            $bggGamesToBeInserted = array();
             for ($x = 0; $x < $listQuantity; $x++) {
-                echo $count;
+//                echo $count;
                 $exists = $em->getRepository(Game::class)
                     ->bggIdExists($list[$x]);
                 if (!$exists) {
-                    $this->newGameByBggId($list[$x]);
+                    array_push($bggGamesToBeInserted, $list[$x]);
                 }
                 $count++;
-                if($count == 5){
-                    echo "20 reached!";
-                    $count = 0;
-                    sleep(5);
-                }
             }
+            foreach ($bggGamesToBeInserted as $bggId) {
+                echo $bggId . "<br>";
+                $this->newGameByBggId($bggId);
+                sleep(2);
+            }
+
+            // set time limit back to default value
+            set_time_limit(120);
+
         }
 
         return $this->render('admin/game/insert-bulk.html.twig', array(
@@ -459,24 +471,27 @@ class AdminController extends Controller
         $client = new \Nataniel\BoardGameGeek\Client();
         $thing = $client->getThing($bgg_id, true);
         if (!$thing->isBoardgameExpansion()) {
-            if($thing->getName()){
-                $game = new Game();
+            if ($thing->getName()) {
+                if ($thing->getMinPlayers() > 0) {
+                    $game = new Game();
 
-                $game->setBggId($bgg_id);
-                $game->setName($thing->getName());
-                $game->setNoOfPlayers($thing->getMinPlayers() . "-" . $thing->getMaxPlayers());
-                $game->setPlaytime($thing->getPlayingTime());
-                $game->setImage($thing->getImage());
-                $game->setIsExpansion($thing->isBoardgameExpansion());
+                    $game->setBggId($bgg_id);
+                    $game->setName($thing->getName());
+                    $game->setNoOfPlayers($thing->getMinPlayers() . "-" . $thing->getMaxPlayers());
+                    $game->setPlaytime($thing->getPlayingTime());
+                    $game->setImage($thing->getImage());
+                    $game->setIsExpansion($thing->isBoardgameExpansion());
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($game);
-                $em->flush();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($game);
+                    $em->flush();
+                }
             }
         }
     }
 
-    public function allGamesInDataset(){
+    public function allGamesInDataset()
+    {
         $em = $this->getDoctrine()->getManager();
         $allGamesInDataset = $em->getRepository('AppBundle:Game')->findAllOrderedByBggId();
         return $allGamesInDataset;
