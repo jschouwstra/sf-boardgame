@@ -426,7 +426,7 @@ class AdminController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Temporary change to script time limit
-            set_time_limit(999999);
+            set_time_limit(9999999);
 
             $rangeMin = $form->get('range-min')->getData();
             $rangeMax = $form->get('range-max')->getData();
@@ -450,11 +450,12 @@ class AdminController extends Controller
                 $count++;
             }
             foreach ($bggGamesToBeInserted as $bggId) {
+
                 echo $bggId . "<br>";
                 $this->newGameByBggId($bggId);
                 sleep(2);
             }
-
+            echo "Done";
             // set time limit back to default value
             set_time_limit(120);
 
