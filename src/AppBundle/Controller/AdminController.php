@@ -380,8 +380,9 @@ class AdminController extends Controller
         ));
     }
 
-    public function isConsecutive($array) {
-        return ((int)max($array)-(int)min($array) == (count($array)-1));
+    public function isConsecutive($array)
+    {
+        return ((int)max($array) - (int)min($array) == (count($array) - 1));
     }
 
     /**
@@ -426,7 +427,7 @@ class AdminController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Temporary change to script time limit
-            set_time_limit(9999999);
+            set_time_limit(999999999);
 
             $rangeMin = $form->get('range-min')->getData();
             $rangeMax = $form->get('range-max')->getData();
@@ -435,13 +436,11 @@ class AdminController extends Controller
             foreach (range($rangeMin, $rangeMax) as $number) {
                 array_push($list, $number);
             }
-//
-//
+
             $listQuantity = count($list);
             $count = 1;
             $bggGamesToBeInserted = array();
             for ($x = 0; $x < $listQuantity; $x++) {
-//                echo $count;
                 $exists = $em->getRepository(Game::class)
                     ->bggIdExists($list[$x]);
                 if (!$exists) {
@@ -463,7 +462,7 @@ class AdminController extends Controller
 
         return $this->render('admin/game/insert-bulk.html.twig', array(
             'form' => $form->createView(),
-            'allGamesInDataset' => $this->allGamesInDataset()
+            'allGamesInDataset' => $this->getBggIdNotInDataset()
         ));
     }
 
@@ -488,14 +487,52 @@ class AdminController extends Controller
                     $em->flush();
                 }
             }
+        } else {
+            if ($thing->getName()) {
+                if ($thing->getMinPlayers() > 0) {
+                    $expansion = new Expansion();
+
+                    $expansion->setBggId($bgg_id);
+                    $expansion->setName($thing->getName());
+                    $expansion->setNoOfPlayers($thing->getMinPlayers() . "-" . $thing->getMaxPlayers());
+                    $expansion->setPlaytime($thing->getPlayingTime());
+                    $expansion->setImage($thing->getImage());
+                    $expansion->setIsExpansion($thing->isBoardgameExpansion());
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($expansion);
+                    $em->flush();
+                }
+            }
         }
     }
 
-    public function allGamesInDataset()
+    public function getBggIdNotInDataset()
     {
+        //Get all bgg Id's from dataset
         $em = $this->getDoctrine()->getManager();
         $allGamesInDataset = $em->getRepository('AppBundle:Game')->findAllOrderedByBggId();
-        return $allGamesInDataset;
+
+        // range from 1 to the maximum bgg Id and add to array
+        $last = end($allGamesInDataset);
+        $range = range(1, $last['bgg_id']);
+        $bgglist = array();
+        foreach ($allGamesInDataset as $item) {
+            array_push($bgglist, $item['bgg_id']);
+
+        }
+
+        //Compare range list
+        $missingNumbers = array_diff($range, $bgglist);
+        foreach ($missingNumbers as $item) {
+            array_push($missingNumbers, $item);
+        }
+
+//        return $missingNumbers;
+        foreach($missingNumbers as $item){
+            echo $item."<br>";
+        }
     }
+
 
 }
